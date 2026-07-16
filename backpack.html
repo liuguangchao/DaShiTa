@@ -45,7 +45,7 @@
     <div class="backpack-tabs">
       <div class="backpack-tab active" onclick="switchBackpackTab(this)">全部</div>
       <div class="backpack-tab" onclick="switchBackpackTab(this)">武器</div>
-      <div class="backpack-tab" onclick="switchBackpackTab(this)">皮肤</div>
+      <div class="backpack-tab" onclick="switchBackpackTab(this)">他的皮肤</div>
       <div class="backpack-tab" onclick="switchBackpackTab(this)">特效</div>
     </div>
     
@@ -177,7 +177,7 @@ function handleEquipBtn(){
 function switchBackpackTab(el){
   el.parentElement.querySelectorAll('.backpack-tab').forEach(function(t){t.classList.remove('active')});
   el.classList.add('active');
-  var texts = ['全部','武器','皮肤','特效'];
+  var texts = ['全部','武器','他的皮肤','特效'];
   var types = ['all','weapon','skin','effect'];
   for(var i = 0; i < texts.length; i++){
     if(el.textContent.trim() === texts[i]){
