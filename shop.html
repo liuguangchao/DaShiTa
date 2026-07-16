@@ -10,12 +10,12 @@
 .shop-section{margin-bottom:16px}
 .section-header{display:flex;align-items:center;justify-content:space-between;padding:0 4px 8px}
 .section-title{font-size:16px;font-weight:700;color:#5C3300}
-.scroll-controls{display:flex;gap:6px}
-.scroll-btn{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.25);color:#5C3300;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:all .15s}
+.scroll-wrapper{display:flex;align-items:center;gap:8px}
+.scroll-btn{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.25);color:#5C3300;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:all .15s;flex-shrink:0;user-select:none;-webkit-user-select:none}
 .scroll-btn:active{background:rgba(255,255,255,.5);transform:scale(.9)}
-.scroll-view{overflow:hidden;border-radius:16px;position:relative}
+.scroll-view{overflow:hidden;flex:1;border-radius:16px}
 .scroll-track-shop{display:flex;gap:10px;transition:transform .4s cubic-bezier(.25,.46,.45,.94);will-change:transform}
-.scroll-track-shop .grid-item{flex-shrink:0;width:80px}
+.scroll-track-shop .grid-item{flex-shrink:0;width:100px}
 </style>
 </head>
 <body>
@@ -37,22 +37,22 @@
     <div class="shop-section">
       <div class="section-header">
         <span class="section-title">🔨 武器</span>
-        <div class="scroll-controls">
-          <button class="scroll-btn" onclick="scrollTrack('weapons', -1)">‹</button>
-          <button class="scroll-btn" onclick="scrollTrack('weapons', 1)">›</button>
-        </div>
       </div>
-      <div class="scroll-view" id="viewWeapons">
-        <div class="scroll-track-shop" id="trackWeapons">
-          <div class="grid-item" onclick="buyItem('木剑', 100)"><div class="icon">⚔️</div><div class="name">木剑</div><div class="count" style="color:#FF6B35">🪙 100</div></div>
-          <div class="grid-item" onclick="buyItem('铁锤', 200)"><div class="icon">🔨</div><div class="name">铁锤</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
-          <div class="grid-item" onclick="buyItem('电击棒', 500)"><div class="icon">⚡</div><div class="name">电击棒</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
-          <div class="grid-item" onclick="buyItem('平底锅', 300)"><div class="icon">🍳</div><div class="name">平底锅</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
-          <div class="grid-item" onclick="buyItem('棒球棍', 400)"><div class="icon">🏏</div><div class="name">棒球棍</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
-          <div class="grid-item" onclick="buyItem('旋风腿', 600)"><div class="icon">🦵</div><div class="name">旋风腿</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
-          <div class="grid-item" onclick="buyItem('魔法杖', 700)"><div class="icon">🪄</div><div class="name">魔法杖</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
-          <div class="grid-item" onclick="buyItem('激光枪', 800)"><div class="icon">🔫</div><div class="name">激光枪</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn" onclick="scrollTrack('weapons', -1)">‹</button>
+        <div class="scroll-view" id="viewWeapons">
+          <div class="scroll-track-shop" id="trackWeapons">
+            <div class="grid-item" onclick="buyItem('木剑', 100)"><div class="icon">⚔️</div><div class="name">木剑</div><div class="count" style="color:#FF6B35">🪙 100</div></div>
+            <div class="grid-item" onclick="buyItem('铁锤', 200)"><div class="icon">🔨</div><div class="name">铁锤</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+            <div class="grid-item" onclick="buyItem('电击棒', 500)"><div class="icon">⚡</div><div class="name">电击棒</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+            <div class="grid-item" onclick="buyItem('平底锅', 300)"><div class="icon">🍳</div><div class="name">平底锅</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+            <div class="grid-item" onclick="buyItem('棒球棍', 400)"><div class="icon">🏏</div><div class="name">棒球棍</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+            <div class="grid-item" onclick="buyItem('旋风腿', 600)"><div class="icon">🦵</div><div class="name">旋风腿</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+            <div class="grid-item" onclick="buyItem('魔法杖', 700)"><div class="icon">🪄</div><div class="name">魔法杖</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
+            <div class="grid-item" onclick="buyItem('激光枪', 800)"><div class="icon">🔫</div><div class="name">激光枪</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
+          </div>
         </div>
+        <button class="scroll-btn" onclick="scrollTrack('weapons', 1)">›</button>
       </div>
     </div>
     
@@ -60,22 +60,22 @@
     <div class="shop-section">
       <div class="section-header">
         <span class="section-title">🎭 他的皮肤</span>
-        <div class="scroll-controls">
-          <button class="scroll-btn" onclick="scrollTrack('skin', -1)">‹</button>
-          <button class="scroll-btn" onclick="scrollTrack('skin', 1)">›</button>
-        </div>
       </div>
-      <div class="scroll-view" id="viewSkin">
-        <div class="scroll-track-shop" id="trackSkin">
-          <div class="grid-item" onclick="buyItem('经典表情', 0)"><div class="icon">😊</div><div class="name">经典表情</div><div class="count" style="color:#4CAF50">免费</div></div>
-          <div class="grid-item" onclick="buyItem('火焰表情', 300)"><div class="icon">🔥</div><div class="name">火焰表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
-          <div class="grid-item" onclick="buyItem('冰雪表情', 300)"><div class="icon">❄️</div><div class="name">冰雪表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
-          <div class="grid-item" onclick="buyItem('暗黑表情', 500)"><div class="icon">😈</div><div class="name">暗黑表情</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
-          <div class="grid-item" onclick="buyItem('彩虹表情', 400)"><div class="icon">🌈</div><div class="name">彩虹表情</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
-          <div class="grid-item" onclick="buyItem('钻石表情', 600)"><div class="icon">💎</div><div class="name">钻石表情</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
-          <div class="grid-item" onclick="buyItem('幽灵表情', 450)"><div class="icon">👻</div><div class="name">幽灵表情</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
-          <div class="grid-item" onclick="buyItem('机器人', 550)"><div class="icon">🤖</div><div class="name">机器人</div><div class="count" style="color:#FF6B35">🪙 550</div></div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn" onclick="scrollTrack('skin', -1)">‹</button>
+        <div class="scroll-view" id="viewSkin">
+          <div class="scroll-track-shop" id="trackSkin">
+            <div class="grid-item" onclick="buyItem('经典表情', 0)"><div class="icon">😊</div><div class="name">经典表情</div><div class="count" style="color:#4CAF50">免费</div></div>
+            <div class="grid-item" onclick="buyItem('火焰表情', 300)"><div class="icon">🔥</div><div class="name">火焰表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+            <div class="grid-item" onclick="buyItem('冰雪表情', 300)"><div class="icon">❄️</div><div class="name">冰雪表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+            <div class="grid-item" onclick="buyItem('暗黑表情', 500)"><div class="icon">😈</div><div class="name">暗黑表情</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+            <div class="grid-item" onclick="buyItem('彩虹表情', 400)"><div class="icon">🌈</div><div class="name">彩虹表情</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+            <div class="grid-item" onclick="buyItem('钻石表情', 600)"><div class="icon">💎</div><div class="name">钻石表情</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+            <div class="grid-item" onclick="buyItem('幽灵表情', 450)"><div class="icon">👻</div><div class="name">幽灵表情</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
+            <div class="grid-item" onclick="buyItem('机器人', 550)"><div class="icon">🤖</div><div class="name">机器人</div><div class="count" style="color:#FF6B35">🪙 550</div></div>
+          </div>
         </div>
+        <button class="scroll-btn" onclick="scrollTrack('skin', 1)">›</button>
       </div>
     </div>
     
@@ -83,22 +83,22 @@
     <div class="shop-section">
       <div class="section-header">
         <span class="section-title">✨ 初级特效</span>
-        <div class="scroll-controls">
-          <button class="scroll-btn" onclick="scrollTrack('eff1', -1)">‹</button>
-          <button class="scroll-btn" onclick="scrollTrack('eff1', 1)">›</button>
-        </div>
       </div>
-      <div class="scroll-view" id="viewEff1">
-        <div class="scroll-track-shop" id="trackEff1">
-          <div class="grid-item" onclick="buyItem('木纹飞溅', 150)"><div class="icon">🪵</div><div class="name">木纹飞溅</div><div class="count" style="color:#FF6B35">🪙 150</div></div>
-          <div class="grid-item" onclick="buyItem('落叶飘飘', 180)"><div class="icon">🍂</div><div class="name">落叶飘飘</div><div class="count" style="color:#FF6B35">🪙 180</div></div>
-          <div class="grid-item" onclick="buyItem('水花四溅', 200)"><div class="icon">💦</div><div class="name">水花四溅</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
-          <div class="grid-item" onclick="buyItem('火花带闪电', 220)"><div class="icon">🌟</div><div class="name">火花带闪电</div><div class="count" style="color:#FF6B35">🪙 220</div></div>
-          <div class="grid-item" onclick="buyItem('尘土飞扬', 160)"><div class="icon">💨</div><div class="name">尘土飞扬</div><div class="count" style="color:#FF6B35">🪙 160</div></div>
-          <div class="grid-item" onclick="buyItem('泡泡飞舞', 170)"><div class="icon">🫧</div><div class="name">泡泡飞舞</div><div class="count" style="color:#FF6B35">🪙 170</div></div>
-          <div class="grid-item" onclick="buyItem('星光闪烁', 190)"><div class="icon">⭐</div><div class="name">星光闪烁</div><div class="count" style="color:#FF6B35">🪙 190</div></div>
-          <div class="grid-item" onclick="buyItem('彩带飘扬', 210)"><div class="icon">🎊</div><div class="name">彩带飘扬</div><div class="count" style="color:#FF6B35">🪙 210</div></div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn" onclick="scrollTrack('eff1', -1)">‹</button>
+        <div class="scroll-view" id="viewEff1">
+          <div class="scroll-track-shop" id="trackEff1">
+            <div class="grid-item" onclick="buyItem('木纹飞溅', 150)"><div class="icon">🪵</div><div class="name">木纹飞溅</div><div class="count" style="color:#FF6B35">🪙 150</div></div>
+            <div class="grid-item" onclick="buyItem('落叶飘飘', 180)"><div class="icon">🍂</div><div class="name">落叶飘飘</div><div class="count" style="color:#FF6B35">🪙 180</div></div>
+            <div class="grid-item" onclick="buyItem('水花四溅', 200)"><div class="icon">💦</div><div class="name">水花四溅</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+            <div class="grid-item" onclick="buyItem('火花带闪电', 220)"><div class="icon">🌟</div><div class="name">火花带闪电</div><div class="count" style="color:#FF6B35">🪙 220</div></div>
+            <div class="grid-item" onclick="buyItem('尘土飞扬', 160)"><div class="icon">💨</div><div class="name">尘土飞扬</div><div class="count" style="color:#FF6B35">🪙 160</div></div>
+            <div class="grid-item" onclick="buyItem('泡泡飞舞', 170)"><div class="icon">🫧</div><div class="name">泡泡飞舞</div><div class="count" style="color:#FF6B35">🪙 170</div></div>
+            <div class="grid-item" onclick="buyItem('星光闪烁', 190)"><div class="icon">⭐</div><div class="name">星光闪烁</div><div class="count" style="color:#FF6B35">🪙 190</div></div>
+            <div class="grid-item" onclick="buyItem('彩带飘扬', 210)"><div class="icon">🎊</div><div class="name">彩带飘扬</div><div class="count" style="color:#FF6B35">🪙 210</div></div>
+          </div>
         </div>
+        <button class="scroll-btn" onclick="scrollTrack('eff1', 1)">›</button>
       </div>
     </div>
     
@@ -106,22 +106,22 @@
     <div class="shop-section">
       <div class="section-header">
         <span class="section-title">✨ 中级特效</span>
-        <div class="scroll-controls">
-          <button class="scroll-btn" onclick="scrollTrack('eff2', -1)">‹</button>
-          <button class="scroll-btn" onclick="scrollTrack('eff2', 1)">›</button>
-        </div>
       </div>
-      <div class="scroll-view" id="viewEff2">
-        <div class="scroll-track-shop" id="trackEff2">
-          <div class="grid-item" onclick="buyItem('雷电交加', 350)"><div class="icon">⚡</div><div class="name">雷电交加</div><div class="count" style="color:#FF6B35">🪙 350</div></div>
-          <div class="grid-item" onclick="buyItem('火焰燃烧', 380)"><div class="icon">🔥</div><div class="name">火焰燃烧</div><div class="count" style="color:#FF6B35">🪙 380</div></div>
-          <div class="grid-item" onclick="buyItem('冰霜冻结', 400)"><div class="icon">❄️</div><div class="name">冰霜冻结</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
-          <div class="grid-item" onclick="buyItem('地震波', 420)"><div class="icon">🌋</div><div class="name">地震波</div><div class="count" style="color:#FF6B35">🪙 420</div></div>
-          <div class="grid-item" onclick="buyItem('龙卷风', 450)"><div class="icon">🌪️</div><div class="name">龙卷风</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
-          <div class="grid-item" onclick="buyItem('雷霆万钧', 430)"><div class="icon">⛈️</div><div class="name">雷霆万钧</div><div class="count" style="color:#FF6B35">🪙 430</div></div>
-          <div class="grid-item" onclick="buyItem('极光涌动', 410)"><div class="icon">🌌</div><div class="name">极光涌动</div><div class="count" style="color:#FF6B35">🪙 410</div></div>
-          <div class="grid-item" onclick="buyItem('风暴之眼', 440)"><div class="icon">🌀</div><div class="name">风暴之眼</div><div class="count" style="color:#FF6B35">🪙 440</div></div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn" onclick="scrollTrack('eff2', -1)">‹</button>
+        <div class="scroll-view" id="viewEff2">
+          <div class="scroll-track-shop" id="trackEff2">
+            <div class="grid-item" onclick="buyItem('雷电交加', 350)"><div class="icon">⚡</div><div class="name">雷电交加</div><div class="count" style="color:#FF6B35">🪙 350</div></div>
+            <div class="grid-item" onclick="buyItem('火焰燃烧', 380)"><div class="icon">🔥</div><div class="name">火焰燃烧</div><div class="count" style="color:#FF6B35">🪙 380</div></div>
+            <div class="grid-item" onclick="buyItem('冰霜冻结', 400)"><div class="icon">❄️</div><div class="name">冰霜冻结</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+            <div class="grid-item" onclick="buyItem('地震波', 420)"><div class="icon">🌋</div><div class="name">地震波</div><div class="count" style="color:#FF6B35">🪙 420</div></div>
+            <div class="grid-item" onclick="buyItem('龙卷风', 450)"><div class="icon">🌪️</div><div class="name">龙卷风</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
+            <div class="grid-item" onclick="buyItem('雷霆万钧', 430)"><div class="icon">⛈️</div><div class="name">雷霆万钧</div><div class="count" style="color:#FF6B35">🪙 430</div></div>
+            <div class="grid-item" onclick="buyItem('极光涌动', 410)"><div class="icon">🌌</div><div class="name">极光涌动</div><div class="count" style="color:#FF6B35">🪙 410</div></div>
+            <div class="grid-item" onclick="buyItem('风暴之眼', 440)"><div class="icon">🌀</div><div class="name">风暴之眼</div><div class="count" style="color:#FF6B35">🪙 440</div></div>
+          </div>
         </div>
+        <button class="scroll-btn" onclick="scrollTrack('eff2', 1)">›</button>
       </div>
     </div>
     
@@ -129,22 +129,22 @@
     <div class="shop-section">
       <div class="section-header">
         <span class="section-title">✨ 高级特效</span>
-        <div class="scroll-controls">
-          <button class="scroll-btn" onclick="scrollTrack('eff3', -1)">‹</button>
-          <button class="scroll-btn" onclick="scrollTrack('eff3', 1)">›</button>
-        </div>
       </div>
-      <div class="scroll-view" id="viewEff3">
-        <div class="scroll-track-shop" id="trackEff3">
-          <div class="grid-item" onclick="buyItem('陨石坠落', 600)"><div class="icon">☄️</div><div class="name">陨石坠落</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
-          <div class="grid-item" onclick="buyItem('黑洞吞噬', 700)"><div class="icon">🕳️</div><div class="name">黑洞吞噬</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
-          <div class="grid-item" onclick="buyItem('时空扭曲', 800)"><div class="icon">🌀</div><div class="name">时空扭曲</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
-          <div class="grid-item" onclick="buyItem('宇宙爆炸', 900)"><div class="icon">💫</div><div class="name">宇宙爆炸</div><div class="count" style="color:#FF6B35">🪙 900</div></div>
-          <div class="grid-item" onclick="buyItem('次元撕裂', 850)"><div class="icon">🔮</div><div class="name">次元撕裂</div><div class="count" style="color:#FF6B35">🪙 850</div></div>
-          <div class="grid-item" onclick="buyItem('银河倒转', 750)"><div class="icon">🌠</div><div class="name">银河倒转</div><div class="count" style="color:#FF6B35">🪙 750</div></div>
-          <div class="grid-item" onclick="buyItem('量子纠缠', 880)"><div class="icon">⚛️</div><div class="name">量子纠缠</div><div class="count" style="color:#FF6B35">🪙 880</div></div>
-          <div class="grid-item" onclick="buyItem('维度折叠', 950)"><div class="icon">🌐</div><div class="name">维度折叠</div><div class="count" style="color:#FF6B35">🪙 950</div></div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn" onclick="scrollTrack('eff3', -1)">‹</button>
+        <div class="scroll-view" id="viewEff3">
+          <div class="scroll-track-shop" id="trackEff3">
+            <div class="grid-item" onclick="buyItem('陨石坠落', 600)"><div class="icon">☄️</div><div class="name">陨石坠落</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+            <div class="grid-item" onclick="buyItem('黑洞吞噬', 700)"><div class="icon">🕳️</div><div class="name">黑洞吞噬</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
+            <div class="grid-item" onclick="buyItem('时空扭曲', 800)"><div class="icon">🌀</div><div class="name">时空扭曲</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
+            <div class="grid-item" onclick="buyItem('宇宙爆炸', 900)"><div class="icon">💫</div><div class="name">宇宙爆炸</div><div class="count" style="color:#FF6B35">🪙 900</div></div>
+            <div class="grid-item" onclick="buyItem('次元撕裂', 850)"><div class="icon">🔮</div><div class="name">次元撕裂</div><div class="count" style="color:#FF6B35">🪙 850</div></div>
+            <div class="grid-item" onclick="buyItem('银河倒转', 750)"><div class="icon">🌠</div><div class="name">银河倒转</div><div class="count" style="color:#FF6B35">🪙 750</div></div>
+            <div class="grid-item" onclick="buyItem('量子纠缠', 880)"><div class="icon">⚛️</div><div class="name">量子纠缠</div><div class="count" style="color:#FF6B35">🪙 880</div></div>
+            <div class="grid-item" onclick="buyItem('维度折叠', 950)"><div class="icon">🌐</div><div class="name">维度折叠</div><div class="count" style="color:#FF6B35">🪙 950</div></div>
+          </div>
         </div>
+        <button class="scroll-btn" onclick="scrollTrack('eff3', 1)">›</button>
       </div>
     </div>
     
