@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>打地鼠模式</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 6. 打地鼠游戏 ===================== -->
+<div class="page" id="moleGamePage">
+  <div class="game-bar">
+    <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+    <div class="gb-title">打地鼠模式</div>
+    <div class="gb-stats">
+      <div class="gb-stat">剩余时间 01:30</div>
+      <div class="gb-stat">累计伤害</div>
+      <div class="gb-val" id="moleScore">8650</div>
+    </div>
+  </div>
+  <div style="padding:0 16px;margin-top:8px;display:flex;justify-content:space-between;align-items:center">
+    <button class="btn-gray" style="padding:8px 14px;border-radius:12px">⬇️</button>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span style="font-size:22px">⭐</span>
+      <span style="font-size:22px;font-weight:900;color:#5C3300" id="moleStarScore">8650</span>
+    </div>
+  </div>
+  <div style="text-align:right;padding:4px 16px;font-size:12px;color:#8B6914">连续打击可触发伤害翻倍</div>
+
+  <div class="game-field" id="moleField">
+    <!-- 装饰 -->
+    <div class="grass-deco" style="top:10px;left:10px">🌿</div>
+    <div class="grass-deco" style="top:30px;right:20px">🌸</div>
+    <div class="grass-deco" style="bottom:50px;left:30px">🌼</div>
+    <div class="grass-deco" style="bottom:30px;right:40px">🌺</div>
+    <div class="grass-deco" style="top:60px;left:60px">🪨</div>
+
+    <!-- 地鼠 -->
+    <div class="mole-hole" style="top:40px;left:30px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:30px;right:80px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:140px;left:20px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:140px;right:20px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:250px;left:60px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:250px;right:60px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:340px;left:50%;transform:translateX(-50%)" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+  </div>
+
+  <div class="combo-bar"><span class="combo-badge">➕ 连击 x8</span></div>
+
+  <div class="game-actions">
+    <div class="left-tool">
+      <div class="lt-icon">🔨</div>
+      <div class="lt-name">✓ 拖鞋</div>
+    </div>
+    <div class="center-btns">
+      <button class="btn-orange" onclick="showToast(&#39;重锤攻击！&#39;)">重锤</button>
+      <button class="btn-yellow" onclick="showToast(&#39;切换武器&#39;)">切换武器</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script></body></html>

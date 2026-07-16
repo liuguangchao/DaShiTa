@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>个人信息设置</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 10. 个人信息设置 ===================== -->
+<div class="page" id="profileSettingsPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="window.location.href='settings.html'">←</button>
+    <div class="title-center">个人信息设置</div>
+    <button class="btn-gray" style="padding:8px 18px;font-size:14px" onclick="showToast(&#39;信息已保存&#39;)">保存</button>
+  </div>
+  <div style="padding:0 16px">
+    <div class="profile-section">
+      <div class="profile-avatar">😊</div>
+      <button class="btn-gold" onclick="showToast(&#39;更换头像&#39;)">更换头像</button>
+    </div>
+    <div class="card-round">
+      <div style="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center">自身名称设置</div>
+      <div style="font-size:17px;color:#333;margin-bottom:10px">快乐小锤手</div>
+      <div class="profile-hint">支持2-8个字符，可包含汉字、字母、数字</div>
+      <div style="text-align:right"><button class="btn-green" style="padding:10px 24px" onclick="showToast(&#39;名称已保存&#39;)">保存名称</button></div>
+    </div>
+    <button class="btn-gold" style="width:100%;padding:16px;font-size:20px;margin-top:10px" onclick="showToast(&#39;设置已保存&#39;)">保存设置</button>
+  </div>
+</div>
+
+<script src="js/app.js"></script></body></html>

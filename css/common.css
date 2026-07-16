@@ -1,0 +1,428 @@
+<title>打屎他</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,#FFE066 0%,#FFD166 30%,#FFB347 100%);min-height:100vh;overflow-x:hidden}
+.page{width:100%;max-width:575px;margin:0 auto;min-height:100vh;padding:0;display:none;position:relative}
+.page.active{display:block}
+
+/* ===== 通用 ===== */
+.bar-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 8px;position:relative;z-index:2}
+.bar-top .logo{font-size:42px;font-weight:900;color:#fff;text-shadow:3px 3px 0 #E8960C,0 0 12px rgba(255,200,0,.5);letter-spacing:2px}
+.icon-btn{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.icon-btn-img{width:44px;height:44px;border-radius:50%;background:transparent;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;box-shadow:none;overflow:hidden}
+.icon-btn-img img{width:32px;height:32px;object-fit:contain}
+.icon-btn .badge{position:absolute;top:-4px;right:-4px;background:#FF4444;color:#fff;font-size:11px;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;font-weight:700}
+.back-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.title-center{text-align:center;font-size:26px;font-weight:800;color:#5C3300;text-shadow:1px 1px 0 rgba(255,255,255,.5)}
+
+.card{background:rgba(255,255,255,.15);border-radius:20px;padding:16px;margin:0 16px 14px;box-shadow:0 4px 16px rgba(0,0,0,.06);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}
+.card-round{background:rgba(255,255,255,.15);border-radius:24px;padding:16px;margin:0 16px 14px;box-shadow:0 4px 16px rgba(0,0,0,.06);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}
+
+/* ========== 七日签到卡片 ========== */
+.sign-card {
+    width: 95%;
+    border-radius: 34px;
+    border: 4px solid #783E10;
+    box-shadow:
+        0 7px 0 #E4BF86,
+        0 12px 18px rgba(120, 62, 16, 0.14),
+        inset 0 4px 8px rgba(255, 255, 255, 0.6);
+    padding: 16px 18px 15px;
+    margin-bottom: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+}
+.sign-card::before {
+    content: "✨";
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-size: 30px;
+    opacity: 0.7;
+    transform: rotate(12deg);
+}
+.sign-card::after {
+    content: "🌟";
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    font-size: 24px;
+    opacity: 0.6;
+    transform: rotate(-8deg);
+}
+.sign-card-top {
+    position: relative;
+    z-index: 2;
+}
+.sign-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    position: relative;
+}
+.sign-tag {
+    position: absolute;
+    top: -10px;
+    right: 18%;
+    background: linear-gradient(130deg, #FF6655, #FF8877);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 2px solid #B83C30;
+    box-shadow: 0 3px 0 #A33228;
+}
+.calendar-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(140deg, #FFC145, #FFA722);
+    border: 3px solid #783E10;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.5);
+}
+.calendar-icon-inner {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    height: 8px;
+    background: #fff;
+    border-radius: 4px;
+}
+.sign-title-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: #54290B;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+}
+.sign-ip-decor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    padding: 0 8px;
+}
+.chick-sticker {
+    width: 42px;
+    height: 46px;
+    position: relative;
+    filter: drop-shadow(2px 3px 0 rgba(120, 62, 16, 0.25));
+}
+.chick-body {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(140deg, #FFE88A, #FFD247);
+    border-radius: 50%;
+    border: 3px solid #783E10;
+    position: absolute;
+    bottom: 0;
+    left: 3px;
+}
+.chick-wing {
+    width: 14px;
+    height: 18px;
+    background: #FFD247;
+    border-radius: 50%;
+    border: 2px solid #783E10;
+    position: absolute;
+    bottom: 8px;
+    left: -4px;
+    transform: rotate(-12deg);
+}
+.chick-eye {
+    width: 5px;
+    height: 5px;
+    background: #783E10;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    left: 24px;
+}
+.chick-beak {
+    width: 10px;
+    height: 8px;
+    background: #FF8A00;
+    border-radius: 50%;
+    position: absolute;
+    top: 22px;
+    left: 28px;
+    transform: rotate(8deg);
+}
+.star-sticker {
+    font-size: 28px;
+    transform: rotate(15deg);
+    filter: drop-shadow(1px 2px 0 rgba(120, 62, 16, 0.2));
+}
+.gift-sticker {
+    width: 38px;
+    height: 38px;
+    position: relative;
+    filter: drop-shadow(2px 3px 0 rgba(120, 62, 16, 0.25));
+}
+.gift-box {
+    width: 38px;
+    height: 32px;
+    background: linear-gradient(140deg, #FF7A7A, #FF5555);
+    border-radius: 8px;
+    border: 3px solid #783E10;
+    position: absolute;
+    bottom: 0;
+}
+.gift-ribbon {
+    width: 6px;
+    height: 38px;
+    background: #FFD700;
+    border: 2px solid #783E10;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+}
+.week-grid {
+    display: flex;
+    gap: 9px;
+    margin-bottom: 26px;
+    position: relative;
+    z-index: 2;
+}
+.day-box {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    border-radius: 22px;
+    border: 3px solid #C29054;
+    background: #FFF6DD;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #703B0F;
+    box-shadow: inset 0 2px 3px rgba(255,255,255,0.3);
+    position: relative;
+}
+.day-box.today {
+    background: linear-gradient(140deg, #FFD782, #FFBB40);
+    border-color: #783E10;
+    box-shadow:
+        inset 0 3px 6px rgba(255,255,255,0.65),
+        0 0 12px rgba(255, 170, 30, 0.45);
+}
+.day-box.done {
+    background: #EAE2D0;
+    color: #A07444;
+}
+.day-box.done .day-icon {
+    color: #3A8C3A;
+}
+.day-box.lock {
+    background: #F0E9D8;
+    opacity: 0.75;
+}
+.day-box.lock .day-icon {
+    color: #B89868;
+}
+.sign-main-btn {
+    display: block;
+    width: 78%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 15px 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #FFA830, #FFDD7A);
+    border: 3px solid #783E10;
+    box-shadow:
+        0 5px 0 #D19A47,
+        inset 0 3px 6px rgba(255,255,255,0.55);
+    font-size: 23px;
+    font-weight: 900;
+    color: #4F260A;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    position: relative;
+    z-index: 2;
+}
+.sign-main-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #D19A47, inset 0 3px 6px rgba(255,255,255,0.55);
+}
+.sign-desc {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 15px;
+    color: #884E1C;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+}
+
+.btn-gold{background:linear-gradient(180deg,#FFE066,#FFB347);color:#5C3300;border:none;border-radius:25px;padding:12px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(255,165,0,.35)}
+.btn-green{background:linear-gradient(180deg,#6BCB77,#4CAF50);color:#fff;border:none;border-radius:25px;padding:12px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(76,175,80,.35)}
+.btn-gray{background:linear-gradient(180deg,#E8E8E8,#BDBDBD);color:#666;border:none;border-radius:25px;padding:12px 32px;font-size:16px;font-weight:700;cursor:pointer}
+
+/* ===== 开关 ===== */
+.toggle{width:52px;height:28px;background:#ccc;border-radius:14px;position:relative;cursor:pointer;transition:background .3s}
+.toggle.on{background:#4CAF50}
+.toggle::after{content:'';position:absolute;width:24px;height:24px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .3s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.toggle.on::after{transform:translateX(24px)}
+
+/* ===== Tabs ===== */
+.tabs{display:flex;gap:6px;padding:0 16px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:8px 16px;border-radius:20px;background:rgba(255,255,255,.15);font-size:14px;white-space:nowrap;cursor:pointer;transition:all .3s;border:1px solid rgba(255,255,255,.25)}
+.tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;border-color:#FFB347;font-weight:700}
+
+/* ===== 列表 ===== */
+.list-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f0e6d0}
+.list-row:last-child{border-bottom:none}
+.list-row .label{font-size:16px;color:#333}
+.list-row .desc{font-size:12px;color:#999;margin-top:2px}
+.list-row .arrow{color:#ccc;font-size:18px}
+
+/* ===== Grid ===== */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* ===== 横向滚动特效 ===== */
+.scroll-row{overflow:hidden;width:100%;margin-bottom:10px}
+.scroll-track{display:flex;gap:10px;animation:scrollRow 20s linear infinite;width:max-content}
+.scroll-track:hover{animation-play-state:paused}
+@keyframes scrollRow{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.grid-item{background:rgba(255,255,255,.12);border-radius:16px;padding:14px 8px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,.2)}
+.grid-item .icon{font-size:44px;margin-bottom:6px}
+.grid-item .name{font-size:13px;color:#333;font-weight:500}
+.grid-item .count{font-size:12px;color:#999;margin-top:2px}
+
+/* ===== 排行榜 ===== */
+.rank-top3{display:flex;justify-content:center;gap:8px;margin-bottom:16px;padding:0 8px}
+.rank-crown{width:100px;text-align:center;padding:14px 6px 10px;border-radius:16px;position:relative}
+.rank-crown.r1{background:rgba(255,255,255,.12)}
+.rank-crown.r2{background:linear-gradient(180deg,#F0F0F0,#D0D0D0)}
+.rank-crown.r3{background:linear-gradient(180deg,#FFE0B0,#FFB347)}
+.rank-crown .rn{position:absolute;top:6px;left:8px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.rank-crown .ravatar{font-size:44px;margin:6px 0}
+.rank-crown .rname{font-size:14px;font-weight:700;color:#333}
+.rank-crown .rscore{font-size:18px;font-weight:900;color:#FF6B35}
+
+.rank-list .row{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid #f0e6d0}
+.rank-list .row:last-child{border-bottom:none}
+.rank-list .rn{width:28px;font-size:15px;font-weight:700;color:#999;text-align:center}
+.rank-list .ra{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 10px}
+.rank-list .ri{flex:1}
+.rank-list .nm{font-size:15px;font-weight:600;color:#333}
+.rank-list .bd{font-size:11px;color:#999;margin-top:2px}
+.rank-list .sc{font-size:16px;font-weight:700;color:#FF6B35;margin-right:8px}
+.rank-list .act{padding:5px 14px;border-radius:14px;background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-size:13px;font-weight:600;border:none;cursor:pointer}
+
+/* ===== 游戏区域 ===== */
+.game-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:linear-gradient(180deg,#FFE066,#FFB347);border-radius:0 0 20px 20px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.game-bar .gb-title{font-size:28px;font-weight:900;color:#5C3300;text-shadow:2px 2px 0 rgba(255,255,255,.3)}
+.game-bar .gb-stats{text-align:right}
+.game-bar .gb-stat{font-size:12px;color:#8B6914}
+.game-bar .gb-val{font-size:20px;font-weight:900;color:#5C3300}
+
+.game-field{min-height:420px;background:linear-gradient(180deg,#90EE90 0%,#7CCD7C 40%,#6BBF6B 100%);border-radius:20px;margin:12px 16px;position:relative;overflow:hidden}
+.game-field::before{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(0deg,#5a9e5a,#7CCD7C);z-index:1}
+
+/* 草地装饰 */
+.grass-deco{position:absolute;font-size:20px;opacity:.6}
+
+/* 地鼠 */
+.mole-hole{position:absolute;cursor:pointer;z-index:2;transition:transform .15s}
+.mole-hole:active{transform:scale(.85)}
+.mole-hole .mole-body{font-size:52px;display:block;text-align:center;filter:drop-shadow(0 3px 4px rgba(0,0,0,.2))}
+.mole-hole .hole-base{width:60px;height:20px;background:radial-gradient(ellipse,#5C3A1E,#3E2510);border-radius:50%;margin:0 auto}
+
+/* 打击特效 */
+.hit-spark{position:absolute;pointer-events:none;z-index:10;font-size:20px;font-weight:900;color:#FF4444;text-shadow:0 0 6px #FFD700;animation:sparkFloat .8s ease-out forwards}
+@keyframes sparkFloat{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-60px) scale(1.5)}}
+
+/* 虚拟人物 */
+.figure-scene{position:relative;width:100%;height:420px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06)}
+.figure-person{font-size:180px;cursor:pointer;transition:transform .15s;position:relative;z-index:2}
+.figure-person:active{transform:scale(.92)}
+.hit-point{position:absolute;font-size:16px;font-weight:700;color:#FF4444;background:rgba(255,255,255,.15);padding:2px 8px;border-radius:10px;pointer-events:none;animation:sparkFloat .8s ease-out forwards}
+
+/* 武器栏 */
+.weapon-bar{display:flex;gap:8px;padding:12px 16px;background:rgba(255,255,255,.08);border-radius:16px;margin:0 16px 12px;border:1px solid rgba(255,255,255,.15)}
+.weapon-item{min-width:72px;padding:10px 8px;background:rgba(255,255,255,.15);border-radius:12px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.weapon-item.active{border-color:#FF6B35;background:rgba(255,200,100,.5)}
+.weapon-item .wi-icon{font-size:32px}
+.weapon-item .wi-name{font-size:12px;color:#5C3300;margin-top:4px}
+.weapon-item .wi-count{position:absolute;top:-4px;right:-4px;background:#FFD700;color:#fff;font-size:11px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* 底部操作 */
+.game-actions{display:flex;gap:10px;padding:0 16px 20px;align-items:center}
+.game-actions .left-tool{width:100px;padding:12px;background:rgba(255,255,255,.15);border-radius:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid rgba(255,255,255,.2)}
+.game-actions .left-tool .lt-icon{font-size:40px}
+.game-actions .left-tool .lt-name{font-size:13px;color:#5C3300;font-weight:600;margin-top:4px}
+.game-actions .center-btns{flex:1;display:flex;gap:8px}
+.game-actions .center-btns button{flex:1;padding:12px;border-radius:20px;border:none;font-size:16px;font-weight:700;cursor:pointer}
+.game-actions .btn-orange{background:linear-gradient(180deg,#FF8C42,#FF6B35);color:#fff;box-shadow:0 4px 10px rgba(255,107,53,.4)}
+.game-actions .btn-yellow{background:linear-gradient(180deg,#FFE066,#FFB347);color:#5C3300;box-shadow:0 4px 10px rgba(255,179,71,.4)}
+
+.combo-bar{text-align:center;padding:8px 0}
+.combo-badge{display:inline-block;background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;padding:6px 20px;border-radius:20px;font-size:16px;font-weight:700;box-shadow:0 2px 8px rgba(255,165,0,.3)}
+
+/* 个人信息 */
+.profile-section{text-align:center;margin-bottom:20px}
+.profile-avatar{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.1);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:70px;border:4px solid #FFD700}
+.profile-name-input{width:calc(100% - 32px);margin:0 16px 10px;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);font-size:16px;color:#333;outline:none}
+.profile-hint{font-size:12px;color:#999;margin:0 16px 16px;text-align:center;background:rgba(255,255,255,.08);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.15)}
+
+/* 奖励弹窗 */
+.reward-popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:999;display:flex;align-items:center;justify-content:center}
+.reward-card{background:rgba(255,255,255,.08);border-radius:28px;padding:28px 24px;width:calc(100% - 48px);max-width:380px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.reward-card .rc-title{font-size:18px;font-weight:700;color:#FF6B35;margin-bottom:16px}
+.reward-card .rc-items{display:flex;justify-content:space-around;margin:16px 0}
+.reward-card .rc-item{text-align:center}
+.reward-card .rc-item .ri-icon{font-size:40px;margin-bottom:4px}
+.reward-card .rc-item .ri-label{font-size:13px;color:#666}
+.reward-card .rc-item .ri-val{font-size:16px;font-weight:700;color:#333}
+.reward-card .rc-item .ri-val.gold{color:#FF6B35;font-size:22px}
+.reward-card .rc-icons{display:flex;justify-content:center;gap:16px;margin:20px 0;font-size:50px}
+.reward-card .rc-btn{width:100%;padding:14px;border-radius:25px;border:none;background:linear-gradient(180deg,#FFE066,#FFB347);color:#5C3300;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(255,165,0,.3)}
+
+/* 设置菜单 */
+.setting-item{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid #f0e6d0}
+.setting-item:last-child{border-bottom:none}
+.setting-item .si-left{display:flex;align-items:center;gap:12px}
+.setting-item .si-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:18px}
+.setting-item .si-label{font-size:16px;color:#333;font-weight:500}
+.setting-item .si-right{font-size:14px;color:#999;display:flex;align-items:center;gap:4px}
+.setting-item .si-right .arrow{color:#ccc}
+
+.msg-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+
+@media(max-width:400px){
+  .bar-top .logo{font-size:28px}
+  .bar-top .icon-btn{width:36px;height:36px;font-size:18px}
+  .bar-top .icon-btn span{font-size:9px}
+  .bar-top .icon-btn .badge{font-size:10px;min-width:16px;height:16px}
+  .game-bar .gb-title{font-size:20px}
+  .rank-crown{width:80px}
+  .rank-crown .ravatar{font-size:36px}
+  .rank-crown .rscore{font-size:15px}
+  .rank-crown .rname{font-size:12px}
+  /* 第二行按钮在小屏缩小 */
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn{height:32px;font-size:12px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn span{font-size:8px}
+}
+@media(max-width:360px){
+  .bar-top .logo{font-size:24px}
+  .bar-top .icon-btn{width:32px;height:32px;font-size:16px}
+  .bar-top .icon-btn span{font-size:8px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn{height:28px;font-size:11px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn span{font-size:7px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn[style*="width:auto"]{padding:0 10px}
+}
+</style>
+</head>
+<body>
+

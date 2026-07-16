@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>设置</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 5. 系统设置 ===================== -->
+<div class="page" id="settingsPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+    <div class="title-center" style="font-size:32px">设置</div>
+    <div style="width:40px"></div>
+  </div>
+  <div style="padding-bottom:20px">
+    <div class="card">
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🎵</div><div class="si-label">音效设置</div></div><div class="si-right">背景音乐 已关闭 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">📳</div><div class="si-label">震动设置</div></div><div class="si-right">打击音效 已开启 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🖥️</div><div class="si-label">界面设置</div></div><div class="si-right">震动强度 中 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🔒</div><div class="si-label">隐私设置</div></div><div class="si-right"><span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">✉️</div><div class="si-label">消息设置</div></div><div class="si-right">排行榜展示 已开启 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🗑️</div><div class="si-label">清除缓存</div></div><div class="si-right">头像模糊 已关闭 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">ℹ️</div><div class="si-label">关于游戏</div></div><div class="si-right"><span class="arrow">›</span></div></div>
+    </div>
+    <div style="display:flex;gap:10px;padding:0 16px">
+      <button class="btn-gold" style="flex:1" onclick="showToast(&#39;设置已保存&#39;)">保存设置</button>
+      <button class="btn-gray" style="flex:1" onclick="if(confirm(&#39;确定要重置自定义内容吗？&#39;))showToast(&#39;已重置&#39;)">重置自定义内容</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script></body></html>

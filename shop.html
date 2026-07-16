@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>商城</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 11. 商城页面 ===================== -->
+<div class="page active" id="shopPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+    <div class="title-center">商城</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:20px">🪙</span>
+      <span style="font-size:16px;font-weight:700;color:#FF6B35" id="coinBalance">1280</span>
+    </div>
+  </div>
+  
+  <div style="padding:0 16px">
+    
+    <!-- 武器 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">🔨 武器</div>
+    <div class="scroll-row" id="scrollRow0">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;木剑&#39;, 100)"><div class="icon">⚔️</div><div class="name">木剑</div><div class="count" style="color:#FF6B35">🪙 100</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;铁锤&#39;, 200)"><div class="icon">🔨</div><div class="name">铁锤</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;电击棒&#39;, 500)"><div class="icon">⚡</div><div class="name">电击棒</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;平底锅&#39;, 300)"><div class="icon">🍳</div><div class="name">平底锅</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;棒球棍&#39;, 400)"><div class="icon">🏏</div><div class="name">棒球棍</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;木剑&#39;, 100)"><div class="icon">⚔️</div><div class="name">木剑</div><div class="count" style="color:#FF6B35">🪙 100</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;铁锤&#39;, 200)"><div class="icon">🔨</div><div class="name">铁锤</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;电击棒&#39;, 500)"><div class="icon">⚡</div><div class="name">电击棒</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;平底锅&#39;, 300)"><div class="icon">🍳</div><div class="name">平底锅</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;棒球棍&#39;, 400)"><div class="icon">🏏</div><div class="name">棒球棍</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+      </div>
+    </div>
+    
+    <!-- 他的皮肤 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">🎭 他的皮肤</div>
+    <div class="scroll-row" id="scrollRowSkin">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;经典表情&#39;, 0)"><div class="icon">😊</div><div class="name">经典表情</div><div class="count" style="color:#4CAF50">免费</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰表情&#39;, 300)"><div class="icon">🔥</div><div class="name">火焰表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰雪表情&#39;, 300)"><div class="icon">❄️</div><div class="name">冰雪表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;暗黑表情&#39;, 500)"><div class="icon">😈</div><div class="name">暗黑表情</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;彩虹表情&#39;, 400)"><div class="icon">🌈</div><div class="name">彩虹表情</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;钻石表情&#39;, 600)"><div class="icon">💎</div><div class="name">钻石表情</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;经典表情&#39;, 0)"><div class="icon">😊</div><div class="name">经典表情</div><div class="count" style="color:#4CAF50">免费</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰表情&#39;, 300)"><div class="icon">🔥</div><div class="name">火焰表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰雪表情&#39;, 300)"><div class="icon">❄️</div><div class="name">冰雪表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;暗黑表情&#39;, 500)"><div class="icon">😈</div><div class="name">暗黑表情</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;彩虹表情&#39;, 400)"><div class="icon">🌈</div><div class="name">彩虹表情</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;钻石表情&#39;, 600)"><div class="icon">💎</div><div class="name">钻石表情</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+      </div>
+    </div>
+    
+    <!-- 初级特效 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">✨ 初级特效</div>
+    <div class="scroll-row" id="scrollRow1">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;木纹飞溅&#39;, 150)"><div class="icon">🪵</div><div class="name">木纹飞溅</div><div class="count" style="color:#FF6B35">🪙 150</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;落叶飘飘&#39;, 180)"><div class="icon">🍂</div><div class="name">落叶飘飘</div><div class="count" style="color:#FF6B35">🪙 180</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;水花四溅&#39;, 200)"><div class="icon">💦</div><div class="name">水花四溅</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火花带闪电&#39;, 220)"><div class="icon">🌟</div><div class="name">火花带闪电</div><div class="count" style="color:#FF6B35">🪙 220</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;尘土飞扬&#39;, 160)"><div class="icon">💨</div><div class="name">尘土飞扬</div><div class="count" style="color:#FF6B35">🪙 160</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;木纹飞溅&#39;, 150)"><div class="icon">🪵</div><div class="name">木纹飞溅</div><div class="count" style="color:#FF6B35">🪙 150</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;落叶飘飘&#39;, 180)"><div class="icon">🍂</div><div class="name">落叶飘飘</div><div class="count" style="color:#FF6B35">🪙 180</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;水花四溅&#39;, 200)"><div class="icon">💦</div><div class="name">水花四溅</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火花带闪电&#39;, 220)"><div class="icon">🌟</div><div class="name">火花带闪电</div><div class="count" style="color:#FF6B35">🪙 220</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;尘土飞扬&#39;, 160)"><div class="icon">💨</div><div class="name">尘土飞扬</div><div class="count" style="color:#FF6B35">🪙 160</div></div>
+      </div>
+    </div>
+    
+    <!-- 中级特效 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">✨ 中级特效</div>
+    <div class="scroll-row" id="scrollRow2">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;雷电交加&#39;, 350)"><div class="icon">⚡</div><div class="name">雷电交加</div><div class="count" style="color:#FF6B35">🪙 350</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰燃烧&#39;, 380)"><div class="icon">🔥</div><div class="name">火焰燃烧</div><div class="count" style="color:#FF6B35">🪙 380</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰霜冻结&#39;, 400)"><div class="icon">❄️</div><div class="name">冰霜冻结</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;地震波&#39;, 420)"><div class="icon">🌋</div><div class="name">地震波</div><div class="count" style="color:#FF6B35">🪙 420</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;龙卷风&#39;, 450)"><div class="icon">🌪️</div><div class="name">龙卷风</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;雷电交加&#39;, 350)"><div class="icon">⚡</div><div class="name">雷电交加</div><div class="count" style="color:#FF6B35">🪙 350</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰燃烧&#39;, 380)"><div class="icon">🔥</div><div class="name">火焰燃烧</div><div class="count" style="color:#FF6B35">🪙 380</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰霜冻结&#39;, 400)"><div class="icon">❄️</div><div class="name">冰霜冻结</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;地震波&#39;, 420)"><div class="icon">🌋</div><div class="name">地震波</div><div class="count" style="color:#FF6B35">🪙 420</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;龙卷风&#39;, 450)"><div class="icon">🌪️</div><div class="name">龙卷风</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
+      </div>
+    </div>
+    
+    <!-- 高级特效 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">✨ 高级特效</div>
+    <div class="scroll-row" id="scrollRow3">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;陨石坠落&#39;, 600)"><div class="icon">☄️</div><div class="name">陨石坠落</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;黑洞吞噬&#39;, 700)"><div class="icon">🕳️</div><div class="name">黑洞吞噬</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;时空扭曲&#39;, 800)"><div class="icon">🌀</div><div class="name">时空扭曲</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;宇宙爆炸&#39;, 900)"><div class="icon">💫</div><div class="name">宇宙爆炸</div><div class="count" style="color:#FF6B35">🪙 900</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;次元撕裂&#39;, 850)"><div class="icon">🔮</div><div class="name">次元撕裂</div><div class="count" style="color:#FF6B35">🪙 850</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;陨石坠落&#39;, 600)"><div class="icon">☄️</div><div class="name">陨石坠落</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;黑洞吞噬&#39;, 700)"><div class="icon">🕳️</div><div class="name">黑洞吞噬</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;时空扭曲&#39;, 800)"><div class="icon">🌀</div><div class="name">时空扭曲</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;宇宙爆炸&#39;, 900)"><div class="icon">💫</div><div class="name">宇宙爆炸</div><div class="count" style="color:#FF6B35">🪙 900</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;次元撕裂&#39;, 850)"><div class="icon">🔮</div><div class="name">次元撕裂</div><div class="count" style="color:#FF6B35">🪙 850</div></div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+/* ===== 路由 ===== */
+}
+
+/* ===== 模式选择 ===== */
+let selectedMode = 'mole';
+function selectMode(mode){
+  selectedMode = mode;
+  document.querySelectorAll('.mode-card').forEach(c=>{
+    c.style.outline = c.dataset.mode === mode ? '3px solid #FF6B35' : 'none';
+  });
+}
+function startFromHome(){
+  startGame(selectedMode);
+}
+/* ===== Tab ===== */
+function switchTab(el){
+  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ===== Toast（轻量提示，不弹窗） ===== */
+let toastTimer=null;
+function showToast(msg){
+  let el=document.querySelector('.toast-fly');
+  if(!el){
+    el=document.createElement('div');
+    el.className='toast-fly';
+    el.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:14px 28px;border-radius:14px;font-size:15px;z-index:9999;pointer-events:none;transition:opacity .3s';
+    document.body.appendChild(el);
+  }
+  el.textContent=msg;
+  el.style.opacity='1';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{el.style.opacity='0'},1200);
+}
+
+/* ===== 消息设置保存 ===== */
+function saveMsgSettings(){showToast('设置已保存')}
+
+/* ===== 武器选择 ===== */
+function selectWeapon(el){
+  el.parentElement.querySelectorAll('.weapon-item').forEach(w=>w.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ===== 打地鼠 ===== */
+let moleScore=8650;
+function hitMole(el){
+  moleScore+=100;
+  document.getElementById('moleScore').textContent=moleScore;
+  document.getElementById('moleStarScore').textContent=moleScore;
+
+  // 缩放动画
+  el.style.transform='scale(0.7)';
+  setTimeout(()=>{el.style.transform='scale(1)'},120);
+
+  // 飘字特效
+  spawnSpark(el,'+100','#FF4444');
+}
+
+/* ===== 虚拟人物 ===== */
+let figureScore=12850;
+function hitFigure(el){
+  figureScore+=150;
+  document.getElementById('figureScore').textContent=figureScore;
+
+  el.style.transform='scale(0.9) rotate(5deg)';
+  setTimeout(()=>{el.style.transform='scale(1) rotate(0deg)'},150);
+
+  spawnSpark(el,'+150','#FF4444');
+}
+
+/* ===== 飘字 ===== */
+function spawnSpark(parent,text,color){
+  const s=document.createElement('div');
+  s.className='hit-spark';
+  s.textContent=text;
+  s.style.color=color;
+  const r=parent.getBoundingClientRect();
+  const pr=parent.parentElement.getBoundingClientRect();
+  s.style.left=(r.left-pr.left+r.width/2-15)+'px';
+  s.style.top=(r.top-pr.top-10)+'px';
+  parent.parentElement.appendChild(s);
+  setTimeout(()=>s.remove(),800);
+}
+
+/* ===== 商城购买 ===== */
+let coinBalance = 1280;
+function buyItem(name, price){
+  if(price === 0){
+    showToast(`恭喜获得：${name}`);
+    return;
+  }
+  if(coinBalance >= price){
+    coinBalance -= price;
+    document.getElementById('coinBalance').textContent = coinBalance;
+    showToast(`购买成功！消耗 ${price} 打屎币，获得 ${name}`);
+  } else {
+    showToast(`打屎币不足！需要 ${price}，当前 ${coinBalance}`);
+  }
+}
+
+/* ===== 初始化 ===== */
+window.addEventListener('DOMContentLoaded', ()=>{ selectMode('mole'); });
+
+</script>
+
+
+</body></html><script src="js/app.js"></script></body></html>

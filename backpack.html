@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>背包</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 3. 背包 ===================== -->
+<div class="page" id="backpackPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+    <div class="title-center">背包</div>
+    <div class="icon-btn" style="width:auto;padding:0 14px;height:36px;border-radius:18px;font-size:14px" onclick="showToast(&#39;整理功能&#39;)">整理</div>
+  </div>
+  <div class="tabs" style="margin-top:8px">
+    <div class="tab" onclick="switchTab(this)">全部</div>
+    <div class="tab" onclick="switchTab(this)">武器</div>
+    <div class="tab active" onclick="switchTab(this)">皮肤</div>
+    <div class="tab" onclick="switchTab(this)">特效</div>
+    <div class="tab" onclick="switchTab(this)">道具</div>
+  </div>
+  <div style="padding:0 16px">
+    <div class="grid-3">
+      <div class="grid-item"><div class="icon">🪵</div><div class="name">木棍</div><div class="count">x1</div></div>
+      <div class="grid-item"><div class="icon">👟</div><div class="name">拖鞋</div><div class="count">x1</div></div>
+      <div class="grid-item"><div class="icon">🥿</div><div class="name">伤害提升道具</div><div class="count">x3</div></div>
+      <div class="grid-item"><div class="icon">🥒</div><div class="name">特效触发提升</div><div class="count">x2</div></div>
+      <div class="grid-item"><div class="icon">🎁</div><div class="name">初级武器体验卡</div><div class="count">x1</div></div>
+      <div class="grid-item"><div class="icon">🪙</div><div class="name">打屎币</div><div class="count">x1280</div></div>
+    </div>
+    <div class="card-round" style="margin-top:14px;display:flex;gap:14px;align-items:center">
+      <div style="width:90px;height:90px;background:rgba(255,255,255,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:56px">🪵</div>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:700;margin-bottom:4px">木棍</div>
+        <div style="font-size:13px;color:#666">已装备</div>
+        <div style="font-size:13px;color:#666">伤害 20-25</div>
+        <div style="font-size:13px;color:#FF6B35">专属特效 木纹飞溅</div>
+      </div>
+      <button class="btn-gray" style="padding:10px 18px" onclick="showToast(&#39;已卸下&#39;)">卸下</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script></body></html>

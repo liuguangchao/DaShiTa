@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>排行榜</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 4. 排行榜 ===================== -->
+<div class="page" id="leaderboardPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+    <div class="title-center">排行榜</div>
+    <div class="icon-btn" style="width:auto;padding:0 12px;height:36px;border-radius:18px;font-size:13px" onclick="showToast(&#39;隐私设置&#39;)">隐私设置</div>
+  </div>
+  <div class="tabs" style="margin-top:8px">
+    <div class="tab" onclick="switchTab(this)">虚拟人物打击榜</div>
+    <div class="tab active" onclick="switchTab(this)">打地鼠榜</div>
+    <div class="tab" onclick="switchTab(this)">打地鼠榜</div>
+  </div>
+  <div style="padding:0 8px">
+    <div class="rank-top3">
+      <div class="rank-crown r1"><span class="rn">1</span><div class="ravatar">👑</div><div class="rname">发泄小能手</div><div style="font-size:11px;color:#8B6914">昵称</div><div class="rscore">128000</div></div>
+      <div class="rank-crown r2"><span class="rn">2</span><div class="ravatar">👑</div><div class="rname">天天打地鼠</div><div style="font-size:11px;color:#8B6914">累计伤害</div><div class="rscore">96500</div></div>
+      <div class="rank-crown r3"><span class="rn">3</span><div class="ravatar">👑</div><div class="rname">解压大师</div><div style="font-size:11px;color:#8B6914">累计伤害</div><div class="rscore">87200</div></div>
+    </div>
+    <div class="card rank-list">
+      <div class="row"><span class="rn">4</span><div class="ra">👦</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">12800</span><button class="act">👍 伤害</button></div>
+      <div class="row"><span class="rn">5</span><div class="ra">👷</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">12500</span><button class="act">👍 伤害</button></div>
+      <div class="row"><span class="rn">6</span><div class="ra">👨</div><div class="ri"><div class="nm">天天打地鼠</div><div class="bd">累计小奖头</div></div><span class="sc">17500</span><button class="act">👍 伤害</button></div>
+      <div class="row"><span class="rn">10</span><div class="ra">👩</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">10500</span><button class="act">👍 伤害</button></div>
+    </div>
+    <div class="card-round" style="text-align:center;background:rgba(255,255,255,.1);margin:0 16px">
+      <div style="font-size:14px;color:#8B6914">🏆 今日上榜可获得打屎币奖励</div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script></body></html>
