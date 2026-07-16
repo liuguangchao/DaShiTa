@@ -158,8 +158,8 @@ function renderMsgList(type){
   var list = document.getElementById('msgList');
   var msgs = msgData[type] || msgData.all;
   
-  // 限制最多9条消息
-  var displayMsgs = msgs.slice(0, 9);
+  // 限制最多8条消息
+  var displayMsgs = msgs.slice(0, 8);
   
   var html = '';
   for(var i = 0; i < displayMsgs.length; i++){
