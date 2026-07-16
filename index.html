@@ -22,27 +22,6 @@
     </div>
   </div>
 
-  <!-- 免责声明 -->
-  <div style="
-    width:calc(100% - 32px);margin:0 16px 20px;display:block;border-radius:999px;
-    background:linear-gradient(90deg,#FFC970 0%,#FFF2D0 50%,#FFC970 100%);
-    border:2px solid #945018;box-shadow:0 3px 0 #F5E0BC,inset 0 2px 3px rgba(255,255,255,.4);
-    padding:14px 20px;text-align:center;">
-    <span style="font-size:20px;font-weight:800;color:#4E2408;text-shadow:1px 1px 0 rgba(255,255,255,.35);letter-spacing:1px">
-      本游戏仅用于情绪解压，请勿模仿或传播暴力行为
-    </span>
-  </div>
-
-  <!-- 模式选择 -->
-  <div style="display:flex;gap:8px;margin-bottom:14px">
-    <div class="card mode-card" style="flex:1 1 0%;cursor:pointer;text-align:center;border-radius:14px;padding:0;overflow:hidden;background:transparent;border:none;box-shadow:none;outline:3px solid #FF6B35" onclick="selectMode('mole')" data-mode="mole">
-      <img src="./images/mole-mode-bg.png" style="width:104.29%;height:auto;display:block;border-radius:14px;pointer-events:none" alt="打地鼠模式">
-    </div>
-    <div class="card mode-card" style="flex:1 1 0%;cursor:pointer;text-align:center;border-radius:14px;padding:0;overflow:hidden;background:transparent;border:none;box-shadow:none;outline:none" onclick="selectMode('figure')" data-mode="figure">
-      <img src="./images/figure-mode-bg.png" style="width:100%;height:auto;display:block;border-radius:14px;pointer-events:none" alt="虚拟人物打击模式">
-    </div>
-  </div>
-
   <!-- 七日签到卡片 -->
   <div class="sign-card">
     <div class="sign-card-top">
@@ -60,6 +39,27 @@
       <div class="day-box lock"><span class="day-num">6</span><span class="day-icon">·</span></div>
       <div class="day-box lock"><span class="day-num">7</span><span class="day-icon">·</span></div>
     </div>
+  </div>
+
+  <!-- 模式选择 -->
+  <div style="display:flex;gap:8px;margin:14px 0">
+    <div class="card mode-card" style="flex:1 1 0%;cursor:pointer;text-align:center;border-radius:14px;padding:0;overflow:hidden;background:transparent;border:none;box-shadow:none;outline:3px solid #FF6B35" onclick="selectMode('mole')" data-mode="mole">
+      <img src="./images/mole-mode-bg.png" style="width:104.29%;height:auto;display:block;border-radius:14px;pointer-events:none" alt="打地鼠模式">
+    </div>
+    <div class="card mode-card" style="flex:1 1 0%;cursor:pointer;text-align:center;border-radius:14px;padding:0;overflow:hidden;background:transparent;border:none;box-shadow:none;outline:none" onclick="selectMode('figure')" data-mode="figure">
+      <img src="./images/figure-mode-bg.png" style="width:100%;height:auto;display:block;border-radius:14px;pointer-events:none" alt="虚拟人物打击模式">
+    </div>
+  </div>
+
+  <!-- 免责声明 -->
+  <div style="
+    width:calc(100% - 32px);margin:14px 16px;display:block;border-radius:999px;
+    background:linear-gradient(90deg,#FFC970 0%,#FFF2D0 50%,#FFC970 100%);
+    border:2px solid #945018;box-shadow:0 3px 0 #F5E0BC,inset 0 2px 3px rgba(255,255,255,.4);
+    padding:14px 20px;text-align:center;">
+    <span style="font-size:20px;font-weight:800;color:#4E2408;text-shadow:1px 1px 0 rgba(255,255,255,.35);letter-spacing:1px">
+      本游戏仅用于情绪解压，请勿模仿或传播暴力行为
+    </span>
   </div>
 
   <!-- 开始按钮 -->
