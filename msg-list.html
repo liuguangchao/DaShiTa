@@ -9,11 +9,11 @@
 /* ===== 消息列表页面专用样式 ===== */
 #msgListPage{background:linear-gradient(180deg,#FFE066 0%,#FFD166 30%,#FFB347 100%)}
 .title-center{background:transparent!important}
-.msg-container{background:rgba(255,255,255,.85);border-radius:28px;margin:8px 10px 16px;display:flex;flex-direction:column}
+.msg-container{background:rgba(255,255,255,.85);border-radius:28px;margin:8px 10px 16px;display:flex;flex-direction:column;max-height:calc(100vh - 100px);overflow:hidden}
 .msg-tabs{display:flex;gap:0;width:100%;flex-shrink:0}
 .msg-tab{flex:1;padding:10px 0;text-align:center;font-size:15px;color:#5C3300;cursor:pointer;white-space:nowrap;transition:all .3s;font-weight:500;border:none;background:transparent}
 .msg-tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-weight:700;border-radius:20px}
-.msg-list{padding:12px 10px;max-height:calc(100vh - 280px);overflow-y:auto}
+.msg-list{flex:1;overflow-y:auto;padding:12px 10px}
 .msg-card{background:rgba(255,255,255,.6);border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.5);cursor:pointer;transition:all .15s;position:relative}
 .msg-card:active{transform:scale(.98);background:rgba(255,224,102,.3)}
 .msg-card.has-border{border-left:4px solid #2196F3}
@@ -40,12 +40,24 @@
 .batch-mode .msg-card{padding-left:38px}
 
 /* ===== 底部操作栏 ===== */
-.batch-footer{display:none;padding:12px 16px;background:rgba(255,255,255,.95);border-top:1px solid rgba(0,0,0,.1);gap:12px;flex-shrink:0}
+.batch-footer{display:none;padding:12px 16px;background:rgba(255,255,255,.95);gap:12px;flex-shrink:0;border-bottom-left-radius:28px;border-bottom-right-radius:28px}
 .batch-footer.show{display:flex}
 .batch-footer-btn{flex:1;padding:12px;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
 .batch-footer-btn.clear{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300}
 .batch-footer-btn.delete{background:linear-gradient(135deg,#FF6B6B,#EE5A5A);color:#fff}
 .batch-footer-btn:active{transform:scale(.95)}
+
+/* ===== 消息详情弹窗 ===== */
+.msg-modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:center}
+.msg-modal-overlay.show{display:flex}
+.msg-modal{background:#fff;border-radius:20px;width:85%;max-width:360px;max-height:70vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.msg-modal-header{padding:20px 20px 12px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+.msg-modal-title{font-size:16px;font-weight:700;color:#333}
+.msg-modal-close{width:32px;height:32px;border-radius:50%;border:none;background:#f5f5f5;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.msg-modal-body{padding:16px 20px}
+.msg-modal-icon{width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px}
+.msg-modal-content{font-size:14px;color:#666;line-height:1.6;text-align:center}
+.msg-modal-time{text-align:center;padding:12px 20px 20px;font-size:12px;color:#999}
 </style>
 </head>
 <body>
@@ -80,6 +92,21 @@
       <button class="batch-footer-btn clear" onclick="clearUnread()">清除未读</button>
       <button class="batch-footer-btn delete" onclick="deleteSelected()">一键删除</button>
     </div>
+  </div>
+</div>
+
+<!-- 消息详情弹窗 -->
+<div class="msg-modal-overlay" id="msgModal">
+  <div class="msg-modal">
+    <div class="msg-modal-header">
+      <div class="msg-modal-title" id="modalTitle">消息详情</div>
+      <button class="msg-modal-close" onclick="closeMsgModal()">✕</button>
+    </div>
+    <div class="msg-modal-body">
+      <div class="msg-modal-icon" id="modalIcon">🎁</div>
+      <div class="msg-modal-content" id="modalContent">消息内容</div>
+    </div>
+    <div class="msg-modal-time" id="modalTime">20:25</div>
   </div>
 </div>
 
@@ -166,7 +193,7 @@ function renderMsgList(type){
     var m = displayMsgs[i];
     var borderClass = m.hasBorder ? ' has-border' : '';
     var unreadClass = m.unread ? ' unread' : '';
-    html += '<div class="msg-card' + borderClass + unreadClass + '" onclick="showToast(\'查看详情：' + m.title + '\')">' +
+    html += '<div class="msg-card' + borderClass + unreadClass + '" onclick="showMsgDetail(' + i + ',\'' + type + '\')">' +
       '<div class="msg-checkbox">' +
         '<input type="checkbox" onclick="event.stopPropagation()">' +
       '</div>' +
@@ -183,6 +210,42 @@ function renderMsgList(type){
   html += '<div class="msg-empty">暂无更多消息</div>';
   list.innerHTML = html;
 }
+
+/* ===== 显示消息详情 ===== */
+function showMsgDetail(index, type){
+  var msgs = msgData[type] || msgData.all;
+  if(index >= msgs.length) return;
+  
+  var msg = msgs[index];
+  
+  // 填充弹窗内容
+  document.getElementById('modalTitle').textContent = msg.title;
+  document.getElementById('modalIcon').textContent = msg.icon;
+  document.getElementById('modalIcon').className = 'msg-modal-icon msg-icon ' + msg.type;
+  document.getElementById('modalContent').textContent = msg.desc;
+  document.getElementById('modalTime').textContent = msg.time;
+  
+  // 显示弹窗
+  document.getElementById('msgModal').classList.add('show');
+  
+  // 如果是未读消息，标记为已读
+  if(msg.unread){
+    msg.unread = false;
+    renderMsgList(type);
+  }
+}
+
+/* ===== 关闭消息详情弹窗 ===== */
+function closeMsgModal(){
+  document.getElementById('msgModal').classList.remove('show');
+}
+
+// 点击遮罩层关闭弹窗
+document.getElementById('msgModal').addEventListener('click', function(e){
+  if(e.target === this){
+    closeMsgModal();
+  }
+});
 
 /* ===== 消息 Tab 切换 ===== */
 function switchMsgTab(el){
