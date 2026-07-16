@@ -13,9 +13,11 @@
 .scroll-wrapper{display:flex;align-items:center;gap:8px}
 .scroll-btn{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.25);color:#5C3300;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:all .15s;flex-shrink:0;user-select:none;-webkit-user-select:none}
 .scroll-btn:active{background:rgba(255,255,255,.5);transform:scale(.9)}
-.scroll-view{overflow:hidden;flex:1;border-radius:16px}
+.scroll-view{overflow:hidden;flex:1;border-radius:16px;position:relative}
 .scroll-track-shop{display:flex;gap:10px;transition:transform .4s cubic-bezier(.25,.46,.45,.94);will-change:transform}
 .scroll-track-shop .grid-item{flex-shrink:0;width:100px}
+/* 自动滚动时禁用 transition，保证丝滑 */
+.scroll-track-shop.auto-scroll{transition:none}
 </style>
 </head>
 <body>
@@ -186,6 +188,39 @@ function showToast(msg){
 
 /* ===== 滚动控制 ===== */
 var scrollPos = {};
+var autoScrollTimers = {};
+var AUTO_SCROLL_INTERVAL = 2000; // 每2秒自动滚一次
+
+// 启动某个行的自动滚动
+function startAutoScroll(key){
+  var trackId = 'track' + key.charAt(0).toUpperCase() + key.slice(1);
+  var track = document.getElementById(trackId);
+  if(!track) return;
+  
+  // 清除旧定时器
+  if(autoScrollTimers[key]){
+    clearInterval(autoScrollTimers[key]);
+  }
+  
+  // 标记为自动滚动（禁用transition）
+  track.classList.add('auto-scroll');
+  
+  autoScrollTimers[key] = setInterval(function(){
+    scrollTrack(key, 1);
+  }, AUTO_SCROLL_INTERVAL);
+}
+
+// 停止某个行的自动滚动
+function stopAutoScroll(key){
+  if(autoScrollTimers[key]){
+    clearInterval(autoScrollTimers[key]);
+    autoScrollTimers[key] = null;
+    
+    var trackId = 'track' + key.charAt(0).toUpperCase() + key.slice(1);
+    var track = document.getElementById(trackId);
+    if(track) track.classList.remove('auto-scroll');
+  }
+}
 
 function scrollTrack(key, dir){
   var trackId = 'track' + key.charAt(0).toUpperCase() + key.slice(1);
@@ -219,6 +254,24 @@ function scrollTrack(key, dir){
   
   track.style.transform = 'translateX(-' + scrollPos[key] + 'px)';
 }
+
+/* ===== 初始化：页面加载后启动自动滚动 ===== */
+window.addEventListener('DOMContentLoaded', function(){
+  var keys = ['weapons', 'skin', 'eff1', 'eff2', 'eff3'];
+  for(var i = 0; i < keys.length; i++){
+    startAutoScroll(keys[i]);
+  }
+});
+
+/* ===== 窗口大小变化时重置 ===== */
+window.addEventListener('resize', function(){
+  var keys = ['weapons', 'skin', 'eff1', 'eff2', 'eff3'];
+  for(var i = 0; i < keys.length; i++){
+    stopAutoScroll(keys[i]);
+    scrollPos[keys[i]] = 0;
+    startAutoScroll(keys[i]);
+  }
+});
 </script>
 
 </body>
