@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///Users/bytedance/Documents/AgnesCode/DaShiTa/index.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>打屎他</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,#FFE066 0%,#FFD166 30%,#FFB347 100%);min-height:100vh;overflow-x:hidden}
+.page{width:100%;max-width:575px;margin:0 auto;min-height:100vh;padding:0;display:none;position:relative}
+.page.active{display:block}
+
+/* ===== 通用 ===== */
+.bar-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 8px;position:relative;z-index:2}
+.bar-top .logo{font-size:42px;font-weight:900;color:#fff;text-shadow:3px 3px 0 #E8960C,0 0 12px rgba(255,200,0,.5);letter-spacing:2px}
+.icon-btn{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.icon-btn-img{width:44px;height:44px;border-radius:50%;background:transparent;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;box-shadow:none;overflow:hidden}
+.icon-btn-img img{width:32px;height:32px;object-fit:contain}
+.icon-btn .badge{position:absolute;top:-4px;right:-4px;background:#FF4444;color:#fff;font-size:11px;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;font-weight:700}
+.back-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.title-center{text-align:center;font-size:26px;font-weight:800;color:#5C3300;text-shadow:1px 1px 0 rgba(255,255,255,.5)}
+
+.card{background:rgba(255,255,255,.15);border-radius:20px;padding:16px;margin:0 16px 14px;box-shadow:0 4px 16px rgba(0,0,0,.06);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}
+.card-round{background:rgba(255,255,255,.15);border-radius:24px;padding:16px;margin:0 16px 14px;box-shadow:0 4px 16px rgba(0,0,0,.06);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}
+
+/* ========== 七日签到卡片 ========== */
+.sign-card {
+    width: 95%;
+    border-radius: 34px;
+    border: 4px solid #783E10;
+    box-shadow:
+        0 7px 0 #E4BF86,
+        0 12px 18px rgba(120, 62, 16, 0.14),
+        inset 0 4px 8px rgba(255, 255, 255, 0.6);
+    padding: 16px 18px 15px;
+    margin-bottom: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+}
+.sign-card::before {
+    content: "✨";
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-size: 30px;
+    opacity: 0.7;
+    transform: rotate(12deg);
+}
+.sign-card::after {
+    content: "🌟";
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    font-size: 24px;
+    opacity: 0.6;
+    transform: rotate(-8deg);
+}
+.sign-card-top {
+    position: relative;
+    z-index: 2;
+}
+.sign-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    position: relative;
+}
+.sign-tag {
+    position: absolute;
+    top: -10px;
+    right: 18%;
+    background: linear-gradient(130deg, #FF6655, #FF8877);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 2px solid #B83C30;
+    box-shadow: 0 3px 0 #A33228;
+}
+.calendar-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(140deg, #FFC145, #FFA722);
+    border: 3px solid #783E10;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.5);
+}
+.calendar-icon-inner {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    height: 8px;
+    background: #fff;
+    border-radius: 4px;
+}
+.sign-title-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: #54290B;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+}
+.sign-ip-decor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    padding: 0 8px;
+}
+.chick-sticker {
+    width: 42px;
+    height: 46px;
+    position: relative;
+    filter: drop-shadow(2px 3px 0 rgba(120, 62, 16, 0.25));
+}
+.chick-body {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(140deg, #FFE88A, #FFD247);
+    border-radius: 50%;
+    border: 3px solid #783E10;
+    position: absolute;
+    bottom: 0;
+    left: 3px;
+}
+.chick-wing {
+    width: 14px;
+    height: 18px;
+    background: #FFD247;
+    border-radius: 50%;
+    border: 2px solid #783E10;
+    position: absolute;
+    bottom: 8px;
+    left: -4px;
+    transform: rotate(-12deg);
+}
+.chick-eye {
+    width: 5px;
+    height: 5px;
+    background: #783E10;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    left: 24px;
+}
+.chick-beak {
+    width: 10px;
+    height: 8px;
+    background: #FF8A00;
+    border-radius: 50%;
+    position: absolute;
+    top: 22px;
+    left: 28px;
+    transform: rotate(8deg);
+}
+.star-sticker {
+    font-size: 28px;
+    transform: rotate(15deg);
+    filter: drop-shadow(1px 2px 0 rgba(120, 62, 16, 0.2));
+}
+.gift-sticker {
+    width: 38px;
+    height: 38px;
+    position: relative;
+    filter: drop-shadow(2px 3px 0 rgba(120, 62, 16, 0.25));
+}
+.gift-box {
+    width: 38px;
+    height: 32px;
+    background: linear-gradient(140deg, #FF7A7A, #FF5555);
+    border-radius: 8px;
+    border: 3px solid #783E10;
+    position: absolute;
+    bottom: 0;
+}
+.gift-ribbon {
+    width: 6px;
+    height: 38px;
+    background: #FFD700;
+    border: 2px solid #783E10;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+}
+.week-grid {
+    display: flex;
+    gap: 9px;
+    margin-bottom: 26px;
+    position: relative;
+    z-index: 2;
+}
+.day-box {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    border-radius: 22px;
+    border: 3px solid #C29054;
+    background: #FFF6DD;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #703B0F;
+    box-shadow: inset 0 2px 3px rgba(255,255,255,0.3);
+    position: relative;
+}
+.day-box.today {
+    background: linear-gradient(140deg, #FFD782, #FFBB40);
+    border-color: #783E10;
+    box-shadow:
+        inset 0 3px 6px rgba(255,255,255,0.65),
+        0 0 12px rgba(255, 170, 30, 0.45);
+}
+.day-box.done {
+    background: #EAE2D0;
+    color: #A07444;
+}
+.day-box.done .day-icon {
+    color: #3A8C3A;
+}
+.day-box.lock {
+    background: #F0E9D8;
+    opacity: 0.75;
+}
+.day-box.lock .day-icon {
+    color: #B89868;
+}
+.sign-main-btn {
+    display: block;
+    width: 78%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 15px 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #FFA830, #FFDD7A);
+    border: 3px solid #783E10;
+    box-shadow:
+        0 5px 0 #D19A47,
+        inset 0 3px 6px rgba(255,255,255,0.55);
+    font-size: 23px;
+    font-weight: 900;
+    color: #4F260A;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    position: relative;
+    z-index: 2;
+}
+.sign-main-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #D19A47, inset 0 3px 6px rgba(255,255,255,0.55);
+}
+.sign-desc {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 15px;
+    color: #884E1C;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+}
+
+.btn-gold{background:linear-gradient(180deg,#FFE066,#FFB347);color:#5C3300;border:none;border-radius:25px;padding:12px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(255,165,0,.35)}
+.btn-green{background:linear-gradient(180deg,#6BCB77,#4CAF50);color:#fff;border:none;border-radius:25px;padding:12px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(76,175,80,.35)}
+.btn-gray{background:linear-gradient(180deg,#E8E8E8,#BDBDBD);color:#666;border:none;border-radius:25px;padding:12px 32px;font-size:16px;font-weight:700;cursor:pointer}
+
+/* ===== 开关 ===== */
+.toggle{width:52px;height:28px;background:#ccc;border-radius:14px;position:relative;cursor:pointer;transition:background .3s}
+.toggle.on{background:#4CAF50}
+.toggle::after{content:'';position:absolute;width:24px;height:24px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .3s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.toggle.on::after{transform:translateX(24px)}
+
+/* ===== Tabs ===== */
+.tabs{display:flex;gap:6px;padding:0 16px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:8px 16px;border-radius:20px;background:rgba(255,255,255,.15);font-size:14px;white-space:nowrap;cursor:pointer;transition:all .3s;border:1px solid rgba(255,255,255,.25)}
+.tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;border-color:#FFB347;font-weight:700}
+
+/* ===== 列表 ===== */
+.list-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f0e6d0}
+.list-row:last-child{border-bottom:none}
+.list-row .label{font-size:16px;color:#333}
+.list-row .desc{font-size:12px;color:#999;margin-top:2px}
+.list-row .arrow{color:#ccc;font-size:18px}
+
+/* ===== Grid ===== */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* ===== 横向滚动特效 ===== */
+.scroll-row{overflow:hidden;width:100%;margin-bottom:10px}
+.scroll-track{display:flex;gap:10px;animation:scrollRow 20s linear infinite;width:max-content}
+.scroll-track:hover{animation-play-state:paused}
+@keyframes scrollRow{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.grid-item{background:rgba(255,255,255,.12);border-radius:16px;padding:14px 8px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,.2)}
+.grid-item .icon{font-size:44px;margin-bottom:6px}
+.grid-item .name{font-size:13px;color:#333;font-weight:500}
+.grid-item .count{font-size:12px;color:#999;margin-top:2px}
+
+/* ===== 排行榜 ===== */
+.rank-top3{display:flex;justify-content:center;gap:8px;margin-bottom:16px;padding:0 8px}
+.rank-crown{width:100px;text-align:center;padding:14px 6px 10px;border-radius:16px;position:relative}
+.rank-crown.r1{background:rgba(255,255,255,.12)}
+.rank-crown.r2{background:linear-gradient(180deg,#F0F0F0,#D0D0D0)}
+.rank-crown.r3{background:linear-gradient(180deg,#FFE0B0,#FFB347)}
+.rank-crown .rn{position:absolute;top:6px;left:8px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.rank-crown .ravatar{font-size:44px;margin:6px 0}
+.rank-crown .rname{font-size:14px;font-weight:700;color:#333}
+.rank-crown .rscore{font-size:18px;font-weight:900;color:#FF6B35}
+
+.rank-list .row{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid #f0e6d0}
+.rank-list .row:last-child{border-bottom:none}
+.rank-list .rn{width:28px;font-size:15px;font-weight:700;color:#999;text-align:center}
+.rank-list .ra{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 10px}
+.rank-list .ri{flex:1}
+.rank-list .nm{font-size:15px;font-weight:600;color:#333}
+.rank-list .bd{font-size:11px;color:#999;margin-top:2px}
+.rank-list .sc{font-size:16px;font-weight:700;color:#FF6B35;margin-right:8px}
+.rank-list .act{padding:5px 14px;border-radius:14px;background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-size:13px;font-weight:600;border:none;cursor:pointer}
+
+/* ===== 游戏区域 ===== */
+.game-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:linear-gradient(180deg,#FFE066,#FFB347);border-radius:0 0 20px 20px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.game-bar .gb-title{font-size:28px;font-weight:900;color:#5C3300;text-shadow:2px 2px 0 rgba(255,255,255,.3)}
+.game-bar .gb-stats{text-align:right}
+.game-bar .gb-stat{font-size:12px;color:#8B6914}
+.game-bar .gb-val{font-size:20px;font-weight:900;color:#5C3300}
+
+.game-field{min-height:420px;background:linear-gradient(180deg,#90EE90 0%,#7CCD7C 40%,#6BBF6B 100%);border-radius:20px;margin:12px 16px;position:relative;overflow:hidden}
+.game-field::before{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(0deg,#5a9e5a,#7CCD7C);z-index:1}
+
+/* 草地装饰 */
+.grass-deco{position:absolute;font-size:20px;opacity:.6}
+
+/* 地鼠 */
+.mole-hole{position:absolute;cursor:pointer;z-index:2;transition:transform .15s}
+.mole-hole:active{transform:scale(.85)}
+.mole-hole .mole-body{font-size:52px;display:block;text-align:center;filter:drop-shadow(0 3px 4px rgba(0,0,0,.2))}
+.mole-hole .hole-base{width:60px;height:20px;background:radial-gradient(ellipse,#5C3A1E,#3E2510);border-radius:50%;margin:0 auto}
+
+/* 打击特效 */
+.hit-spark{position:absolute;pointer-events:none;z-index:10;font-size:20px;font-weight:900;color:#FF4444;text-shadow:0 0 6px #FFD700;animation:sparkFloat .8s ease-out forwards}
+@keyframes sparkFloat{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-60px) scale(1.5)}}
+
+/* 虚拟人物 */
+.figure-scene{position:relative;width:100%;height:420px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06)}
+.figure-person{font-size:180px;cursor:pointer;transition:transform .15s;position:relative;z-index:2}
+.figure-person:active{transform:scale(.92)}
+.hit-point{position:absolute;font-size:16px;font-weight:700;color:#FF4444;background:rgba(255,255,255,.15);padding:2px 8px;border-radius:10px;pointer-events:none;animation:sparkFloat .8s ease-out forwards}
+
+/* 武器栏 */
+.weapon-bar{display:flex;gap:8px;padding:12px 16px;background:rgba(255,255,255,.08);border-radius:16px;margin:0 16px 12px;border:1px solid rgba(255,255,255,.15)}
+.weapon-item{min-width:72px;padding:10px 8px;background:rgba(255,255,255,.15);border-radius:12px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.weapon-item.active{border-color:#FF6B35;background:rgba(255,200,100,.5)}
+.weapon-item .wi-icon{font-size:32px}
+.weapon-item .wi-name{font-size:12px;color:#5C3300;margin-top:4px}
+.weapon-item .wi-count{position:absolute;top:-4px;right:-4px;background:#FFD700;color:#fff;font-size:11px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* 底部操作 */
+.game-actions{display:flex;gap:10px;padding:0 16px 20px;align-items:center}
+.game-actions .left-tool{width:100px;padding:12px;background:rgba(255,255,255,.15);border-radius:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid rgba(255,255,255,.2)}
+.game-actions .left-tool .lt-icon{font-size:40px}
+.game-actions .left-tool .lt-name{font-size:13px;color:#5C3300;font-weight:600;margin-top:4px}
+.game-actions .center-btns{flex:1;display:flex;gap:8px}
+.game-actions .center-btns button{flex:1;padding:12px;border-radius:20px;border:none;font-size:16px;font-weight:700;cursor:pointer}
+.game-actions .btn-orange{background:linear-gradient(180deg,#FF8C42,#FF6B35);color:#fff;box-shadow:0 4px 10px rgba(255,107,53,.4)}
+.game-actions .btn-yellow{background:linear-gradient(180deg,#FFE066,#FFB347);color:#5C3300;box-shadow:0 4px 10px rgba(255,179,71,.4)}
+
+.combo-bar{text-align:center;padding:8px 0}
+.combo-badge{display:inline-block;background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;padding:6px 20px;border-radius:20px;font-size:16px;font-weight:700;box-shadow:0 2px 8px rgba(255,165,0,.3)}
+
+/* 个人信息 */
+.profile-section{text-align:center;margin-bottom:20px}
+.profile-avatar{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.1);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:70px;border:4px solid #FFD700}
+.profile-name-input{width:calc(100% - 32px);margin:0 16px 10px;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);font-size:16px;color:#333;outline:none}
+.profile-hint{font-size:12px;color:#999;margin:0 16px 16px;text-align:center;background:rgba(255,255,255,.08);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.15)}
+
+/* 奖励弹窗 */
+.reward-popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:999;display:flex;align-items:center;justify-content:center}
+.reward-card{background:rgba(255,255,255,.08);border-radius:28px;padding:28px 24px;width:calc(100% - 48px);max-width:380px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.reward-card .rc-title{font-size:18px;font-weight:700;color:#FF6B35;margin-bottom:16px}
+.reward-card .rc-items{display:flex;justify-content:space-around;margin:16px 0}
+.reward-card .rc-item{text-align:center}
+.reward-card .rc-item .ri-icon{font-size:40px;margin-bottom:4px}
+.reward-card .rc-item .ri-label{font-size:13px;color:#666}
+.reward-card .rc-item .ri-val{font-size:16px;font-weight:700;color:#333}
+.reward-card .rc-item .ri-val.gold{color:#FF6B35;font-size:22px}
+.reward-card .rc-icons{display:flex;justify-content:center;gap:16px;margin:20px 0;font-size:50px}
+.reward-card .rc-btn{width:100%;padding:14px;border-radius:25px;border:none;background:linear-gradient(180deg,#FFE066,#FFB347);color:#5C3300;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(255,165,0,.3)}
+
+/* 设置菜单 */
+.setting-item{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid #f0e6d0}
+.setting-item:last-child{border-bottom:none}
+.setting-item .si-left{display:flex;align-items:center;gap:12px}
+.setting-item .si-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:18px}
+.setting-item .si-label{font-size:16px;color:#333;font-weight:500}
+.setting-item .si-right{font-size:14px;color:#999;display:flex;align-items:center;gap:4px}
+.setting-item .si-right .arrow{color:#ccc}
+
+.msg-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+
+@media(max-width:400px){
+  .bar-top .logo{font-size:28px}
+  .bar-top .icon-btn{width:36px;height:36px;font-size:18px}
+  .bar-top .icon-btn span{font-size:9px}
+  .bar-top .icon-btn .badge{font-size:10px;min-width:16px;height:16px}
+  .game-bar .gb-title{font-size:20px}
+  .rank-crown{width:80px}
+  .rank-crown .ravatar{font-size:36px}
+  .rank-crown .rscore{font-size:15px}
+  .rank-crown .rname{font-size:12px}
+  /* 第二行按钮在小屏缩小 */
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn{height:32px;font-size:12px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn span{font-size:8px}
+}
+@media(max-width:360px){
+  .bar-top .logo{font-size:24px}
+  .bar-top .icon-btn{width:32px;height:32px;font-size:16px}
+  .bar-top .icon-btn span{font-size:8px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn{height:28px;font-size:11px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn span{font-size:7px}
+  .bar-top + div[style*="padding:0 16px 10px"] .icon-btn[style*="width:auto"]{padding:0 10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== 1. 首页 ===================== -->
+<div class="page" id="homePage">
+  <div class="bar-top">
+    <img src="./images/logo.png" alt="打屎他" style="height:48px">
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn-img" onclick="showToast(&#39;签到成功！+20打屎币&#39;)" style="width:44px;height:44px"><img src="./images/checkin.png" alt="签到" style="width:36px;height:36px"></button>
+      <button class="icon-btn-img" onclick="navTo(&#39;shopPage&#39;)" style="width:44px;height:44px"><img src="./images/shop.png" alt="商城" style="width:36px;height:36px"></button>
+      <button class="icon-btn-img" onclick="navTo(&#39;backpackPage&#39;)" style="width:44px;height:44px"><img src="./images/backpack.png" alt="背包" style="width:36px;height:36px"></button>
+      <button class="icon-btn-img" onclick="navTo(&#39;msgListPage&#39;)" style="width:44px;height:44px"><img src="./images/message.png" alt="消息" style="width:36px;height:36px"></button>
+      <button class="icon-btn-img" onclick="navTo(&#39;leaderboardPage&#39;)" style="width:44px;height:44px;overflow:visible"><img src="./images/leaderboard.png" alt="排行榜" style="width:36px;height:36px"></button>
+      <button class="icon-btn-img" onclick="navTo(&#39;settingsPage&#39;)" style="width:44px;height:44px"><img src="./images/settings.png" alt="设置" style="width:36px;height:36px"></button>
+    </div>
+  </div>
+  <!-- 免责声明 CSS 版本 -->
+  <div style="
+    width:calc(100% - 32px);
+    margin:0 16px 20px;
+    display:block;
+    border-radius:999px;
+    background:linear-gradient(90deg,#FFC970 0%,#FFF2D0 50%,#FFC970 100%);
+    border:2px solid #945018;
+    box-shadow: 0 3px 0 #F5E0BC, inset 0 2px 3px rgba(255,255,255,0.4);
+    padding:14px 20px;
+    text-align:center;
+">
+    <span style="
+        font-size:20px;
+        font-weight:800;
+        color:#4E2408;
+        text-shadow:1px 1px 0 rgba(255,255,255,0.35);
+        letter-spacing:1px;
+    ">
+        本游戏仅用于情绪解压，请勿模仿或传播暴力行为
+    </span>
+</div>
+
+  <!-- 模式选择 -->
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+    <div class="card mode-card" style="flex: 1 1 0%; cursor: pointer; text-align: center; border-radius: 14px; padding: 0px; overflow: hidden; background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; box-shadow: none; outline: rgb(255, 107, 53) solid 3px;" onclick="selectMode(&#39;mole&#39;)" data-mode="mole">
+      <img src="./images/mole-mode-bg.png" style="width:104.29%;height:auto;display:block;border-radius:14px;pointer-events:none" alt="打地鼠模式">
+    </div>
+    <div class="card mode-card" style="flex: 1 1 0%; cursor: pointer; text-align: center; border-radius: 14px; padding: 0px; overflow: hidden; background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; box-shadow: none; outline: none;" onclick="selectMode(&#39;figure&#39;)" data-mode="figure">
+      <img src="./images/figure-mode-bg.png" style="width:100%;height:auto;display:block;border-radius:14px;pointer-events:none" alt="虚拟人物打击模式">
+    </div>
+  </div>
+
+  <!-- 七日签到卡片 -->
+  <div class="sign-card">
+    <div class="sign-card-top">
+      <div class="sign-header">
+        <div class="calendar-icon">
+          <div class="calendar-icon-inner"></div>
+        </div>
+        <div class="sign-title-text">七日连续签到</div>
+      </div>
+    </div>
+
+    <div class="week-grid">
+      <div class="day-box done">
+        <span class="day-num">1</span>
+        <span class="day-icon">✓</span>
+      </div>
+      <div class="day-box done">
+        <span class="day-num">2</span>
+        <span class="day-icon">✓</span>
+      </div>
+      <div class="day-box done">
+        <span class="day-num">3</span>
+        <span class="day-icon">✓</span>
+      </div>
+      <div class="day-box today">
+        <span class="day-num">4</span>
+        <span class="day-icon">✨</span>
+      </div>
+      <div class="day-box lock">
+        <span class="day-num">5</span>
+        <span class="day-icon">·</span>
+      </div>
+      <div class="day-box lock">
+        <span class="day-num">6</span>
+        <span class="day-icon">·</span>
+      </div>
+      <div class="day-box lock">
+        <span class="day-num">7</span>
+        <span class="day-icon">·</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 开始按钮 -->
+  <div style="text-align:center;padding:0 16px 30px">
+    <img src="./images/start-btn.png" alt="开始宣泄" style="height:60px;cursor:pointer" onclick="startFromHome()">
+    <div style="font-size:14px;color:#8B6914;margin-top:10px;opacity:.7">选择模式后开始</div>
+  </div>
+</div>
+
+<!-- ===================== 2. 消息设置 ===================== -->
+<div class="page" id="msgSettingsPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="title-center">消息设置</div>
+    <div style="width:40px"></div>
+  </div>
+  <div style="padding-bottom:20px">
+    <div class="card">
+      <div style="font-size:18px;font-weight:700;margin-bottom:12px">消息推送开关</div>
+      <div class="list-row"><div class="label">系统通知<div class="desc">已开启</div></div><div class="toggle on" onclick="this.classList.toggle(&#39;on&#39;)"></div></div>
+      <div class="list-row"><div class="label">奖励到账<div class="desc">已开启</div></div><div class="toggle on" onclick="this.classList.toggle(&#39;on&#39;)"></div></div>
+      <div class="list-row"><div class="label">成就解锁<div class="desc">已开启</div></div><div class="toggle on" onclick="this.classList.toggle(&#39;on&#39;)"></div></div>
+      <div class="list-row"><div class="label">活动通知<div class="desc">已开启</div></div><span class="arrow">›</span></div>
+      <div class="list-row"><div class="label">互动提醒<div class="desc">已开启</div></div><div class="toggle on" onclick="this.classList.toggle(&#39;on&#39;)"></div></div>
+      <div class="list-row"><div class="label">玩法提醒<div class="desc">已开启</div></div><div class="toggle on" onclick="this.classList.toggle(&#39;on&#39;)"></div></div>
+    </div>
+    <div class="card">
+      <div style="font-size:18px;font-weight:700;margin-bottom:12px">消息免打扰</div>
+      <div class="list-row"><div class="label">玩法期间免打扰<div class="desc">已关闭</div></div><div class="toggle" onclick="this.classList.toggle(&#39;on&#39;)"></div></div>
+      <div class="list-row"><div class="label">夜间免打扰<div class="desc">已关闭</div></div><span class="arrow">›</span></div>
+    </div>
+    <div style="display:flex;gap:10px;padding:0 16px">
+      <button class="btn-gray" style="flex:1" onclick="document.querySelectorAll(&#39;.toggle&#39;).forEach(t=&gt;t.classList.add(&#39;on&#39;))">一键开启所有推送</button>
+      <button class="btn-gold" style="flex:1" onclick="saveMsgSettings()">保存设置</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 3. 背包 ===================== -->
+<div class="page" id="backpackPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="title-center">背包</div>
+    <div class="icon-btn" style="width:auto;padding:0 14px;height:36px;border-radius:18px;font-size:14px" onclick="showToast(&#39;整理功能&#39;)">整理</div>
+  </div>
+  <div class="tabs" style="margin-top:8px">
+    <div class="tab" onclick="switchTab(this)">全部</div>
+    <div class="tab" onclick="switchTab(this)">武器</div>
+    <div class="tab active" onclick="switchTab(this)">皮肤</div>
+    <div class="tab" onclick="switchTab(this)">特效</div>
+    <div class="tab" onclick="switchTab(this)">道具</div>
+  </div>
+  <div style="padding:0 16px">
+    <div class="grid-3">
+      <div class="grid-item"><div class="icon">🪵</div><div class="name">木棍</div><div class="count">x1</div></div>
+      <div class="grid-item"><div class="icon">👟</div><div class="name">拖鞋</div><div class="count">x1</div></div>
+      <div class="grid-item"><div class="icon">🥿</div><div class="name">伤害提升道具</div><div class="count">x3</div></div>
+      <div class="grid-item"><div class="icon">🥒</div><div class="name">特效触发提升</div><div class="count">x2</div></div>
+      <div class="grid-item"><div class="icon">🎁</div><div class="name">初级武器体验卡</div><div class="count">x1</div></div>
+      <div class="grid-item"><div class="icon">🪙</div><div class="name">打屎币</div><div class="count">x1280</div></div>
+    </div>
+    <div class="card-round" style="margin-top:14px;display:flex;gap:14px;align-items:center">
+      <div style="width:90px;height:90px;background:rgba(255,255,255,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:56px">🪵</div>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:700;margin-bottom:4px">木棍</div>
+        <div style="font-size:13px;color:#666">已装备</div>
+        <div style="font-size:13px;color:#666">伤害 20-25</div>
+        <div style="font-size:13px;color:#FF6B35">专属特效 木纹飞溅</div>
+      </div>
+      <button class="btn-gray" style="padding:10px 18px" onclick="showToast(&#39;已卸下&#39;)">卸下</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 4. 排行榜 ===================== -->
+<div class="page" id="leaderboardPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="title-center">排行榜</div>
+    <div class="icon-btn" style="width:auto;padding:0 12px;height:36px;border-radius:18px;font-size:13px" onclick="showToast(&#39;隐私设置&#39;)">隐私设置</div>
+  </div>
+  <div class="tabs" style="margin-top:8px">
+    <div class="tab" onclick="switchTab(this)">虚拟人物打击榜</div>
+    <div class="tab active" onclick="switchTab(this)">打地鼠榜</div>
+    <div class="tab" onclick="switchTab(this)">打地鼠榜</div>
+  </div>
+  <div style="padding:0 8px">
+    <div class="rank-top3">
+      <div class="rank-crown r1"><span class="rn">1</span><div class="ravatar">👑</div><div class="rname">发泄小能手</div><div style="font-size:11px;color:#8B6914">昵称</div><div class="rscore">128000</div></div>
+      <div class="rank-crown r2"><span class="rn">2</span><div class="ravatar">👑</div><div class="rname">天天打地鼠</div><div style="font-size:11px;color:#8B6914">累计伤害</div><div class="rscore">96500</div></div>
+      <div class="rank-crown r3"><span class="rn">3</span><div class="ravatar">👑</div><div class="rname">解压大师</div><div style="font-size:11px;color:#8B6914">累计伤害</div><div class="rscore">87200</div></div>
+    </div>
+    <div class="card rank-list">
+      <div class="row"><span class="rn">4</span><div class="ra">👦</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">12800</span><button class="act">👍 伤害</button></div>
+      <div class="row"><span class="rn">5</span><div class="ra">👷</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">12500</span><button class="act">👍 伤害</button></div>
+      <div class="row"><span class="rn">6</span><div class="ra">👨</div><div class="ri"><div class="nm">天天打地鼠</div><div class="bd">累计小奖头</div></div><span class="sc">17500</span><button class="act">👍 伤害</button></div>
+      <div class="row"><span class="rn">10</span><div class="ra">👩</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">10500</span><button class="act">👍 伤害</button></div>
+    </div>
+    <div class="card-round" style="text-align:center;background:rgba(255,255,255,.1);margin:0 16px">
+      <div style="font-size:14px;color:#8B6914">🏆 今日上榜可获得打屎币奖励</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 5. 系统设置 ===================== -->
+<div class="page" id="settingsPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="title-center" style="font-size:32px">设置</div>
+    <div style="width:40px"></div>
+  </div>
+  <div style="padding-bottom:20px">
+    <div class="card">
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🎵</div><div class="si-label">音效设置</div></div><div class="si-right">背景音乐 已关闭 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">📳</div><div class="si-label">震动设置</div></div><div class="si-right">打击音效 已开启 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🖥️</div><div class="si-label">界面设置</div></div><div class="si-right">震动强度 中 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🔒</div><div class="si-label">隐私设置</div></div><div class="si-right"><span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">✉️</div><div class="si-label">消息设置</div></div><div class="si-right">排行榜展示 已开启 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">🗑️</div><div class="si-label">清除缓存</div></div><div class="si-right">头像模糊 已关闭 <span class="arrow">›</span></div></div>
+      <div class="setting-item"><div class="si-left"><div class="si-icon">ℹ️</div><div class="si-label">关于游戏</div></div><div class="si-right"><span class="arrow">›</span></div></div>
+    </div>
+    <div style="display:flex;gap:10px;padding:0 16px">
+      <button class="btn-gold" style="flex:1" onclick="showToast(&#39;设置已保存&#39;)">保存设置</button>
+      <button class="btn-gray" style="flex:1" onclick="if(confirm(&#39;确定要重置自定义内容吗？&#39;))showToast(&#39;已重置&#39;)">重置自定义内容</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 6. 打地鼠游戏 ===================== -->
+<div class="page" id="moleGamePage">
+  <div class="game-bar">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="gb-title">打地鼠模式</div>
+    <div class="gb-stats">
+      <div class="gb-stat">剩余时间 01:30</div>
+      <div class="gb-stat">累计伤害</div>
+      <div class="gb-val" id="moleScore">8650</div>
+    </div>
+  </div>
+  <div style="padding:0 16px;margin-top:8px;display:flex;justify-content:space-between;align-items:center">
+    <button class="btn-gray" style="padding:8px 14px;border-radius:12px">⬇️</button>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span style="font-size:22px">⭐</span>
+      <span style="font-size:22px;font-weight:900;color:#5C3300" id="moleStarScore">8650</span>
+    </div>
+  </div>
+  <div style="text-align:right;padding:4px 16px;font-size:12px;color:#8B6914">连续打击可触发伤害翻倍</div>
+
+  <div class="game-field" id="moleField">
+    <!-- 装饰 -->
+    <div class="grass-deco" style="top:10px;left:10px">🌿</div>
+    <div class="grass-deco" style="top:30px;right:20px">🌸</div>
+    <div class="grass-deco" style="bottom:50px;left:30px">🌼</div>
+    <div class="grass-deco" style="bottom:30px;right:40px">🌺</div>
+    <div class="grass-deco" style="top:60px;left:60px">🪨</div>
+
+    <!-- 地鼠 -->
+    <div class="mole-hole" style="top:40px;left:30px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:30px;right:80px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:140px;left:20px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:140px;right:20px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:250px;left:60px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:250px;right:60px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    <div class="mole-hole" style="top:340px;left:50%;transform:translateX(-50%)" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+  </div>
+
+  <div class="combo-bar"><span class="combo-badge">➕ 连击 x8</span></div>
+
+  <div class="game-actions">
+    <div class="left-tool">
+      <div class="lt-icon">🔨</div>
+      <div class="lt-name">✓ 拖鞋</div>
+    </div>
+    <div class="center-btns">
+      <button class="btn-orange" onclick="showToast(&#39;重锤攻击！&#39;)">重锤</button>
+      <button class="btn-yellow" onclick="showToast(&#39;切换武器&#39;)">切换武器</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 7. 虚拟人物打击 ===================== -->
+<div class="page" id="figureGamePage">
+  <div class="game-bar" style="background:linear-gradient(180deg,#FFE066,#FFB347)">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="gb-title">虚拟人物打击模式</div>
+    <div class="gb-stats">
+      <div class="gb-stat">累计伤害</div>
+      <div class="gb-val" id="figureScore">12850</div>
+    </div>
+  </div>
+  <div style="padding:0 16px;margin-top:8px;display:flex;justify-content:space-between;align-items:center">
+    <button class="btn-gray" style="padding:8px 14px;border-radius:12px">➖</button>
+    <div style="font-size:16px;font-weight:700;color:#5C3300;text-align:right">剩余时间<br>无限</div>
+  </div>
+
+  <div class="figure-scene" id="figureScene">
+    <div style="position:absolute;top:10px;left:0;right:0;text-align:center">
+      <div style="font-size:16px;font-weight:700;color:#FF6B35">讨厌的同事</div>
+    </div>
+    <div class="figure-person" onclick="hitFigure(this)">🧑‍💼</div>
+    <div style="position:absolute;top:120px;left:40px;font-size:18px;font-weight:700;color:#FF4444">拳打</div>
+    <div style="position:absolute;top:180px;left:20px;font-size:18px;font-weight:700;color:#FF4444">脚踢</div>
+    <div style="position:absolute;bottom:120px;left:50px;font-size:18px;font-weight:700;color:#FF4444">扇耳光</div>
+    <div style="position:absolute;bottom:120px;right:50px;font-size:18px;font-weight:700;color:#FF4444">扇耳光</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:0 16px 20px">
+    <div>
+      <div style="font-size:14px;color:#8B6914">求饶几率</div>
+      <div style="font-size:30px;font-weight:900;color:#FF6B35">15%</div>
+    </div>
+    <button class="btn-gold" style="font-size:18px;padding:12px 28px" onclick="showToast(&#39;触发特效！&#39;)">触发特效</button>
+  </div>
+</div>
+
+<!-- ===================== 8. 消息列表 ===================== -->
+<div class="page" id="msgListPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="title-center">消息中心</div>
+    <div class="icon-btn" style="width:auto;padding:0 10px;height:36px;border-radius:18px;font-size:13px" onclick="showToast(&#39;批量操作&#39;)">批量操作 ⚙️</div>
+  </div>
+  <div class="tabs" style="margin-top:8px">
+    <div class="tab active" onclick="switchTab(this)">全部</div>
+    <div class="tab" onclick="switchTab(this)">系统</div>
+    <div class="tab" onclick="switchTab(this)">奖励</div>
+    <div class="tab" onclick="switchTab(this)">成就</div>
+    <div class="tab" onclick="switchTab(this)">活动</div>
+    <div class="tab" onclick="switchTab(this)">互动</div>
+    <div class="tab" onclick="switchTab(this)">玩法</div>
+  </div>
+  <div style="padding:0 16px">
+    <div class="card-round" style="cursor:pointer" onclick="navTo(&#39;rewardDetailPage&#39;)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="msg-icon" style="background:linear-gradient(135deg,#FFE066,#FFB347)">🎁</div>
+        <div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【奖励到账】每日登录奖励已发放</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用，适路考景阀顾…</div></div>
+        <div style="font-size:13px;color:#999">20:25</div>
+      </div>
+    </div>
+    <div class="card-round">
+      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#4CAF50,#45a049)">⚙️</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【成就解锁】初入宣泄室已达成</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
+    </div>
+    <div class="card-round">
+      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#2196F3,#1976D2)">🔒</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【成就解锁】初入宣泄室已达成</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
+    </div>
+    <div class="card-round">
+      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#9C27B0,#7B1FA2)">💎</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【活动通知】特效几率翻倍开启</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:35</div></div>
+    </div>
+    <div class="card-round">
+      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#FF5722,#E64A19)">✅</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【活动通知】特效几率翻倍开启</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
+    </div>
+    <div class="card-round" style="border-left:4px solid #2196F3">
+      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#FFE066,#FFB347)">🎮</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【玩法提醒】连击10次触发伤害翻倍</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
+    </div>
+    <div style="text-align:center;padding:20px;color:#ccc;font-size:14px">暂无更多消息</div>
+  </div>
+</div>
+
+<!-- ===================== 9. 奖励详情 ===================== -->
+<div class="page" id="rewardDetailPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;msgListPage&#39;)">←</button>
+    <div class="title-center">奖励到账</div>
+    <button class="back-btn" onclick="navTo(&#39;msgListPage&#39;)">✕</button>
+  </div>
+  <div style="padding:0 16px">
+    <div class="card-round" style="background:rgba(255,255,255,.1);text-align:center">
+      <div style="font-size:40px;margin-bottom:8px">🎁</div>
+      <div style="font-size:17px;font-weight:700;color:#FF6B35">恭喜你获得每日登录奖励</div>
+    </div>
+    <div class="card-round">
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="font-size:15px;color:#666">免费广告次数</span><span style="font-size:15px;font-weight:700">1个</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><span style="font-size:15px;color:#666">打屎币</span><span style="font-size:22px;font-weight:900;color:#FF6B35">+20</span></div>
+      <div style="text-align:center;font-size:15px;color:#666;margin-bottom:16px">已发放至背包</div>
+      <div style="display:flex;justify-content:center;gap:20px;font-size:50px">🎁 🪙 🎫</div>
+    </div>
+    <button class="btn-gold" style="width:100%;padding:14px;font-size:18px" onclick="navTo(&#39;backpackPage&#39;)">查看背包</button>
+    <div style="text-align:center;font-size:14px;color:#999;margin-top:10px">奖励可在背包中查看</div>
+  </div>
+</div>
+
+<!-- ===================== 10. 个人信息设置 ===================== -->
+<div class="page" id="profileSettingsPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;settingsPage&#39;)">←</button>
+    <div class="title-center">个人信息设置</div>
+    <button class="btn-gray" style="padding:8px 18px;font-size:14px" onclick="showToast(&#39;信息已保存&#39;)">保存</button>
+  </div>
+  <div style="padding:0 16px">
+    <div class="profile-section">
+      <div class="profile-avatar">😊</div>
+      <button class="btn-gold" onclick="showToast(&#39;更换头像&#39;)">更换头像</button>
+    </div>
+    <div class="card-round">
+      <div style="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center">自身名称设置</div>
+      <div style="font-size:17px;color:#333;margin-bottom:10px">快乐小锤手</div>
+      <div class="profile-hint">支持2-8个字符，可包含汉字、字母、数字</div>
+      <div style="text-align:right"><button class="btn-green" style="padding:10px 24px" onclick="showToast(&#39;名称已保存&#39;)">保存名称</button></div>
+    </div>
+    <button class="btn-gold" style="width:100%;padding:16px;font-size:20px;margin-top:10px" onclick="showToast(&#39;设置已保存&#39;)">保存设置</button>
+  </div>
+</div>
+
+<!-- ===================== 11. 商城页面 ===================== -->
+<div class="page active" id="shopPage">
+  <div class="bar-top">
+    <button class="back-btn" onclick="navTo(&#39;homePage&#39;)">←</button>
+    <div class="title-center">商城</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:20px">🪙</span>
+      <span style="font-size:16px;font-weight:700;color:#FF6B35" id="coinBalance">1280</span>
+    </div>
+  </div>
+  
+  <div style="padding:0 16px">
+    
+    <!-- 武器 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">🔨 武器</div>
+    <div class="scroll-row" id="scrollRow0">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;木剑&#39;, 100)"><div class="icon">⚔️</div><div class="name">木剑</div><div class="count" style="color:#FF6B35">🪙 100</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;铁锤&#39;, 200)"><div class="icon">🔨</div><div class="name">铁锤</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;电击棒&#39;, 500)"><div class="icon">⚡</div><div class="name">电击棒</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;平底锅&#39;, 300)"><div class="icon">🍳</div><div class="name">平底锅</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;棒球棍&#39;, 400)"><div class="icon">🏏</div><div class="name">棒球棍</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;木剑&#39;, 100)"><div class="icon">⚔️</div><div class="name">木剑</div><div class="count" style="color:#FF6B35">🪙 100</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;铁锤&#39;, 200)"><div class="icon">🔨</div><div class="name">铁锤</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;电击棒&#39;, 500)"><div class="icon">⚡</div><div class="name">电击棒</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;平底锅&#39;, 300)"><div class="icon">🍳</div><div class="name">平底锅</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;棒球棍&#39;, 400)"><div class="icon">🏏</div><div class="name">棒球棍</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+      </div>
+    </div>
+    
+    <!-- 他的皮肤 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">🎭 他的皮肤</div>
+    <div class="scroll-row" id="scrollRowSkin">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;经典表情&#39;, 0)"><div class="icon">😊</div><div class="name">经典表情</div><div class="count" style="color:#4CAF50">免费</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰表情&#39;, 300)"><div class="icon">🔥</div><div class="name">火焰表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰雪表情&#39;, 300)"><div class="icon">❄️</div><div class="name">冰雪表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;暗黑表情&#39;, 500)"><div class="icon">😈</div><div class="name">暗黑表情</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;彩虹表情&#39;, 400)"><div class="icon">🌈</div><div class="name">彩虹表情</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;钻石表情&#39;, 600)"><div class="icon">💎</div><div class="name">钻石表情</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;经典表情&#39;, 0)"><div class="icon">😊</div><div class="name">经典表情</div><div class="count" style="color:#4CAF50">免费</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰表情&#39;, 300)"><div class="icon">🔥</div><div class="name">火焰表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰雪表情&#39;, 300)"><div class="icon">❄️</div><div class="name">冰雪表情</div><div class="count" style="color:#FF6B35">🪙 300</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;暗黑表情&#39;, 500)"><div class="icon">😈</div><div class="name">暗黑表情</div><div class="count" style="color:#FF6B35">🪙 500</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;彩虹表情&#39;, 400)"><div class="icon">🌈</div><div class="name">彩虹表情</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;钻石表情&#39;, 600)"><div class="icon">💎</div><div class="name">钻石表情</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+      </div>
+    </div>
+    
+    <!-- 初级特效 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">✨ 初级特效</div>
+    <div class="scroll-row" id="scrollRow1">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;木纹飞溅&#39;, 150)"><div class="icon">🪵</div><div class="name">木纹飞溅</div><div class="count" style="color:#FF6B35">🪙 150</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;落叶飘飘&#39;, 180)"><div class="icon">🍂</div><div class="name">落叶飘飘</div><div class="count" style="color:#FF6B35">🪙 180</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;水花四溅&#39;, 200)"><div class="icon">💦</div><div class="name">水花四溅</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火花带闪电&#39;, 220)"><div class="icon">🌟</div><div class="name">火花带闪电</div><div class="count" style="color:#FF6B35">🪙 220</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;尘土飞扬&#39;, 160)"><div class="icon">💨</div><div class="name">尘土飞扬</div><div class="count" style="color:#FF6B35">🪙 160</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;木纹飞溅&#39;, 150)"><div class="icon">🪵</div><div class="name">木纹飞溅</div><div class="count" style="color:#FF6B35">🪙 150</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;落叶飘飘&#39;, 180)"><div class="icon">🍂</div><div class="name">落叶飘飘</div><div class="count" style="color:#FF6B35">🪙 180</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;水花四溅&#39;, 200)"><div class="icon">💦</div><div class="name">水花四溅</div><div class="count" style="color:#FF6B35">🪙 200</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火花带闪电&#39;, 220)"><div class="icon">🌟</div><div class="name">火花带闪电</div><div class="count" style="color:#FF6B35">🪙 220</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;尘土飞扬&#39;, 160)"><div class="icon">💨</div><div class="name">尘土飞扬</div><div class="count" style="color:#FF6B35">🪙 160</div></div>
+      </div>
+    </div>
+    
+    <!-- 中级特效 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">✨ 中级特效</div>
+    <div class="scroll-row" id="scrollRow2">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;雷电交加&#39;, 350)"><div class="icon">⚡</div><div class="name">雷电交加</div><div class="count" style="color:#FF6B35">🪙 350</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰燃烧&#39;, 380)"><div class="icon">🔥</div><div class="name">火焰燃烧</div><div class="count" style="color:#FF6B35">🪙 380</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰霜冻结&#39;, 400)"><div class="icon">❄️</div><div class="name">冰霜冻结</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;地震波&#39;, 420)"><div class="icon">🌋</div><div class="name">地震波</div><div class="count" style="color:#FF6B35">🪙 420</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;龙卷风&#39;, 450)"><div class="icon">🌪️</div><div class="name">龙卷风</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;雷电交加&#39;, 350)"><div class="icon">⚡</div><div class="name">雷电交加</div><div class="count" style="color:#FF6B35">🪙 350</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;火焰燃烧&#39;, 380)"><div class="icon">🔥</div><div class="name">火焰燃烧</div><div class="count" style="color:#FF6B35">🪙 380</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;冰霜冻结&#39;, 400)"><div class="icon">❄️</div><div class="name">冰霜冻结</div><div class="count" style="color:#FF6B35">🪙 400</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;地震波&#39;, 420)"><div class="icon">🌋</div><div class="name">地震波</div><div class="count" style="color:#FF6B35">🪙 420</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;龙卷风&#39;, 450)"><div class="icon">🌪️</div><div class="name">龙卷风</div><div class="count" style="color:#FF6B35">🪙 450</div></div>
+      </div>
+    </div>
+    
+    <!-- 高级特效 -->
+    <div style="font-size:16px;font-weight:700;color:#5C3300;margin:14px 0 10px;padding:0 4px">✨ 高级特效</div>
+    <div class="scroll-row" id="scrollRow3">
+      <div class="scroll-track">
+        <div class="grid-item" onclick="buyItem(&#39;陨石坠落&#39;, 600)"><div class="icon">☄️</div><div class="name">陨石坠落</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;黑洞吞噬&#39;, 700)"><div class="icon">🕳️</div><div class="name">黑洞吞噬</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;时空扭曲&#39;, 800)"><div class="icon">🌀</div><div class="name">时空扭曲</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;宇宙爆炸&#39;, 900)"><div class="icon">💫</div><div class="name">宇宙爆炸</div><div class="count" style="color:#FF6B35">🪙 900</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;次元撕裂&#39;, 850)"><div class="icon">🔮</div><div class="name">次元撕裂</div><div class="count" style="color:#FF6B35">🪙 850</div></div>
+        <!-- 循环副本 -->
+        <div class="grid-item" onclick="buyItem(&#39;陨石坠落&#39;, 600)"><div class="icon">☄️</div><div class="name">陨石坠落</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;黑洞吞噬&#39;, 700)"><div class="icon">🕳️</div><div class="name">黑洞吞噬</div><div class="count" style="color:#FF6B35">🪙 700</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;时空扭曲&#39;, 800)"><div class="icon">🌀</div><div class="name">时空扭曲</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;宇宙爆炸&#39;, 900)"><div class="icon">💫</div><div class="name">宇宙爆炸</div><div class="count" style="color:#FF6B35">🪙 900</div></div>
+        <div class="grid-item" onclick="buyItem(&#39;次元撕裂&#39;, 850)"><div class="icon">🔮</div><div class="name">次元撕裂</div><div class="count" style="color:#FF6B35">🪙 850</div></div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+/* ===== 路由 ===== */
+function navTo(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const t=document.getElementById(id);
+  if(t){t.classList.add('active');window.scrollTo(0,0)}
+}
+
+/* ===== 模式选择 ===== */
+let selectedMode = 'mole';
+function selectMode(mode){
+  selectedMode = mode;
+  document.querySelectorAll('.mode-card').forEach(c=>{
+    c.style.outline = c.dataset.mode === mode ? '3px solid #FF6B35' : 'none';
+  });
+}
+function startFromHome(){
+  startGame(selectedMode);
+}
+
+function startGame(mode){
+  if(mode==='mole')navTo('moleGamePage');
+  else if(mode==='figure')navTo('figureGamePage');
+}
+
+/* ===== Tab ===== */
+function switchTab(el){
+  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ===== Toast（轻量提示，不弹窗） ===== */
+let toastTimer=null;
+function showToast(msg){
+  let el=document.querySelector('.toast-fly');
+  if(!el){
+    el=document.createElement('div');
+    el.className='toast-fly';
+    el.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:14px 28px;border-radius:14px;font-size:15px;z-index:9999;pointer-events:none;transition:opacity .3s';
+    document.body.appendChild(el);
+  }
+  el.textContent=msg;
+  el.style.opacity='1';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{el.style.opacity='0'},1200);
+}
+
+/* ===== 消息设置保存 ===== */
+function saveMsgSettings(){showToast('设置已保存')}
+
+/* ===== 武器选择 ===== */
+function selectWeapon(el){
+  el.parentElement.querySelectorAll('.weapon-item').forEach(w=>w.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ===== 打地鼠 ===== */
+let moleScore=8650;
+function hitMole(el){
+  moleScore+=100;
+  document.getElementById('moleScore').textContent=moleScore;
+  document.getElementById('moleStarScore').textContent=moleScore;
+
+  // 缩放动画
+  el.style.transform='scale(0.7)';
+  setTimeout(()=>{el.style.transform='scale(1)'},120);
+
+  // 飘字特效
+  spawnSpark(el,'+100','#FF4444');
+}
+
+/* ===== 虚拟人物 ===== */
+let figureScore=12850;
+function hitFigure(el){
+  figureScore+=150;
+  document.getElementById('figureScore').textContent=figureScore;
+
+  el.style.transform='scale(0.9) rotate(5deg)';
+  setTimeout(()=>{el.style.transform='scale(1) rotate(0deg)'},150);
+
+  spawnSpark(el,'+150','#FF4444');
+}
+
+/* ===== 飘字 ===== */
+function spawnSpark(parent,text,color){
+  const s=document.createElement('div');
+  s.className='hit-spark';
+  s.textContent=text;
+  s.style.color=color;
+  const r=parent.getBoundingClientRect();
+  const pr=parent.parentElement.getBoundingClientRect();
+  s.style.left=(r.left-pr.left+r.width/2-15)+'px';
+  s.style.top=(r.top-pr.top-10)+'px';
+  parent.parentElement.appendChild(s);
+  setTimeout(()=>s.remove(),800);
+}
+
+/* ===== 商城购买 ===== */
+let coinBalance = 1280;
+function buyItem(name, price){
+  if(price === 0){
+    showToast(`恭喜获得：${name}`);
+    return;
+  }
+  if(coinBalance >= price){
+    coinBalance -= price;
+    document.getElementById('coinBalance').textContent = coinBalance;
+    showToast(`购买成功！消耗 ${price} 打屎币，获得 ${name}`);
+  } else {
+    showToast(`打屎币不足！需要 ${price}，当前 ${coinBalance}`);
+  }
+}
+
+/* ===== 初始化 ===== */
+window.addEventListener('DOMContentLoaded', ()=>{ selectMode('mole'); });
+
+</script>
+
+
+</body></html>

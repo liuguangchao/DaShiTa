@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打屎他 - 游戏功能测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #FFF9E6 0%, #FFE4B5 50%, #FFDAB9 100%);
+            margin: 0;
+            padding: 20px;
+        }
+        .test-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .game-area {
+            background: linear-gradient(180deg, #90EE90 0%, #98FB98 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 300px;
+            position: relative;
+        }
+        .mole {
+            position: absolute;
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .mole:active {
+            transform: scale(0.8);
+        }
+        .figure {
+            font-size: 100px;
+            cursor: pointer;
+            text-align: center;
+            margin: 20px 0;
+            transition: transform 0.15s;
+        }
+        .figure:active {
+            transform: scale(0.9) rotate(5deg);
+        }
+        .score-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF6B35;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            z-index: 10000;
+            animation: fadeInOut 2s ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <h2>🎮 打屎他 - 游戏功能测试</h2>
+        <p>测试所有点击功能和分数累加</p>
+    </div>
+
+    <div class="test-section">
+        <h3>🐹 打地鼠游戏测试</h3>
+        <div class="score-display">得分: <span id="moleScore">8650</span></div>
+        <div class="game-area" id="moleGameArea">
+            <div class="mole" style="top: 20px; left: 50px;" onclick="hitMole(this)">🐹</div>
+            <div class="mole" style="top: 20px; right: 50px;" onclick="hitMole(this)">🐹</div>
+            <div class="mole" style="top: 120px; left: 30px;" onclick="hitMole(this)">🐹</div>
+            <div class="mole" style="top: 120px; right: 30px;" onclick="hitMole(this)">🐹</div>
+            <div class="mole" style="top: 220px; left: 80px;" onclick="hitMole(this)">🐹</div>
+            <div class="mole" style="top: 220px; right: 80px;" onclick="hitMole(this)">🐹</div>
+            <div class="mole" style="top: 300px; left: 50%; transform: translateX(-50%);" onclick="hitMole(this)">🐹</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>👊 虚拟人物打击测试</h3>
+        <div class="score-display">伤害: <span id="figureScore">12850</span></div>
+        <div class="figure" onclick="hitFigure(this)">🧑‍💼</div>
+        <div style="text-align: center; color: #666;">点击人物进行打击</div>
+    </div>
+
+    <script>
+        let moleScore = 8650;
+        let figureScore = 12850;
+
+        function showAlert(message) {
+            const existingToasts = document.querySelectorAll('.toast');
+            existingToasts.forEach(toast => toast.remove());
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        function hitMole(element) {
+            moleScore += 100;
+            document.getElementById('moleScore').textContent = moleScore;
+            
+            element.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 100);
+            
+            const hitEffect = document.createElement('div');
+            hitEffect.textContent = '+100';
+            hitEffect.style.cssText = `
+                position: absolute;
+                color: #FF6B35;
+                font-size: 20px;
+                font-weight: bold;
+                pointer-events: none;
+                animation: floatUp 1s ease-out forwards;
+                z-index: 100;
+            `;
+            
+            const rect = element.getBoundingClientRect();
+            hitEffect.style.left = rect.left + 'px';
+            hitEffect.style.top = (rect.top - 20) + 'px';
+            document.body.appendChild(hitEffect);
+            
+            setTimeout(() => hitEffect.remove(), 1000);
+            
+            showAlert(`击中！+100分 (总分: ${moleScore})`);
+        }
+
+        function hitFigure(element) {
+            figureScore += 150;
+            document.getElementById('figureScore').textContent = figureScore;
+            
+            element.style.transform = 'scale(0.9) rotate(5deg)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1) rotate(0deg)';
+            }, 150);
+            
+            const hitEffect = document.createElement('div');
+            hitEffect.textContent = '+150';
+            hitEffect.style.cssText = `
+                position: absolute;
+                color: #FF4444;
+                font-size: 24px;
+                font-weight: bold;
+                pointer-events: none;
+                animation: floatUp 1s ease-out forwards;
+                z-index: 100;
+            `;
+            
+            const rect = element.getBoundingClientRect();
+            hitEffect.style.left = rect.left + rect.width/2 + 'px';
+            hitEffect.style.top = (rect.top - 30) + 'px';
+            document.body.appendChild(hitEffect);
+            
+            setTimeout(() => hitEffect.remove(), 1000);
+            
+            showAlert(`打击成功！+150伤害 (总分: ${figureScore})`);
+        }
+
+        console.log('游戏测试页面加载完成');
+    </script>
+</body>
+</html>
