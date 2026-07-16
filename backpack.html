@@ -33,17 +33,16 @@
   <div class="bar-top">
     <button class="back-btn" onclick="window.location.href='index.html'">←</button>
     <div class="title-center">背包</div>
-    <div style="font-size:15px;font-weight:600;color:#5C3300;cursor:pointer" onclick="showToast('整理功能')">整理</div>
+    <div style="width:60px"></div>
   </div>
   
   <div class="backpack-container">
     <!-- Tab 切换 -->
     <div class="backpack-tabs">
-      <div class="backpack-tab active" onclick="switchBackpackTab(this)">皮肤</div>
-      <div class="backpack-tab" onclick="switchBackpackTab(this)">全部</div>
+      <div class="backpack-tab active" onclick="switchBackpackTab(this)">全部</div>
       <div class="backpack-tab" onclick="switchBackpackTab(this)">武器</div>
+      <div class="backpack-tab" onclick="switchBackpackTab(this)">皮肤</div>
       <div class="backpack-tab" onclick="switchBackpackTab(this)">特效</div>
-      <div class="backpack-tab" onclick="switchBackpackTab(this)">道具</div>
     </div>
     
     <!-- 物品网格 -->
