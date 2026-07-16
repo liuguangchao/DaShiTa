@@ -14,10 +14,8 @@
 .scroll-btn{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.25);color:#5C3300;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:all .15s;flex-shrink:0;user-select:none;-webkit-user-select:none}
 .scroll-btn:active{background:rgba(255,255,255,.5);transform:scale(.9)}
 .scroll-view{overflow:hidden;flex:1;border-radius:16px;position:relative}
-.scroll-track-shop{display:flex;gap:10px;transition:transform .4s cubic-bezier(.25,.46,.45,.94);will-change:transform}
+.scroll-track-shop{display:flex;gap:10px}
 .scroll-track-shop .grid-item{flex-shrink:0;width:100px}
-/* 自动滚动时禁用 transition，保证丝滑 */
-.scroll-track-shop.auto-scroll{transition:none}
 </style>
 </head>
 <body>
@@ -41,7 +39,7 @@
         <span class="section-title">🔨 武器</span>
       </div>
       <div class="scroll-wrapper">
-        <button class="scroll-btn" onclick="scrollTrack('weapons', -1)">‹</button>
+        <button class="scroll-btn" onclick="manualScroll('weapons', -1)">‹</button>
         <div class="scroll-view" id="viewWeapons">
           <div class="scroll-track-shop" id="trackWeapons">
             <div class="grid-item" onclick="buyItem('木剑', 100)"><div class="icon">⚔️</div><div class="name">木剑</div><div class="count" style="color:#FF6B35">🪙 100</div></div>
@@ -54,7 +52,7 @@
             <div class="grid-item" onclick="buyItem('激光枪', 800)"><div class="icon">🔫</div><div class="name">激光枪</div><div class="count" style="color:#FF6B35">🪙 800</div></div>
           </div>
         </div>
-        <button class="scroll-btn" onclick="scrollTrack('weapons', 1)">›</button>
+        <button class="scroll-btn" onclick="manualScroll('weapons', 1)">›</button>
       </div>
     </div>
     
@@ -64,7 +62,7 @@
         <span class="section-title">🎭 他的皮肤</span>
       </div>
       <div class="scroll-wrapper">
-        <button class="scroll-btn" onclick="scrollTrack('skin', -1)">‹</button>
+        <button class="scroll-btn" onclick="manualScroll('skin', -1)">‹</button>
         <div class="scroll-view" id="viewSkin">
           <div class="scroll-track-shop" id="trackSkin">
             <div class="grid-item" onclick="buyItem('经典表情', 0)"><div class="icon">😊</div><div class="name">经典表情</div><div class="count" style="color:#4CAF50">免费</div></div>
@@ -77,7 +75,7 @@
             <div class="grid-item" onclick="buyItem('机器人', 550)"><div class="icon">🤖</div><div class="name">机器人</div><div class="count" style="color:#FF6B35">🪙 550</div></div>
           </div>
         </div>
-        <button class="scroll-btn" onclick="scrollTrack('skin', 1)">›</button>
+        <button class="scroll-btn" onclick="manualScroll('skin', 1)">›</button>
       </div>
     </div>
     
@@ -87,7 +85,7 @@
         <span class="section-title">✨ 初级特效</span>
       </div>
       <div class="scroll-wrapper">
-        <button class="scroll-btn" onclick="scrollTrack('eff1', -1)">‹</button>
+        <button class="scroll-btn" onclick="manualScroll('eff1', -1)">‹</button>
         <div class="scroll-view" id="viewEff1">
           <div class="scroll-track-shop" id="trackEff1">
             <div class="grid-item" onclick="buyItem('木纹飞溅', 150)"><div class="icon">🪵</div><div class="name">木纹飞溅</div><div class="count" style="color:#FF6B35">🪙 150</div></div>
@@ -100,7 +98,7 @@
             <div class="grid-item" onclick="buyItem('彩带飘扬', 210)"><div class="icon">🎊</div><div class="name">彩带飘扬</div><div class="count" style="color:#FF6B35">🪙 210</div></div>
           </div>
         </div>
-        <button class="scroll-btn" onclick="scrollTrack('eff1', 1)">›</button>
+        <button class="scroll-btn" onclick="manualScroll('eff1', 1)">›</button>
       </div>
     </div>
     
@@ -110,7 +108,7 @@
         <span class="section-title">✨ 中级特效</span>
       </div>
       <div class="scroll-wrapper">
-        <button class="scroll-btn" onclick="scrollTrack('eff2', -1)">‹</button>
+        <button class="scroll-btn" onclick="manualScroll('eff2', -1)">‹</button>
         <div class="scroll-view" id="viewEff2">
           <div class="scroll-track-shop" id="trackEff2">
             <div class="grid-item" onclick="buyItem('雷电交加', 350)"><div class="icon">⚡</div><div class="name">雷电交加</div><div class="count" style="color:#FF6B35">🪙 350</div></div>
@@ -123,7 +121,7 @@
             <div class="grid-item" onclick="buyItem('风暴之眼', 440)"><div class="icon">🌀</div><div class="name">风暴之眼</div><div class="count" style="color:#FF6B35">🪙 440</div></div>
           </div>
         </div>
-        <button class="scroll-btn" onclick="scrollTrack('eff2', 1)">›</button>
+        <button class="scroll-btn" onclick="manualScroll('eff2', 1)">›</button>
       </div>
     </div>
     
@@ -133,7 +131,7 @@
         <span class="section-title">✨ 高级特效</span>
       </div>
       <div class="scroll-wrapper">
-        <button class="scroll-btn" onclick="scrollTrack('eff3', -1)">‹</button>
+        <button class="scroll-btn" onclick="manualScroll('eff3', -1)">‹</button>
         <div class="scroll-view" id="viewEff3">
           <div class="scroll-track-shop" id="trackEff3">
             <div class="grid-item" onclick="buyItem('陨石坠落', 600)"><div class="icon">☄️</div><div class="name">陨石坠落</div><div class="count" style="color:#FF6B35">🪙 600</div></div>
@@ -146,7 +144,7 @@
             <div class="grid-item" onclick="buyItem('维度折叠', 950)"><div class="icon">🌐</div><div class="name">维度折叠</div><div class="count" style="color:#FF6B35">🪙 950</div></div>
           </div>
         </div>
-        <button class="scroll-btn" onclick="scrollTrack('eff3', 1)">›</button>
+        <button class="scroll-btn" onclick="manualScroll('eff3', 1)">›</button>
       </div>
     </div>
     
@@ -202,9 +200,6 @@ function startAutoScroll(key){
     clearInterval(autoScrollTimers[key]);
   }
   
-  // 标记为自动滚动（禁用transition）
-  track.classList.add('auto-scroll');
-  
   autoScrollTimers[key] = setInterval(function(){
     scrollTrack(key, 1);
   }, AUTO_SCROLL_INTERVAL);
@@ -215,10 +210,6 @@ function stopAutoScroll(key){
   if(autoScrollTimers[key]){
     clearInterval(autoScrollTimers[key]);
     autoScrollTimers[key] = null;
-    
-    var trackId = 'track' + key.charAt(0).toUpperCase() + key.slice(1);
-    var track = document.getElementById(trackId);
-    if(track) track.classList.remove('auto-scroll');
   }
 }
 
@@ -238,21 +229,33 @@ function scrollTrack(key, dir){
   
   scrollPos[key] += dir * itemWidth;
   
-  // 计算最大可滚动距离
-  var trackWidth = 0;
+  // 计算一组商品的总宽度
+  var groupWidth = 0;
   for(var i = 0; i < items.length; i++){
-    trackWidth += items[i].offsetWidth + 10;
+    groupWidth += items[i].offsetWidth + 10;
   }
-  trackWidth -= 10; // 最后一个没有gap
+  groupWidth -= 10; // 最后一个没有gap
   
   var viewWidth = track.parentElement.offsetWidth;
-  var maxScroll = trackWidth - viewWidth;
+  var maxScroll = groupWidth - viewWidth;
   
-  // 边界限制
-  if(scrollPos[key] < 0) scrollPos[key] = 0;
-  if(scrollPos[key] > maxScroll) scrollPos[key] = maxScroll;
+  // 如果maxScroll <= 0，说明所有商品都能在一屏内显示，无需滚动
+  if(maxScroll <= 0) return;
+  
+  // 循环滚动：超过maxScroll则回到0，不足0则跳到maxScroll
+  if(scrollPos[key] > maxScroll){
+    scrollPos[key] = 0;
+  }
+  if(scrollPos[key] < 0){
+    scrollPos[key] = maxScroll;
+  }
   
   track.style.transform = 'translateX(-' + scrollPos[key] + 'px)';
+}
+
+/* ===== 手动滚动 ===== */
+function manualScroll(key, dir){
+  scrollTrack(key, dir);
 }
 
 /* ===== 初始化：页面加载后启动自动滚动 ===== */
