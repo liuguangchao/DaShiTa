@@ -1,37 +1,107 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>背包</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 3. 背包 ===================== -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>背包</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+/* ===== 背包页面专用样式 ===== */
+#backpackPage{background:linear-gradient(180deg,#FFE066 0%,#FFD166 30%,#FFB347 100%)}
+.backpack-container{background:rgba(255,255,255,.85);border-radius:28px;margin:8px 10px 16px;padding:16px;min-height:calc(100vh - 100px)}
+.backpack-tabs{display:flex;gap:0;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.backpack-tab{padding:8px 18px;border-radius:20px;font-size:15px;color:#5C3300;cursor:pointer;white-space:nowrap;transition:all .3s;font-weight:500;border:none;background:transparent}
+.backpack-tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-weight:700;box-shadow:0 2px 8px rgba(255,179,71,.3)}
+.backpack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.backpack-item{background:rgba(255,255,255,.6);border-radius:16px;padding:14px 8px;text-align:center;border:1px solid rgba(255,255,255,.5)}
+.backpack-item .bi-icon{font-size:52px;margin-bottom:6px;display:block}
+.backpack-item .bi-name{font-size:13px;color:#333;font-weight:500;margin-bottom:2px}
+.backpack-item .bi-count{font-size:14px;color:#5C3300;font-weight:700}
+.backpack-equip{background:rgba(255,255,255,.6);border-radius:16px;padding:14px;display:flex;gap:14px;align-items:center;border:1px solid rgba(255,255,255,.5)}
+.backpack-equip .be-icon{width:90px;height:90px;background:rgba(255,224,102,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:56px;flex-shrink:0}
+.backpack-equip .be-info{flex:1}
+.backpack-equip .be-name{font-size:17px;font-weight:700;color:#333;margin-bottom:4px}
+.backpack-equip .be-status{font-size:13px;color:#666;margin-bottom:2px}
+.backpack-equip .be-effect{font-size:13px;color:#FF6B35;margin-top:6px}
+.backpack-equip .be-btn{padding:10px 20px;border-radius:20px;border:none;background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(255,179,71,.3);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- ===================== 3. 背包页面 ===================== -->
 <div class="page active" id="backpackPage">
   <div class="bar-top">
     <button class="back-btn" onclick="window.location.href='index.html'">←</button>
     <div class="title-center">背包</div>
-
+    <div style="font-size:15px;font-weight:600;color:#5C3300;cursor:pointer" onclick="showToast('整理功能')">整理</div>
   </div>
-  <div class="tabs" style="margin-top:8px">
-    <div class="tab" onclick="switchTab(this)">全部</div>
-    <div class="tab" onclick="switchTab(this)">武器</div>
-    <div class="tab active" onclick="switchTab(this)">皮肤</div>
-    <div class="tab" onclick="switchTab(this)">特效</div>
-    <div class="tab" onclick="switchTab(this)">道具</div>
-  </div>
-  <div style="padding:0 16px">
-    <div class="grid-3">
-      <div class="grid-item"><div class="icon">🪵</div><div class="name">木棍</div><div class="count">x1</div></div>
-      <div class="grid-item"><div class="icon">👟</div><div class="name">拖鞋</div><div class="count">x1</div></div>
-      <div class="grid-item"><div class="icon">🥿</div><div class="name">伤害提升道具</div><div class="count">x3</div></div>
-      <div class="grid-item"><div class="icon">🥒</div><div class="name">特效触发提升</div><div class="count">x2</div></div>
-      <div class="grid-item"><div class="icon">🎁</div><div class="name">初级武器体验卡</div><div class="count">x1</div></div>
-      <div class="grid-item"><div class="icon">🪙</div><div class="name">打屎币</div><div class="count">x1280</div></div>
+  
+  <div class="backpack-container">
+    <!-- Tab 切换 -->
+    <div class="backpack-tabs">
+      <div class="backpack-tab active" onclick="switchBackpackTab(this)">皮肤</div>
+      <div class="backpack-tab" onclick="switchBackpackTab(this)">全部</div>
+      <div class="backpack-tab" onclick="switchBackpackTab(this)">武器</div>
+      <div class="backpack-tab" onclick="switchBackpackTab(this)">特效</div>
+      <div class="backpack-tab" onclick="switchBackpackTab(this)">道具</div>
     </div>
-    <div class="card-round" style="margin-top:14px;display:flex;gap:14px;align-items:center">
-      <div style="width:90px;height:90px;background:rgba(255,255,255,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:56px">🪵</div>
-      <div style="flex:1">
-        <div style="font-size:17px;font-weight:700;margin-bottom:4px">木棍</div>
-        <div style="font-size:13px;color:#666">已装备</div>
-        <div style="font-size:13px;color:#666">伤害 20-25</div>
-        <div style="font-size:13px;color:#FF6B35">专属特效 木纹飞溅</div>
+    
+    <!-- 物品网格 -->
+    <div class="backpack-grid">
+      <div class="backpack-item">
+        <span class="bi-icon">🪵</span>
+        <div class="bi-name">木棍</div>
+        <div class="bi-count">x1</div>
       </div>
-      <button class="btn-gray" style="padding:10px 18px" onclick="showToast(&#39;已卸下&#39;)">卸下</button>
+      <div class="backpack-item">
+        <span class="bi-icon">👟</span>
+        <div class="bi-name">拖鞋</div>
+        <div class="bi-count">x1</div>
+      </div>
+      <div class="backpack-item">
+        <span class="bi-icon">🥿</span>
+        <div class="bi-name">伤害提升道具</div>
+        <div class="bi-count">x3</div>
+      </div>
+      <div class="backpack-item">
+        <span class="bi-icon">🥒</span>
+        <div class="bi-name">特效触发提升</div>
+        <div class="bi-count">x2</div>
+      </div>
+      <div class="backpack-item">
+        <span class="bi-icon">🎁</span>
+        <div class="bi-name">初级武器体验卡</div>
+        <div class="bi-count">x1</div>
+      </div>
+      <div class="backpack-item">
+        <span class="bi-icon">🪙</span>
+        <div class="bi-name">打屎币</div>
+        <div class="bi-count">x1280</div>
+      </div>
+    </div>
+    
+    <!-- 装备详情 -->
+    <div class="backpack-equip">
+      <div class="be-icon">🪵</div>
+      <div class="be-info">
+        <div class="be-name">木棍</div>
+        <div class="be-status">已装备</div>
+        <div class="be-status">伤害 20-25</div>
+        <div class="be-effect">专属特效 木纹飞溅</div>
+      </div>
+      <button class="be-btn" onclick="showToast('已卸下')">卸下</button>
     </div>
   </div>
 </div>
 
-<script src="js/app.js"></script></body></html>
+<script src="js/app.js"></script>
+<script>
+/* ===== 背包 Tab 切换 ===== */
+function switchBackpackTab(el){
+  el.parentElement.querySelectorAll('.backpack-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+
+</body>
+</html>
