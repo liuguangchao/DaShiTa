@@ -1,44 +1,143 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>消息中心</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 8. 消息列表 ===================== -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>消息中心</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+/* ===== 消息列表页面专用样式 ===== */
+#msgListPage{background:linear-gradient(180deg,#FFF9E6 0%,#FFF3CC 100%)}
+.msg-container{background:rgba(255,255,255,.85);border-radius:28px;margin:8px 10px 16px;min-height:calc(100vh - 100px);display:flex;flex-direction:column}
+.msg-tabs{display:flex;gap:0;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0}
+.msg-tab{padding:10px 14px;font-size:15px;color:#5C3300;cursor:pointer;white-space:nowrap;transition:all .3s;font-weight:500;border:none;background:transparent}
+.msg-tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-weight:700;border-radius:20px}
+.msg-list{flex:1;overflow-y:auto;padding:12px 10px}
+.msg-card{background:rgba(255,255,255,.6);border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.5);cursor:pointer;transition:all .15s}
+.msg-card:active{transform:scale(.98);background:rgba(255,224,102,.3)}
+.msg-card.has-border{border-left:4px solid #2196F3}
+.msg-card-inner{display:flex;gap:12px;align-items:flex-start}
+.msg-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.msg-icon.reward{background:linear-gradient(135deg,#FFE066,#FFB347)}
+.msg-icon.achievement{background:linear-gradient(135deg,#4CAF50,#45a049)}
+.msg-icon.activity{background:linear-gradient(135deg,#2196F3,#1976D2)}
+.msg-icon.activity-orange{background:linear-gradient(135deg,#FF7043,#F4511E)}
+.msg-icon.gameplay{background:linear-gradient(135deg,#2196F3,#1976D2)}
+.msg-content{flex:1;min-width:0}
+.msg-title{font-size:15px;font-weight:700;color:#333;margin-bottom:4px;line-height:1.3}
+.msg-desc{font-size:13px;color:#999;margin-bottom:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msg-time{font-size:13px;color:#999;flex-shrink:0;margin-left:8px;align-self:flex-start;margin-top:2px}
+.msg-empty{text-align:center;padding:20px;color:#ccc;font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- ===================== 8. 消息列表 ===================== -->
 <div class="page active" id="msgListPage">
   <div class="bar-top">
     <button class="back-btn" onclick="window.location.href='index.html'">←</button>
     <div class="title-center">消息中心</div>
-    <div class="icon-btn" style="width:auto;padding:0 10px;height:36px;border-radius:18px;font-size:13px" onclick="showToast(&#39;批量操作&#39;)">批量操作 ⚙️</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:#5C3300;cursor:pointer" onclick="showToast('批量操作')">
+      <span>批量操作</span>
+      <span style="font-size:20px">⚙️</span>
+    </div>
   </div>
-  <div class="tabs" style="margin-top:8px">
-    <div class="tab active" onclick="switchTab(this)">全部</div>
-    <div class="tab" onclick="switchTab(this)">系统</div>
-    <div class="tab" onclick="switchTab(this)">奖励</div>
-    <div class="tab" onclick="switchTab(this)">成就</div>
-    <div class="tab" onclick="switchTab(this)">活动</div>
-    <div class="tab" onclick="switchTab(this)">互动</div>
-    <div class="tab" onclick="switchTab(this)">玩法</div>
-  </div>
-  <div style="padding:0 16px">
-    <div class="card-round" style="cursor:pointer" onclick="window.location.href='reward-detail.html'">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="msg-icon" style="background:linear-gradient(135deg,#FFE066,#FFB347)">🎁</div>
-        <div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【奖励到账】每日登录奖励已发放</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用，适路考景阀顾…</div></div>
-        <div style="font-size:13px;color:#999">20:25</div>
-      </div>
+  
+  <div class="msg-container">
+    <!-- Tab 切换 -->
+    <div class="msg-tabs">
+      <div class="msg-tab active" onclick="switchMsgTab(this)">全部</div>
+      <div class="msg-tab" onclick="switchMsgTab(this)">系统</div>
+      <div class="msg-tab" onclick="switchMsgTab(this)">奖励</div>
+      <div class="msg-tab" onclick="switchMsgTab(this)">成就</div>
+      <div class="msg-tab" onclick="switchMsgTab(this)">活动</div>
+      <div class="msg-tab" onclick="switchMsgTab(this)">互动</div>
+      <div class="msg-tab" onclick="switchMsgTab(this)">玩法</div>
     </div>
-    <div class="card-round">
-      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#4CAF50,#45a049)">⚙️</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【成就解锁】初入宣泄室已达成</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
+    
+    <!-- 消息列表 -->
+    <div class="msg-list" id="msgList">
+      <!-- 动态渲染 -->
     </div>
-    <div class="card-round">
-      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#2196F3,#1976D2)">🔒</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【成就解锁】初入宣泄室已达成</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
-    </div>
-    <div class="card-round">
-      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#9C27B0,#7B1FA2)">💎</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【活动通知】特效几率翻倍开启</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:35</div></div>
-    </div>
-    <div class="card-round">
-      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#FF5722,#E64A19)">✅</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【活动通知】特效几率翻倍开启</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
-    </div>
-    <div class="card-round" style="border-left:4px solid #2196F3">
-      <div style="display:flex;align-items:center;gap:12px"><div class="msg-icon" style="background:linear-gradient(135deg,#FFE066,#FFB347)">🎮</div><div style="flex:1"><div style="font-size:15px;font-weight:700;color:#333">【玩法提醒】连击10次触发伤害翻倍</div><div style="font-size:13px;color:#999;margin-top:3px">请选择数据家意支用…</div></div><div style="font-size:13px;color:#999">20:25</div></div>
-    </div>
-    <div style="text-align:center;padding:20px;color:#ccc;font-size:14px">暂无更多消息</div>
   </div>
 </div>
 
-<script src="js/app.js"></script></body></html>
+<script src="js/app.js"></script>
+<script>
+/* ===== 消息数据 ===== */
+var msgData = {
+  all: [
+    {type:'reward',icon:'🎁',title:'【奖励到账】每日登录奖励已发放',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'},
+    {type:'achievement',icon:'⚙️',title:'【成就解锁】初入宣泄室已达成',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'},
+    {type:'achievement',icon:'🔒',title:'【成就解锁】初入宣泄室已达成',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'},
+    {type:'activity',icon:'💎',title:'【活动通知】特效几率翻倍开启',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:35'},
+    {type:'activity-orange',icon:'✅',title:'【活动通知】特效几率翻倍开启',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'},
+    {type:'gameplay',icon:'🎮',title:'【玩法提醒】连击10次触发伤害翻倍',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25',hasBorder:true}
+  ],
+  system: [
+    {type:'activity',icon:'⚙️',title:'【系统通知】服务器维护公告',desc:'请选择数据家意支用，适路考景阀顾...',time:'20:25'}
+  ],
+  reward: [
+    {type:'reward',icon:'🎁',title:'【奖励到账】每日登录奖励已发放',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'}
+  ],
+  achievement: [
+    {type:'achievement',icon:'⚙️',title:'【成就解锁】初入宣泄室已达成',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'},
+    {type:'achievement',icon:'🔒',title:'【成就解锁】初入宣泄室已达成',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'}
+  ],
+  activity: [
+    {type:'activity',icon:'💎',title:'【活动通知】特效几率翻倍开启',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:35'},
+    {type:'activity-orange',icon:'✅',title:'【活动通知】特效几率翻倍开启',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25'}
+  ],
+  interaction: [
+    {type:'activity',icon:'💬',title:'【互动消息】好友邀请你一起游戏',desc:'请选择数据家意支用，适路考景阀顾...',time:'20:25'}
+  ],
+  gameplay: [
+    {type:'gameplay',icon:'🎮',title:'【玩法提醒】连击10次触发伤害翻倍',desc:'请选择数据家意支用，适路考景阀顾，办恢更据退...',time:'20:25',hasBorder:true}
+  ]
+};
+
+/* ===== 渲染消息列表 ===== */
+function renderMsgList(type){
+  var list = document.getElementById('msgList');
+  var msgs = msgData[type] || msgData.all;
+  var html = '';
+  for(var i = 0; i < msgs.length; i++){
+    var m = msgs[i];
+    var borderClass = m.hasBorder ? ' has-border' : '';
+    html += '<div class="msg-card' + borderClass + '" onclick="showToast(\'查看详情：' + m.title + '\')">' +
+      '<div class="msg-card-inner">' +
+        '<div class="msg-icon ' + m.type + '">' + m.icon + '</div>' +
+        '<div class="msg-content">' +
+          '<div class="msg-title">' + m.title + '</div>' +
+          '<div class="msg-desc">' + m.desc + '</div>' +
+        '</div>' +
+        '<div class="msg-time">' + m.time + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  html += '<div class="msg-empty">暂无更多消息</div>';
+  list.innerHTML = html;
+}
+
+/* ===== 消息 Tab 切换 ===== */
+function switchMsgTab(el){
+  el.parentElement.querySelectorAll('.msg-tab').forEach(function(t){t.classList.remove('active')});
+  el.classList.add('active');
+  var texts = ['全部','系统','奖励','成就','活动','互动','玩法'];
+  var types = ['all','system','reward','achievement','activity','interaction','gameplay'];
+  for(var i = 0; i < texts.length; i++){
+    if(el.textContent.trim() === texts[i]){
+      renderMsgList(types[i]);
+      break;
+    }
+  }
+}
+
+/* ===== 初始化 ===== */
+window.addEventListener('DOMContentLoaded', function(){
+  renderMsgList('all');
+});
+</script>
+
+</body>
+</html>
