@@ -14,7 +14,7 @@
 .msg-tab{flex:1;padding:10px 0;text-align:center;font-size:15px;color:#5C3300;cursor:pointer;white-space:nowrap;transition:all .3s;font-weight:500;border:none;background:transparent}
 .msg-tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-weight:700;border-radius:20px}
 .msg-list{flex:1;overflow-y:auto;padding:12px 10px}
-.msg-card{background:rgba(255,255,255,.6);border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.5);cursor:pointer;transition:all .15s}
+.msg-card{background:rgba(255,255,255,.6);border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.5);cursor:pointer;transition:all .15s;position:relative}
 .msg-card:active{transform:scale(.98);background:rgba(255,224,102,.3)}
 .msg-card.has-border{border-left:4px solid #2196F3}
 .msg-card-inner{display:flex;gap:12px;align-items:flex-start}
@@ -29,6 +29,21 @@
 .msg-desc{font-size:13px;color:#999;margin-bottom:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .msg-time{font-size:13px;color:#999;flex-shrink:0;margin-left:8px;align-self:flex-start;margin-top:2px}
 .msg-empty{text-align:center;padding:20px;color:#ccc;font-size:14px}
+
+/* ===== 批量操作样式 ===== */
+.batch-mode .msg-checkbox{display:flex!important}
+.msg-checkbox{display:none!important;position:absolute;left:8px;top:50%;transform:translateY(-50%);z-index:10}
+.msg-checkbox input{width:22px;height:22px;cursor:pointer;accent-color:#FFE066}
+.batch-mode .msg-card-inner{margin-left:28px}
+.batch-mode .msg-card{padding-left:38px}
+
+/* ===== 底部操作栏 ===== */
+.batch-footer{display:none;padding:12px 16px;background:rgba(255,255,255,.95);border-top:1px solid rgba(0,0,0,.1);gap:12px;flex-shrink:0}
+.batch-footer.show{display:flex}
+.batch-footer-btn{flex:1;padding:12px;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
+.batch-footer-btn.clear{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300}
+.batch-footer-btn.delete{background:linear-gradient(135deg,#FF6B6B,#EE5A5A);color:#fff}
+.batch-footer-btn:active{transform:scale(.95)}
 </style>
 </head>
 <body>
@@ -38,13 +53,13 @@
   <div class="bar-top">
     <button class="back-btn" onclick="window.location.href='index.html'">←</button>
     <div class="title-center">消息中心</div>
-    <div style="display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:#5C3300;cursor:pointer" onclick="showToast('批量操作')">
+    <div id="batchBtn" style="display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:#5C3300;cursor:pointer" onclick="toggleBatchMode()">
       <span>批量操作</span>
       <span style="font-size:20px">⚙️</span>
     </div>
   </div>
   
-  <div class="msg-container">
+  <div class="msg-container" id="msgContainer">
     <!-- Tab 切换 -->
     <div class="msg-tabs">
       <div class="msg-tab active" onclick="switchMsgTab(this)">全部</div>
@@ -57,6 +72,12 @@
     <div class="msg-list" id="msgList">
       <!-- 动态渲染 -->
     </div>
+  </div>
+  
+  <!-- 底部操作栏 -->
+  <div class="batch-footer" id="batchFooter">
+    <button class="batch-footer-btn clear" onclick="clearUnread()">清除未读</button>
+    <button class="batch-footer-btn delete" onclick="deleteSelected()">一键删除</button>
   </div>
 </div>
 
@@ -94,6 +115,9 @@ var msgData = {
   ]
 };
 
+/* ===== 批量操作状态 ===== */
+var isBatchMode = false;
+
 /* ===== 渲染消息列表 ===== */
 function renderMsgList(type){
   var list = document.getElementById('msgList');
@@ -103,6 +127,9 @@ function renderMsgList(type){
     var m = msgs[i];
     var borderClass = m.hasBorder ? ' has-border' : '';
     html += '<div class="msg-card' + borderClass + '" onclick="showToast(\'查看详情：' + m.title + '\')">' +
+      '<div class="msg-checkbox">' +
+        '<input type="checkbox" onclick="event.stopPropagation()">' +
+      '</div>' +
       '<div class="msg-card-inner">' +
         '<div class="msg-icon ' + m.type + '">' + m.icon + '</div>' +
         '<div class="msg-content">' +
@@ -129,6 +156,44 @@ function switchMsgTab(el){
       break;
     }
   }
+}
+
+/* ===== 切换批量操作模式 ===== */
+function toggleBatchMode(){
+  isBatchMode = !isBatchMode;
+  var container = document.getElementById('msgContainer');
+  var footer = document.getElementById('batchFooter');
+  var batchBtn = document.getElementById('batchBtn');
+  
+  if(isBatchMode){
+    container.classList.add('batch-mode');
+    footer.classList.add('show');
+    batchBtn.innerHTML = '<span>取消</span>';
+  } else {
+    container.classList.remove('batch-mode');
+    footer.classList.remove('show');
+    batchBtn.innerHTML = '<span>批量操作</span><span style="font-size:20px">⚙️</span>';
+    // 取消所有勾选
+    container.querySelectorAll('.msg-checkbox input').forEach(function(cb){
+      cb.checked = false;
+    });
+  }
+}
+
+/* ===== 清除未读 ===== */
+function clearUnread(){
+  showToast('已清除未读消息');
+}
+
+/* ===== 一键删除 ===== */
+function deleteSelected(){
+  var checked = document.querySelectorAll('.msg-checkbox input:checked');
+  if(checked.length === 0){
+    showToast('请先选择要删除的消息');
+    return;
+  }
+  showToast('已删除 ' + checked.length + ' 条消息');
+  // 实际项目中这里应该调用删除API
 }
 
 /* ===== 初始化 ===== */
