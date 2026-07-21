@@ -122,23 +122,23 @@ var leaderboardData = {
       {rank:3,name:'解压大师',score:8720,avatar:'👑',desc:'打地鼠个数'}
     ],
     list: [
-      {rank:4,name:'打屎高手',avatar:'😡',desc:'打地鼠个数',score:7500},
-      {rank:5,name:'快乐打鼠',avatar:'😊',desc:'打地鼠个数',score:6800},
-      {rank:6,name:'鼠辈克星',avatar:'😎',desc:'打地鼠个数',score:6200},
-      {rank:7,name:'快速反应',avatar:'🤩',desc:'打地鼠个数',score:5800},
-      {rank:8,name:'精准打击',avatar:'🎯',desc:'打地鼠个数',score:5200},
-      {rank:9,name:'手速王者',avatar:'⚡',desc:'打地鼠个数',score:4800},
-      {rank:10,name:'打鼠达人',avatar:'🔥',desc:'打地鼠个数',score:4500},
-      {rank:11,name:'新手上路',avatar:'👶',desc:'打地鼠个数',score:4200},
-      {rank:12,name:'坚持不懈',avatar:'💪',desc:'打地鼠个数',score:3800},
-      {rank:13,name:'运气爆棚',avatar:'🍀',desc:'打地鼠个数',score:3500},
-      {rank:14,name:'慢慢来',avatar:'🐢',desc:'打地鼠个数',score:3200},
-      {rank:15,name:'初出茅庐',avatar:'🌱',desc:'打地鼠个数',score:2800},
-      {rank:16,name:'偶尔玩玩',avatar:'🎮',desc:'打地鼠个数',score:2500},
-      {rank:17,name:'休闲玩家',avatar:'🎲',desc:'打地鼠个数',score:2200},
-      {rank:18,name:'打鼠爱好者',avatar:'🏃',desc:'打地鼠个数',score:1800},
-      {rank:19,name:'新手小白',avatar:'🐣',desc:'打地鼠个数',score:1500},
-      {rank:20,name:'刚入门',avatar:'🌟',desc:'打地鼠个数',score:1200}
+      {rank:4,meAvatar:'😄',meName:'我的名字',fightEmoji:'👊',hisAvatar:'😡',hisName:'打屎高手',desc:'打地鼠个数',score:7500},
+      {rank:5,meAvatar:'😄',meName:'我的名字',fightEmoji:'💪',hisAvatar:'😊',hisName:'快乐打鼠',desc:'打地鼠个数',score:6800},
+      {rank:6,meAvatar:'😄',meName:'我的名字',fightEmoji:'🔥',hisAvatar:'😎',hisName:'鼠辈克星',desc:'打地鼠个数',score:6200},
+      {rank:7,meAvatar:'😄',meName:'我的名字',fightEmoji:'⚡',hisAvatar:'🤩',hisName:'快速反应',desc:'打地鼠个数',score:5800},
+      {rank:8,meAvatar:'😄',meName:'我的名字',fightEmoji:'👺',hisAvatar:'🎯',hisName:'精准打击',desc:'打地鼠个数',score:5200},
+      {rank:9,meAvatar:'😄',meName:'我的名字',fightEmoji:'👹',hisAvatar:'⚡',hisName:'手速王者',desc:'打地鼠个数',score:4800},
+      {rank:10,meAvatar:'😄',meName:'我的名字',fightEmoji:'💢',hisAvatar:'🔥',hisName:'打鼠达人',desc:'打地鼠个数',score:4500},
+      {rank:11,meAvatar:'😄',meName:'我的名字',fightEmoji:'😤',hisAvatar:'👶',hisName:'新手上路',desc:'打地鼠个数',score:4200},
+      {rank:12,meAvatar:'😄',meName:'我的名字',fightEmoji:'😡',hisAvatar:'💪',hisName:'坚持不懈',desc:'打地鼠个数',score:3800},
+      {rank:13,meAvatar:'😄',meName:'我的名字',fightEmoji:'🤬',hisAvatar:'🍀',hisName:'运气爆棚',desc:'打地鼠个数',score:3500},
+      {rank:14,meAvatar:'😄',meName:'我的名字',fightEmoji:'👊',hisAvatar:'🐢',hisName:'慢慢来',desc:'打地鼠个数',score:3200},
+      {rank:15,meAvatar:'😄',meName:'我的名字',fightEmoji:'💪',hisAvatar:'🌱',hisName:'初出茅庐',desc:'打地鼠个数',score:2800},
+      {rank:16,meAvatar:'😄',meName:'我的名字',fightEmoji:'🔥',hisAvatar:'🎮',hisName:'偶尔玩玩',desc:'打地鼠个数',score:2500},
+      {rank:17,meAvatar:'😄',meName:'我的名字',fightEmoji:'⚡',hisAvatar:'🎲',hisName:'休闲玩家',desc:'打地鼠个数',score:2200},
+      {rank:18,meAvatar:'😄',meName:'我的名字',fightEmoji:'👺',hisAvatar:'🏃',hisName:'打鼠爱好者',desc:'打地鼠个数',score:1800},
+      {rank:19,meAvatar:'😄',meName:'我的名字',fightEmoji:'👹',hisAvatar:'🐣',hisName:'新手小白',desc:'打地鼠个数',score:1500},
+      {rank:20,meAvatar:'😄',meName:'我的名字',fightEmoji:'💢',hisAvatar:'🌟',hisName:'刚入门',desc:'打地鼠个数',score:1200}
     ],
     myRank: {
       rank: 10,
@@ -172,8 +172,11 @@ function initFigureList() {
     var fighter = generateRandomFighter();
     list.push({
       rank: i,
-      name: fighter.name,
-      avatar: fighter.emoji,
+      meAvatar: '😄',
+      meName: '我的名字',
+      fightEmoji: fightEmojis[Math.floor(Math.random() * fightEmojis.length)],
+      hisAvatar: fighter.emoji,
+      hisName: fighter.name,
       desc: '总伤害',
       score: Math.floor(32000 + Math.random() * 63000)
     });
@@ -231,17 +234,20 @@ function renderList(data){
   for(var i = 0; i < data.list.length; i++){
     var item = data.list[i];
     var isTop3 = item.rank <= 3;
-    var displayName = item.name;
+    var hisDisplayName = item.hisName;
     
     // 如果开启隐私设置且是打屎他榜单，隐藏他人名字
     if (currentBoard === 'figure' && hideName) {
-      displayName = '干架达人' + item.rank;
+      hisDisplayName = '干架达人' + item.rank;
     }
     
     html += '<div class="rank-item">' +
       '<span class="rank-num' + (isTop3 ? ' top3' : '') + '">' + item.rank + '</span>' +
-      '<div class="rank-avatar">' + item.avatar + '</div>' +
-      '<span class="rank-name">' + displayName + '</span>' +
+      '<div class="rank-avatar">' + item.meAvatar + '</div>' +
+      '<span class="rank-name">' + item.meName + '</span>' +
+      '<span class="rank-label">' + item.fightEmoji + '</span>' +
+      '<div class="rank-avatar">' + item.hisAvatar + '</div>' +
+      '<span class="rank-name">' + hisDisplayName + '</span>' +
       '<span class="rank-label">总伤害</span>' +
       '<span class="rank-score">' + item.score.toLocaleString() + '</span>' +
     '</div>';
