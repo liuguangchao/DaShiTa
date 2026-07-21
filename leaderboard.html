@@ -49,6 +49,7 @@
 .my-rank-badge.on-list{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300}
 .my-rank-badge.off-list{background:rgba(255,255,255,.5);color:#999}
 .my-rank-content{display:flex;align-items:center}
+.my-rank-extra{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,.1)}
 .my-rank-avatar{width:50px;height:50px;border-radius:50%;background:rgba(255,224,102,.3);display:flex;align-items:center;justify-content:center;font-size:28px;margin-right:12px}
 .my-rank-info{flex:1}
 .my-rank-name{font-size:15px;font-weight:700;color:#333;margin-bottom:4px}
@@ -312,6 +313,15 @@ function renderMyRank(data){
       '</div>' +
     '</div>' +
   '</div>';
+  
+  // 如果有对应排名的数据，添加打拳、他的头像、他的名字
+  if (listItem) {
+    html += '<div class="my-rank-extra">' +
+      '<span class="rank-label">🤜</span>' +
+      '<div class="rank-avatar">' + listItem.hisAvatar + '</div>' +
+      '<span class="rank-name">' + listItem.hisName + '</span>' +
+    '</div>';
+  }
   
   container.innerHTML = html;
 }
