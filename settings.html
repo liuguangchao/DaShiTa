@@ -55,19 +55,19 @@
   <!-- 基本设置 -->
   <div class="setting-section">
     <div class="setting-section-title">基本设置</div>
-    <div class="setting-item" onclick="showToast('音效设置')">
+    <div class="setting-item" onclick="toggleSetting(this, 'sound')">
       <div class="si-left">
         <div class="si-icon blue">🎵</div>
         <div class="si-label">音效设置</div>
       </div>
-      <div class="si-right">已开启 <span class="arrow">›</span></div>
+      <div class="si-right"><span class="setting-value">已开启</span> <span class="arrow">›</span></div>
     </div>
-    <div class="setting-item" onclick="showToast('震动设置')">
+    <div class="setting-item" onclick="toggleSetting(this, 'vibration')">
       <div class="si-left">
         <div class="si-icon green">📳</div>
         <div class="si-label">震动设置</div>
       </div>
-      <div class="si-right">中 <span class="arrow">›</span></div>
+      <div class="si-right"><span class="setting-value">已开启</span> <span class="arrow">›</span></div>
     </div>
   </div>
   
@@ -91,5 +91,17 @@
 </div>
 
 <script src="js/app.js"></script>
+<script>
+/* ===== 设置项切换 ===== */
+function toggleSetting(el, type) {
+  var valueEl = el.querySelector('.setting-value');
+  var current = valueEl.textContent;
+  if (current === '已开启') {
+    valueEl.textContent = '已关闭';
+  } else {
+    valueEl.textContent = '已开启';
+  }
+}
+</script>
 </body>
 </html>
