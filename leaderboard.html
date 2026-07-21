@@ -308,21 +308,17 @@ function renderMyRank(data){
     '<div class="my-rank-avatar">' + my.avatar + '</div>' +
     '<div class="my-rank-info">' +
       '<div class="my-rank-name">' + my.name + '</div>' +
+      (listItem ? '<div class="my-rank-extra-inline">' +
+        '<span class="rank-label">🤜</span>' +
+        '<div class="rank-avatar">' + listItem.hisAvatar + '</div>' +
+        '<span class="rank-name">' + listItem.hisName + '</span>' +
+      '</div>' : '') +
       '<div class="my-rank-stats">' +
         '<span>排名: <strong>' + (isOnList ? my.rank : '—') + '</strong></span>' +
         '<span>分数: <strong>' + my.score.toLocaleString() + '</strong></span>' +
       '</div>' +
     '</div>' +
   '</div>';
-  
-  // 如果有对应排名的数据，添加打拳、他的头像、他的名字在同一行
-  if (listItem) {
-    html += '<div class="my-rank-extra-inline">' +
-      '<span class="rank-label">🤜</span>' +
-      '<div class="rank-avatar">' + listItem.hisAvatar + '</div>' +
-      '<span class="rank-name">' + listItem.hisName + '</span>' +
-    '</div>';
-  }
   
   container.innerHTML = html;
 }
