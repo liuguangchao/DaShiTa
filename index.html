@@ -34,7 +34,7 @@
       <div class="day-box done"><span class="day-num">1</span><span class="day-icon">✓</span></div>
       <div class="day-box done"><span class="day-num">2</span><span class="day-icon">✓</span></div>
       <div class="day-box done"><span class="day-num">3</span><span class="day-icon">✓</span></div>
-      <div class="day-box today" id="todayBox"><span class="day-num">4</span><span class="day-icon">✨</span></div>
+      <div class="day-box today" id="todayBox" onclick="performSignIn()"><span class="day-num">4</span><span class="day-icon">✨</span></div>
       <div class="day-box lock"><span class="day-num">5</span><span class="day-icon">·</span></div>
       <div class="day-box lock"><span class="day-num">6</span><span class="day-icon">·</span></div>
       <div class="day-box lock"><span class="day-num">7</span><span class="day-icon">·</span></div>
@@ -107,20 +107,20 @@ function initSignIn() {
   var todayBox = document.getElementById('todayBox');
   
   if (lastSignIn === today) {
-    // 今天已签到
+    // 今天已签到，禁用点击
     signInLocked = true;
     if (todayBox) {
       todayBox.className = 'day-box done';
       todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
       todayBox.removeAttribute('onclick');
-      todayBox.style.pointerEvents = 'none';
+      todayBox.style.opacity = '0.6';
     }
     return;
   }
   
-  // 今天未签到，绑定点击
+  // 今天未签到，保持 onclick 不变
   if (todayBox) {
-    todayBox.setAttribute('onclick', 'performSignIn()');
+    todayBox.style.opacity = '1';
   }
 }
 
@@ -137,7 +137,7 @@ function performSignIn() {
     todayBox.className = 'day-box done';
     todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
     todayBox.removeAttribute('onclick');
-    todayBox.style.pointerEvents = 'none';
+    todayBox.style.opacity = '0.6';
   }
   
   // 解锁下一天
