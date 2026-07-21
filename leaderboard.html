@@ -31,16 +31,15 @@
 /* 滚动列表 */
 .rank-scroll{flex:1;overflow-y:auto;margin-top:8px}
 .rank-list{background:rgba(255,255,255,.7);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.5)}
-.rank-item{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(0,0,0,.05)}
+.rank-item{display:flex;align-items:center;padding:10px 8px;border-bottom:1px solid rgba(0,0,0,.05)}
 .rank-item:last-child{border-bottom:none}
 .rank-item.me{background:rgba(255,224,102,.3);border-left:3px solid #FFB347}
-.rank-num{width:40px;font-size:16px;font-weight:700;color:#666}
+.rank-num{width:32px;font-size:14px;font-weight:700;color:#666;text-align:center;flex-shrink:0}
 .rank-num.top3{color:#FF6B6B}
-.rank-avatar{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:22px;margin-right:12px;flex-shrink:0}
-.rank-info{flex:1;min-width:0}
-.rank-name{font-size:14px;font-weight:600;color:#333;margin-bottom:2px}
-.rank-desc{font-size:12px;color:#999;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rank-score{font-size:15px;font-weight:700;color:#FF6B6B;margin-left:12px;flex-shrink:0}
+.rank-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 6px;flex-shrink:0}
+.rank-name{flex:1;font-size:13px;font-weight:600;color:#333;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-label{font-size:11px;color:#999;margin:0 6px;flex-shrink:0}
+.rank-score{font-size:14px;font-weight:700;color:#FF6B6B;margin-left:6px;flex-shrink:0;white-space:nowrap}
 
 /* 自己数据卡片 */
 .my-rank-card{margin-top:12px;padding:16px;background:rgba(255,255,255,.8);border-radius:16px;border:1px solid rgba(255,255,255,.5);flex-shrink:0}
@@ -242,10 +241,8 @@ function renderList(data){
     html += '<div class="rank-item">' +
       '<span class="rank-num' + (isTop3 ? ' top3' : '') + '">' + item.rank + '</span>' +
       '<div class="rank-avatar">' + item.avatar + '</div>' +
-      '<div class="rank-info">' +
-        '<div class="rank-name">' + displayName + '</div>' +
-        '<div class="rank-desc">总伤害</div>' +
-      '</div>' +
+      '<span class="rank-name">' + displayName + '</span>' +
+      '<span class="rank-label">总伤害</span>' +
       '<span class="rank-score">' + item.score.toLocaleString() + '</span>' +
     '</div>';
   }
