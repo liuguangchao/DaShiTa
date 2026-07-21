@@ -125,7 +125,7 @@ function initSignIn() {
   
   // 今天未签到，顶部签到按钮绑定点击
   if (topSignBtn) {
-    topSignBtn.setAttribute('onclick', 'performSignIn()');
+    topSignBtn.onclick = function() { performSignIn(); };
     topSignBtn.style.opacity = '1';
   }
   if (todayBox) {
