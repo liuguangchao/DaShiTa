@@ -152,6 +152,11 @@ function performSignIn() {
   
   showToast('签到成功！+20打屎币');
 }
+
+// 页面加载时初始化签到
+window.addEventListener('DOMContentLoaded', function() {
+  initSignIn();
+});
 </script>
 </body>
 </html>
