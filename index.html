@@ -121,6 +121,10 @@ function handleSignIn() {
 window.addEventListener('DOMContentLoaded', function() {
   var today = new Date().toDateString();
   var lastSignIn = localStorage.getItem('lastSignInDate');
+  console.log('=== 签到初始化 ===');
+  console.log('today:', today);
+  console.log('lastSignIn:', lastSignIn);
+  console.log('match:', lastSignIn === today);
   
   if (lastSignIn === today) {
     signInDone = true;
@@ -128,6 +132,7 @@ window.addEventListener('DOMContentLoaded', function() {
     var topSignBtn = document.getElementById('topSignBtn');
     
     if (todayBox) {
+      console.log('已签到，切换到 done 样式');
       todayBox.className = 'day-box done';
       todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
       todayBox.removeAttribute('onclick');
@@ -137,6 +142,8 @@ window.addEventListener('DOMContentLoaded', function() {
       topSignBtn.removeAttribute('onclick');
       topSignBtn.style.opacity = '0.6';
     }
+  } else {
+    console.log('未签到，保持 today 样式');
   }
 });
 
