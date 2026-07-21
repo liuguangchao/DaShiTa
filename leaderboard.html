@@ -49,8 +49,6 @@
 .my-rank-badge.on-list{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300}
 .my-rank-badge.off-list{background:rgba(255,255,255,.5);color:#999}
 .my-rank-content{display:flex;align-items:center}
-.my-rank-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.my-rank-extra-inline{display:flex;align-items:center;gap:8px}
 .my-rank-avatar{width:50px;height:50px;border-radius:50%;background:rgba(255,224,102,.3);display:flex;align-items:center;justify-content:center;font-size:28px;margin-right:12px}
 .my-rank-info{flex:1}
 .my-rank-name{font-size:15px;font-weight:700;color:#333;margin-bottom:4px}
@@ -307,14 +305,7 @@ function renderMyRank(data){
   '<div class="my-rank-content">' +
     '<div class="my-rank-avatar">' + my.avatar + '</div>' +
     '<div class="my-rank-info">' +
-      '<div class="my-rank-name-row">' +
-        '<div class="my-rank-name">' + my.name + '</div>' +
-        (currentBoard === 'figure' && listItem ? '<div class="my-rank-extra-inline">' +
-          '<span class="rank-label">🤜</span>' +
-          '<div class="rank-avatar">' + listItem.hisAvatar + '</div>' +
-          '<span class="rank-name">' + listItem.hisName + '</span>' +
-        '</div>' : '') +
-      '</div>' +
+      '<div class="my-rank-name">' + my.name + '</div>' +
       '<div class="my-rank-stats">' +
         '<span>排名: <strong>' + (isOnList ? my.rank : '—') + '</strong></span>' +
         '<span>分数: <strong>' + my.score.toLocaleString() + '</strong></span>' +
