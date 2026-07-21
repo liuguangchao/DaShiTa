@@ -1,31 +1,181 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>排行榜</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 4. 排行榜 ===================== -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>排行榜</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+/* ===== 排行榜页面专用样式 ===== */
+#leaderboardPage{background:linear-gradient(180deg,#FFE066 0%,#FFD166 30%,#FFB347 100%)}
+
+/* Tab 切换样式 */
+.leaderboard-tabs{display:flex;gap:0;margin:8px 16px 0;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.3)}
+.leaderboard-tab{flex:1;padding:10px 0;text-align:center;font-size:15px;color:#5C3300;cursor:pointer;white-space:nowrap;transition:all .3s;font-weight:500;border:none;background:transparent}
+.leaderboard-tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-weight:700}
+
+/* 排名样式 */
+.rank-top3{display:flex;justify-content:center;gap:12px;padding:16px 8px 8px}
+.rank-crown{width:100px;background:rgba(255,255,255,.7);border-radius:16px;padding:12px 8px;text-align:center;border:1px solid rgba(255,255,255,.5)}
+.rank-crown.r1{order:2}
+.rank-crown.r2{order:1}
+.rank-crown.r3{order:3}
+.rank-crown .rn{font-size:12px;font-weight:700;color:#FF6B6B}
+.rank-crown .ravatar{font-size:36px;margin:8px 0}
+.rank-crown .rname{font-size:13px;font-weight:700;color:#333;margin-bottom:4px}
+.rank-crown .rscore{font-size:14px;font-weight:700;color:#FF6B6B}
+
+/* 排名列表 */
+.rank-list{margin:8px 16px}
+.rank-list .row{display:flex;align-items:center;padding:12px 8px;border-bottom:1px solid rgba(0,0,0,.05)}
+.rank-list .row:last-child{border-bottom:none}
+.rank-list .rn{width:32px;font-size:14px;font-weight:700;color:#FF6B6B}
+.rank-list .ra{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:20px;margin-right:8px}
+.rank-list .ri{flex:1}
+.rank-list .ri .nm{font-size:14px;font-weight:600;color:#333}
+.rank-list .ri .bd{font-size:12px;color:#999}
+.rank-list .sc{font-size:15px;font-weight:700;color:#FF6B6B;margin-right:8px}
+.rank-list .act{padding:4px 10px;border-radius:12px;border:none;background:rgba(255,255,255,.5);font-size:12px;cursor:pointer}
+
+/* 底部提示 */
+.bottom-tip{text-align:center;padding:16px;color:#8B6914;font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- ===================== 4. 排行榜 ===================== -->
 <div class="page active" id="leaderboardPage">
   <div class="bar-top">
     <button class="back-btn" onclick="window.location.href='index.html'">←</button>
     <div class="title-center">排行榜</div>
-    <div class="icon-btn" style="width:auto;padding:0 12px;height:36px;border-radius:18px;font-size:13px" onclick="showToast(&#39;隐私设置&#39;)">隐私设置</div>
+    <div class="icon-btn" style="width:auto;padding:0 12px;height:36px;border-radius:18px;font-size:13px" onclick="showToast('隐私设置')">隐私设置</div>
   </div>
-  <div class="tabs" style="margin-top:8px">
-    <div class="tab" onclick="switchTab(this)">虚拟人物打击榜</div>
-    <div class="tab active" onclick="switchTab(this)">打地鼠榜</div>
-    <div class="tab" onclick="switchTab(this)">打地鼠榜</div>
+  
+  <!-- Tab 切换 -->
+  <div class="leaderboard-tabs">
+    <div class="leaderboard-tab" onclick="switchLeaderboard(this, 'mole')">打地鼠</div>
+    <div class="leaderboard-tab active" onclick="switchLeaderboard(this, 'figure')">打屎他</div>
   </div>
+  
   <div style="padding:0 8px">
-    <div class="rank-top3">
-      <div class="rank-crown r1"><span class="rn">1</span><div class="ravatar">👑</div><div class="rname">发泄小能手</div><div style="font-size:11px;color:#8B6914">昵称</div><div class="rscore">128000</div></div>
-      <div class="rank-crown r2"><span class="rn">2</span><div class="ravatar">👑</div><div class="rname">天天打地鼠</div><div style="font-size:11px;color:#8B6914">累计伤害</div><div class="rscore">96500</div></div>
-      <div class="rank-crown r3"><span class="rn">3</span><div class="ravatar">👑</div><div class="rname">解压大师</div><div style="font-size:11px;color:#8B6914">累计伤害</div><div class="rscore">87200</div></div>
+    <!-- Top 3 排名 -->
+    <div class="rank-top3" id="rankTop3">
+      <!-- 动态渲染 -->
     </div>
-    <div class="card rank-list">
-      <div class="row"><span class="rn">4</span><div class="ra">👦</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">12800</span><button class="act">👍 伤害</button></div>
-      <div class="row"><span class="rn">5</span><div class="ra">👷</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">12500</span><button class="act">👍 伤害</button></div>
-      <div class="row"><span class="rn">6</span><div class="ra">👨</div><div class="ri"><div class="nm">天天打地鼠</div><div class="bd">累计小奖头</div></div><span class="sc">17500</span><button class="act">👍 伤害</button></div>
-      <div class="row"><span class="rn">10</span><div class="ra">👩</div><div class="ri"><div class="nm">发泄小能手</div><div class="bd">累计小奖头</div></div><span class="sc">10500</span><button class="act">👍 伤害</button></div>
+    
+    <!-- 排名列表 -->
+    <div class="card rank-list" id="rankList">
+      <!-- 动态渲染 -->
     </div>
-    <div class="card-round" style="text-align:center;background:rgba(255,255,255,.1);margin:0 16px">
-      <div style="font-size:14px;color:#8B6914">🏆 今日上榜可获得打屎币奖励</div>
+    
+    <!-- 底部提示 -->
+    <div class="card-round bottom-tip">
+      <div>🏆 今日上榜可获得打屎币奖励</div>
     </div>
   </div>
 </div>
 
-<script src="js/app.js"></script></body></html>
+<script src="js/app.js"></script>
+<script>
+/* ===== 排行榜数据 ===== */
+var leaderboardData = {
+  mole: {
+    top3: [
+      {rank:1,name:'发泄小能手',score:128000,avatar:'👑',desc:'累计伤害'},
+      {rank:2,name:'天天打地鼠',score:96500,avatar:'👑',desc:'累计伤害'},
+      {rank:3,name:'解压大师',score:87200,avatar:'👑',desc:'累计伤害'}
+    ],
+    list: [
+      {rank:4,avatar:'👦',name:'发泄小能手',desc:'累计小奖头',score:12800},
+      {rank:5,avatar:'👷',name:'发泄小能手',desc:'累计小奖头',score:12500},
+      {rank:6,avatar:'👨',name:'天天打地鼠',desc:'累计小奖头',score:17500},
+      {rank:10,avatar:'👩',name:'发泄小能手',desc:'累计小奖头',score:10500}
+    ]
+  },
+  figure: {
+    top3: [
+      {rank:1,name:'屎神降临',score:156000,avatar:'👑',desc:'总伤害'},
+      {rank:2,name:'暴躁老哥',score:132000,avatar:'👑',desc:'总伤害'},
+      {rank:3,name:'打屎达人',score:118000,avatar:'👑',desc:'总伤害'}
+    ],
+    list: [
+      {rank:4,avatar:'😡',name:'屎神降临',desc:'总伤害',score:15600},
+      {rank:5,avatar:'🤬',name:'暴躁老哥',desc:'总伤害',score:13200},
+      {rank:6,avatar:'💪',name:'打屎达人',desc:'总伤害',score:11800},
+      {rank:10,avatar:'🔥',name:'发泄专家',desc:'总伤害',score:9800}
+    ]
+  }
+};
+
+/* ===== 当前选中的榜单 ===== */
+var currentBoard = 'figure';
+
+/* ===== 渲染 Top 3 ===== */
+function renderTop3(data){
+  var container = document.getElementById('rankTop3');
+  var html = '';
+  
+  // 按排名排序
+  var sorted = data.top3.sort(function(a, b){ return a.rank - b.rank; });
+  
+  for(var i = 0; i < sorted.length; i++){
+    var item = sorted[i];
+    html += '<div class="rank-crown r' + item.rank + '">' +
+      '<span class="rn">' + item.rank + '</span>' +
+      '<div class="ravatar">' + item.avatar + '</div>' +
+      '<div class="rname">' + item.name + '</div>' +
+      '<div style="font-size:11px;color:#8B6914">' + item.desc + '</div>' +
+      '<div class="rscore">' + item.score + '</div>' +
+    '</div>';
+  }
+  
+  container.innerHTML = html;
+}
+
+/* ===== 渲染列表 ===== */
+function renderList(data){
+  var container = document.getElementById('rankList');
+  var html = '';
+  
+  for(var i = 0; i < data.list.length; i++){
+    var item = data.list[i];
+    html += '<div class="row">' +
+      '<span class="rn">' + item.rank + '</span>' +
+      '<div class="ra">' + item.avatar + '</div>' +
+      '<div class="ri">' +
+        '<div class="nm">' + item.name + '</div>' +
+        '<div class="bd">' + item.desc + '</div>' +
+      '</div>' +
+      '<span class="sc">' + item.score + '</span>' +
+      '<button class="act">👍 伤害</button>' +
+    '</div>';
+  }
+  
+  container.innerHTML = html;
+}
+
+/* ===== 切换榜单 ===== */
+function switchLeaderboard(el, type){
+  // 更新 Tab 样式
+  el.parentElement.querySelectorAll('.leaderboard-tab').forEach(function(tab){
+    tab.classList.remove('active');
+  });
+  el.classList.add('active');
+  
+  // 切换数据
+  currentBoard = type;
+  var data = leaderboardData[type];
+  renderTop3(data);
+  renderList(data);
+}
+
+/* ===== 初始化 ===== */
+window.addEventListener('DOMContentLoaded', function(){
+  var data = leaderboardData[currentBoard];
+  renderTop3(data);
+  renderList(data);
+});
+</script>
+
+</body>
+</html>
