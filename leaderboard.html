@@ -248,19 +248,21 @@ function renderList(data){
     var hisDisplayName = item.hisName;
     var showHisAvatar = true;
     var showHisName = true;
+    var showFightEmoji = true;
     
-    // 如果开启隐私设置且是打屎他榜单，且是当前行，隐藏他的头像和名字
+    // 如果开启隐私设置且是打屎他榜单，且是当前行，隐藏他的头像和名字以及打拳表情
     if (currentBoard === 'figure' && hideName && item.rank === myRank) {
       hisDisplayName = '';
       showHisAvatar = false;
       showHisName = false;
+      showFightEmoji = false;
     }
     
     html += '<div class="rank-item">' +
       '<span class="rank-num' + (isTop3 ? ' top3' : '') + '">' + item.rank + '</span>' +
       '<div class="rank-avatar">' + item.meAvatar + '</div>' +
       '<span class="rank-name">' + item.meName + '</span>' +
-      '<span class="rank-label">🤜</span>' +
+      (showFightEmoji ? '<span class="rank-label">🤜</span>' : '') +
       (showHisAvatar ? '<div class="rank-avatar">' + item.hisAvatar + '</div>' : '') +
       (showHisName ? '<span class="rank-name">' + hisDisplayName + '</span>' : '') +
       '<span class="rank-label">总伤害</span>' +
@@ -276,6 +278,22 @@ function renderMyRank(data){
   var container = document.getElementById('myRankCard');
   var my = data.myRank;
   var isOnList = my.rank <= 20;
+  
+  // 从列表中找到对应排名的数据
+  var listItem = null;
+  for (var i = 0; i < data.list.length; i++) {
+    if (data.list[i].rank === my.rank) {
+      listItem = data.list[i];
+      break;
+    }
+  }
+  
+  // 如果有对应排名的数据，使用列表中的数据
+  if (listItem) {
+    my.avatar = listItem.meAvatar;
+    my.name = listItem.meName;
+    my.score = listItem.score;
+  }
   
   var html = '<div class="my-rank-header">' +
     '<span class="my-rank-title">我的排名</span>' +
