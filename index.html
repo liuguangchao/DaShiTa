@@ -30,11 +30,11 @@
         <div class="sign-title-text">七日连续签到</div>
       </div>
     </div>
-    <div class="week-grid">
+    <div class="week-grid" id="weekGrid">
       <div class="day-box done"><span class="day-num">1</span><span class="day-icon">✓</span></div>
       <div class="day-box done"><span class="day-num">2</span><span class="day-icon">✓</span></div>
       <div class="day-box done"><span class="day-num">3</span><span class="day-icon">✓</span></div>
-      <div class="day-box today"><span class="day-num">4</span><span class="day-icon">✨</span></div>
+      <div class="day-box today" id="todayBox"><span class="day-num">4</span><span class="day-icon">✨</span></div>
       <div class="day-box lock"><span class="day-num">5</span><span class="day-icon">·</span></div>
       <div class="day-box lock"><span class="day-num">6</span><span class="day-icon">·</span></div>
       <div class="day-box lock"><span class="day-num">7</span><span class="day-icon">·</span></div>
@@ -70,5 +70,97 @@
 </div>
 
 <script src="js/app.js"></script>
+<script>
+/* ===== 首页逻辑 ===== */
+var selectedMode = null;
+
+/* ===== 选择模式 ===== */
+function selectMode(mode) {
+  selectedMode = mode;
+  document.querySelectorAll('.mode-card').forEach(function(card) {
+    card.style.outline = 'none';
+  });
+  var activeCard = document.querySelector('[data-mode="' + mode + '"]');
+  activeCard.style.outline = '3px solid #FF6B35';
+  showToast('已选择' + (mode === 'mole' ? '打地鼠' : '虚拟人物') + '模式');
+}
+
+/* ===== 从首页开始游戏 ===== */
+function startFromHome() {
+  if (!selectedMode) {
+    showToast('请先选择模式');
+    return;
+  }
+  if (selectedMode === 'mole') {
+    window.location.href = 'mole-game.html';
+  } else {
+    window.location.href = 'figure-game.html';
+  }
+}
+
+/* ===== 签到功能 ===== */
+function initSignIn() {
+  var today = new Date().toDateString();
+  var lastSignIn = localStorage.getItem('lastSignInDate');
+  
+  if (lastSignIn !== today) {
+    // 今天未签到，可以签到
+    var todayBox = document.getElementById('todayBox');
+    if (todayBox) {
+      todayBox.style.cursor = 'pointer';
+      todayBox.onclick = function() {
+        doSignIn();
+      };
+    }
+  } else {
+    // 今天已签到，标记为done
+    var todayBox = document.getElementById('todayBox');
+    if (todayBox) {
+      todayBox.className = 'day-box done';
+      todayBox.onclick = null;
+      showToast('今日已签到');
+    }
+  }
+}
+
+function doSignIn() {
+  var today = new Date().toDateString();
+  var lastSignIn = localStorage.getItem('lastSignInDate');
+  
+  // 检查是否今天已经签过
+  if (lastSignIn === today) {
+    showToast('今日已签到');
+    return;
+  }
+  
+  // 更新签到状态
+  localStorage.setItem('lastSignInDate', today);
+  
+  // 更新UI：将今天标记为done
+  var todayBox = document.getElementById('todayBox');
+  if (todayBox) {
+    todayBox.className = 'day-box done';
+    todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
+    todayBox.onclick = null;
+  }
+  
+  // 解锁下一天
+  var dayBoxes = document.querySelectorAll('.day-box');
+  for (var i = 0; i < dayBoxes.length; i++) {
+    if (dayBoxes[i].classList.contains('lock') && parseInt(dayBoxes[i].querySelector('.day-num').textContent) === 5) {
+      dayBoxes[i].className = 'day-box today';
+      dayBoxes[i].innerHTML = '<span class="day-num">5</span><span class="day-icon">✨</span>';
+      break;
+    }
+  }
+  
+  showToast('签到成功！+20打屎币');
+}
+
+// 页面加载时初始化签到
+window.addEventListener('DOMContentLoaded', function() {
+  initSignIn();
+});
+</script>
 </body>
 </html>
