@@ -93,7 +93,7 @@
     <!-- 隐私设置开关（仅打屎他榜单显示） -->
     <div class="privacy-toggle" id="privacyToggle" style="display:none">
       <div class="privacy-switch" id="privacySwitch" onclick="togglePrivacy()"></div>
-      <label for="privacySwitch" onclick="togglePrivacy()">隐藏我的名字</label>
+      <label for="privacySwitch" onclick="togglePrivacy()">隐藏他人名字</label>
     </div>
     
     <!-- 自己的数据 -->
@@ -234,8 +234,8 @@ function renderList(data){
     var isTop3 = item.rank <= 3;
     var displayName = item.name;
     
-    // 如果开启隐私设置且是打屎他榜单，随机隐藏名字
-    if (currentBoard === 'figure' && hideName && Math.random() > 0.5) {
+    // 如果开启隐私设置且是打屎他榜单，隐藏他人名字
+    if (currentBoard === 'figure' && hideName) {
       displayName = '干架达人' + item.rank;
     }
     
@@ -244,7 +244,7 @@ function renderList(data){
       '<div class="rank-avatar">' + item.avatar + '</div>' +
       '<div class="rank-info">' +
         '<div class="rank-name">' + displayName + '</div>' +
-        '<div class="rank-desc">' + item.desc + '</div>' +
+        '<div class="rank-desc">总伤害</div>' +
       '</div>' +
       '<span class="rank-score">' + item.score.toLocaleString() + '</span>' +
     '</div>';
