@@ -13,7 +13,7 @@
   <div class="bar-top">
     <img src="./images/logo.png" alt="打屎他" style="height:48px">
     <div style="display:flex;gap:8px">
-      <button class="icon-btn-img" onclick="showToast('签到成功！+20打屎币')" style="width:44px;height:44px"><img src="./images/checkin.png" alt="签到" style="width:36px;height:36px"></button>
+      <button class="icon-btn-img" id="topSignBtn" style="width:44px;height:44px"><img src="./images/checkin.png" alt="签到" style="width:36px;height:36px"></button>
       <button class="icon-btn-img" onclick="window.location.href='shop.html'" style="width:44px;height:44px"><img src="./images/shop.png" alt="商城" style="width:36px;height:36px"></button>
       <button class="icon-btn-img" onclick="window.location.href='backpack.html'" style="width:44px;height:44px"><img src="./images/backpack.png" alt="背包" style="width:36px;height:36px"></button>
       <button class="icon-btn-img" onclick="window.location.href='msg-list.html'" style="width:44px;height:44px"><img src="./images/message.png" alt="消息" style="width:40px;height:40px"></button>
@@ -105,6 +105,7 @@ function initSignIn() {
   var today = new Date().toDateString();
   var lastSignIn = localStorage.getItem('lastSignInDate');
   var todayBox = document.getElementById('todayBox');
+  var topSignBtn = document.getElementById('topSignBtn');
   
   if (lastSignIn === today) {
     // 今天已签到，禁用点击
@@ -115,10 +116,18 @@ function initSignIn() {
       todayBox.removeAttribute('onclick');
       todayBox.style.opacity = '0.6';
     }
+    if (topSignBtn) {
+      topSignBtn.removeAttribute('onclick');
+      topSignBtn.style.opacity = '0.6';
+    }
     return;
   }
   
-  // 今天未签到，保持 onclick 不变
+  // 今天未签到，顶部签到按钮绑定点击
+  if (topSignBtn) {
+    topSignBtn.setAttribute('onclick', 'performSignIn()');
+    topSignBtn.style.opacity = '1';
+  }
   if (todayBox) {
     todayBox.style.opacity = '1';
   }
@@ -126,18 +135,27 @@ function initSignIn() {
 
 function performSignIn() {
   // 锁住防止重复点击
-  if (signInLocked) return;
+  if (signInLocked) {
+    showToast('请勿重复签到');
+    return;
+  }
   signInLocked = true;
   
   var today = new Date().toDateString();
   localStorage.setItem('lastSignInDate', today);
   
   var todayBox = document.getElementById('todayBox');
+  var topSignBtn = document.getElementById('topSignBtn');
+  
   if (todayBox) {
     todayBox.className = 'day-box done';
     todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
     todayBox.removeAttribute('onclick');
     todayBox.style.opacity = '0.6';
+  }
+  if (topSignBtn) {
+    topSignBtn.removeAttribute('onclick');
+    topSignBtn.style.opacity = '0.6';
   }
   
   // 解锁下一天
