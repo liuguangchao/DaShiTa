@@ -99,6 +99,8 @@ function startFromHome() {
 }
 
 /* ===== 签到功能 ===== */
+var hasSignedInToday = false;
+
 function initSignIn() {
   var today = new Date().toDateString();
   var lastSignIn = localStorage.getItem('lastSignInDate');
@@ -106,6 +108,7 @@ function initSignIn() {
   
   if (lastSignIn === today) {
     // 今天已签到，标记为done，禁用点击
+    hasSignedInToday = true;
     if (todayBox) {
       todayBox.className = 'day-box done';
       todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
@@ -115,34 +118,40 @@ function initSignIn() {
     return;
   }
   
-  // 今天未签到，绑定点击事件
-  if (todayBox) {
+  // 今天未签到，绑定点击事件（使用 once 标志防止重复绑定）
+  if (todayBox && !todayBox.dataset.bound) {
+    todayBox.dataset.bound = 'true';
     todayBox.style.cursor = 'pointer';
-    todayBox.onclick = function() {
+    todayBox.onclick = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
       doSignIn(todayBox);
     };
   }
 }
 
 function doSignIn(todayBox) {
-  var today = new Date().toDateString();
-  var lastSignIn = localStorage.getItem('lastSignInDate');
-  
-  // 双重检查：如果今天已签过，直接返回
-  if (lastSignIn === today) {
-    showToast('今日已签到');
+  // 防止重复点击
+  if (hasSignedInToday) {
     return;
   }
   
+  var today = new Date().toDateString();
+  
   // 立即写入localStorage，防止重复点击
   localStorage.setItem('lastSignInDate', today);
+  hasSignedInToday = true;
+  
+  // 立即禁用点击
+  if (todayBox) {
+    todayBox.onclick = null;
+    todayBox.style.cursor = 'default';
+  }
   
   // 更新UI：将今天标记为done
   if (todayBox) {
     todayBox.className = 'day-box done';
     todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
-    todayBox.onclick = null;
-    todayBox.style.cursor = 'default';
   }
   
   // 解锁下一天
