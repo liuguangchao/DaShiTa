@@ -13,7 +13,7 @@
   <div class="bar-top">
     <img src="./images/logo.png" alt="打屎他" style="height:48px">
     <div style="display:flex;gap:8px">
-      <button class="icon-btn-img" id="topSignBtn" style="width:44px;height:44px"><img src="./images/checkin.png" alt="签到" style="width:36px;height:36px"></button>
+      <button class="icon-btn-img" id="topSignBtn" onclick="handleSignIn()" style="width:44px;height:44px"><img src="./images/checkin.png" alt="签到" style="width:36px;height:36px"></button>
       <button class="icon-btn-img" onclick="window.location.href='shop.html'" style="width:44px;height:44px"><img src="./images/shop.png" alt="商城" style="width:36px;height:36px"></button>
       <button class="icon-btn-img" onclick="window.location.href='backpack.html'" style="width:44px;height:44px"><img src="./images/backpack.png" alt="背包" style="width:36px;height:36px"></button>
       <button class="icon-btn-img" onclick="window.location.href='msg-list.html'" style="width:44px;height:44px"><img src="./images/message.png" alt="消息" style="width:40px;height:40px"></button>
@@ -99,60 +99,33 @@ function startFromHome() {
 }
 
 /* ===== 签到功能 ===== */
-var signInLocked = false;
+var signInDone = false;
 
-function initSignIn() {
+function handleSignIn() {
+  // 如果今天已签到，提示不要重复
   var today = new Date().toDateString();
   var lastSignIn = localStorage.getItem('lastSignInDate');
-  var todayBox = document.getElementById('todayBox');
-  var topSignBtn = document.getElementById('topSignBtn');
   
-  if (lastSignIn === today) {
-    // 今天已签到，禁用点击
-    signInLocked = true;
-    if (todayBox) {
-      todayBox.className = 'day-box done';
-      todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
-      todayBox.removeAttribute('onclick');
-      todayBox.style.opacity = '0.6';
-    }
-    if (topSignBtn) {
-      topSignBtn.removeAttribute('onclick');
-      topSignBtn.style.opacity = '0.6';
-    }
-    return;
-  }
-  
-  // 今天未签到，顶部签到按钮绑定点击
-  if (topSignBtn) {
-    topSignBtn.onclick = function() { performSignIn(); };
-    topSignBtn.style.opacity = '1';
-  }
-  if (todayBox) {
-    todayBox.style.opacity = '1';
-  }
-}
-
-function performSignIn() {
-  // 锁住防止重复点击
-  if (signInLocked) {
+  if (lastSignIn === today || signInDone) {
     showToast('请勿重复签到');
     return;
   }
-  signInLocked = true;
   
-  var today = new Date().toDateString();
+  // 执行签到
+  signInDone = true;
   localStorage.setItem('lastSignInDate', today);
   
+  // 更新签到卡片
   var todayBox = document.getElementById('todayBox');
-  var topSignBtn = document.getElementById('topSignBtn');
-  
   if (todayBox) {
     todayBox.className = 'day-box done';
     todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
     todayBox.removeAttribute('onclick');
     todayBox.style.opacity = '0.6';
   }
+  
+  // 更新顶部按钮
+  var topSignBtn = document.getElementById('topSignBtn');
   if (topSignBtn) {
     topSignBtn.removeAttribute('onclick');
     topSignBtn.style.opacity = '0.6';
@@ -171,9 +144,27 @@ function performSignIn() {
   showToast('签到成功！+20打屎币');
 }
 
-// 页面加载时初始化签到
+// 页面加载时检查是否已签到
 window.addEventListener('DOMContentLoaded', function() {
-  initSignIn();
+  var today = new Date().toDateString();
+  var lastSignIn = localStorage.getItem('lastSignInDate');
+  
+  if (lastSignIn === today) {
+    signInDone = true;
+    var todayBox = document.getElementById('todayBox');
+    var topSignBtn = document.getElementById('topSignBtn');
+    
+    if (todayBox) {
+      todayBox.className = 'day-box done';
+      todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
+      todayBox.removeAttribute('onclick');
+      todayBox.style.opacity = '0.6';
+    }
+    if (topSignBtn) {
+      topSignBtn.removeAttribute('onclick');
+      topSignBtn.style.opacity = '0.6';
+    }
+  }
 });
 </script>
 </body>
