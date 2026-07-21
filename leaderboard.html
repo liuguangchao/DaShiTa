@@ -113,6 +113,16 @@ function generateRandomFighter() {
   return { emoji: emoji, name: name };
 }
 
+/* ===== 随机生成我的名字和头像 ===== */
+function generateMyInfo() {
+  var emojis = ['😄','😊','😎','🤩','😇','🥳','😜','🤪','😋','🤗'];
+  var names = ['开心果','微笑侠','酷盖','闪亮之星','天使宝贝','派对动物','调皮鬼','逗比王','甜心派','温暖天使'];
+  return {
+    avatar: emojis[Math.floor(Math.random() * emojis.length)],
+    name: names[Math.floor(Math.random() * names.length)]
+  };
+}
+
 /* ===== 排行榜数据 ===== */
 var leaderboardData = {
   mole: {
@@ -122,23 +132,23 @@ var leaderboardData = {
       {rank:3,name:'解压大师',score:8720,avatar:'👑',desc:'打地鼠个数'}
     ],
     list: [
-      {rank:4,meAvatar:'😄',meName:'我的名字',fightEmoji:'👊',hisAvatar:'😡',hisName:'打屎高手',desc:'打地鼠个数',score:7500},
-      {rank:5,meAvatar:'😄',meName:'我的名字',fightEmoji:'💪',hisAvatar:'😊',hisName:'快乐打鼠',desc:'打地鼠个数',score:6800},
-      {rank:6,meAvatar:'😄',meName:'我的名字',fightEmoji:'🔥',hisAvatar:'😎',hisName:'鼠辈克星',desc:'打地鼠个数',score:6200},
-      {rank:7,meAvatar:'😄',meName:'我的名字',fightEmoji:'⚡',hisAvatar:'🤩',hisName:'快速反应',desc:'打地鼠个数',score:5800},
-      {rank:8,meAvatar:'😄',meName:'我的名字',fightEmoji:'👺',hisAvatar:'🎯',hisName:'精准打击',desc:'打地鼠个数',score:5200},
-      {rank:9,meAvatar:'😄',meName:'我的名字',fightEmoji:'👹',hisAvatar:'⚡',hisName:'手速王者',desc:'打地鼠个数',score:4800},
-      {rank:10,meAvatar:'😄',meName:'我的名字',fightEmoji:'💢',hisAvatar:'🔥',hisName:'打鼠达人',desc:'打地鼠个数',score:4500},
-      {rank:11,meAvatar:'😄',meName:'我的名字',fightEmoji:'😤',hisAvatar:'👶',hisName:'新手上路',desc:'打地鼠个数',score:4200},
-      {rank:12,meAvatar:'😄',meName:'我的名字',fightEmoji:'😡',hisAvatar:'💪',hisName:'坚持不懈',desc:'打地鼠个数',score:3800},
-      {rank:13,meAvatar:'😄',meName:'我的名字',fightEmoji:'🤬',hisAvatar:'🍀',hisName:'运气爆棚',desc:'打地鼠个数',score:3500},
-      {rank:14,meAvatar:'😄',meName:'我的名字',fightEmoji:'👊',hisAvatar:'🐢',hisName:'慢慢来',desc:'打地鼠个数',score:3200},
-      {rank:15,meAvatar:'😄',meName:'我的名字',fightEmoji:'💪',hisAvatar:'🌱',hisName:'初出茅庐',desc:'打地鼠个数',score:2800},
-      {rank:16,meAvatar:'😄',meName:'我的名字',fightEmoji:'🔥',hisAvatar:'🎮',hisName:'偶尔玩玩',desc:'打地鼠个数',score:2500},
-      {rank:17,meAvatar:'😄',meName:'我的名字',fightEmoji:'⚡',hisAvatar:'🎲',hisName:'休闲玩家',desc:'打地鼠个数',score:2200},
-      {rank:18,meAvatar:'😄',meName:'我的名字',fightEmoji:'👺',hisAvatar:'🏃',hisName:'打鼠爱好者',desc:'打地鼠个数',score:1800},
-      {rank:19,meAvatar:'😄',meName:'我的名字',fightEmoji:'👹',hisAvatar:'🐣',hisName:'新手小白',desc:'打地鼠个数',score:1500},
-      {rank:20,meAvatar:'😄',meName:'我的名字',fightEmoji:'💢',hisAvatar:'🌟',hisName:'刚入门',desc:'打地鼠个数',score:1200}
+      {rank:4,meAvatar:'😄',meName:'开心果',fightEmoji:'👊',hisAvatar:'😡',hisName:'打屎高手',desc:'打地鼠个数',score:7500},
+      {rank:5,meAvatar:'😊',meName:'微笑侠',fightEmoji:'💪',hisAvatar:'😊',hisName:'快乐打鼠',desc:'打地鼠个数',score:6800},
+      {rank:6,meAvatar:'😎',meName:'酷盖',fightEmoji:'🔥',hisAvatar:'😎',hisName:'鼠辈克星',desc:'打地鼠个数',score:6200},
+      {rank:7,meAvatar:'🤩',meName:'闪亮之星',fightEmoji:'⚡',hisAvatar:'🤩',hisName:'快速反应',desc:'打地鼠个数',score:5800},
+      {rank:8,meAvatar:'😇',meName:'天使宝贝',fightEmoji:'👺',hisAvatar:'🎯',hisName:'精准打击',desc:'打地鼠个数',score:5200},
+      {rank:9,meAvatar:'🥳',meName:'派对动物',fightEmoji:'👹',hisAvatar:'⚡',hisName:'手速王者',desc:'打地鼠个数',score:4800},
+      {rank:10,meAvatar:'😜',meName:'调皮鬼',fightEmoji:'💢',hisAvatar:'🔥',hisName:'打鼠达人',desc:'打地鼠个数',score:4500},
+      {rank:11,meAvatar:'🤪',meName:'逗比王',fightEmoji:'😤',hisAvatar:'👶',hisName:'新手上路',desc:'打地鼠个数',score:4200},
+      {rank:12,meAvatar:'😋',meName:'甜心派',fightEmoji:'😡',hisAvatar:'💪',hisName:'坚持不懈',desc:'打地鼠个数',score:3800},
+      {rank:13,meAvatar:'🤗',meName:'温暖天使',fightEmoji:'🤬',hisAvatar:'🍀',hisName:'运气爆棚',desc:'打地鼠个数',score:3500},
+      {rank:14,meAvatar:'😄',meName:'开心果',fightEmoji:'👊',hisAvatar:'🐢',hisName:'慢慢来',desc:'打地鼠个数',score:3200},
+      {rank:15,meAvatar:'😊',meName:'微笑侠',fightEmoji:'💪',hisAvatar:'🌱',hisName:'初出茅庐',desc:'打地鼠个数',score:2800},
+      {rank:16,meAvatar:'😎',meName:'酷盖',fightEmoji:'🔥',hisAvatar:'🎮',hisName:'偶尔玩玩',desc:'打地鼠个数',score:2500},
+      {rank:17,meAvatar:'🤩',meName:'闪亮之星',fightEmoji:'⚡',hisAvatar:'🎲',hisName:'休闲玩家',desc:'打地鼠个数',score:2200},
+      {rank:18,meAvatar:'😇',meName:'天使宝贝',fightEmoji:'👺',hisAvatar:'🏃',hisName:'打鼠爱好者',desc:'打地鼠个数',score:1800},
+      {rank:19,meAvatar:'🥳',meName:'派对动物',fightEmoji:'👹',hisAvatar:'🐣',hisName:'新手小白',desc:'打地鼠个数',score:1500},
+      {rank:20,meAvatar:'😜',meName:'调皮鬼',fightEmoji:'💢',hisAvatar:'🌟',hisName:'刚入门',desc:'打地鼠个数',score:1200}
     ],
     myRank: {
       rank: 10,
@@ -170,10 +180,11 @@ function initFigureList() {
   var list = [];
   for (var i = 4; i <= 20; i++) {
     var fighter = generateRandomFighter();
+    var myInfo = generateMyInfo();
     list.push({
       rank: i,
-      meAvatar: '😄',
-      meName: '我的名字',
+      meAvatar: myInfo.avatar,
+      meName: myInfo.name,
       fightEmoji: fightEmojis[Math.floor(Math.random() * fightEmojis.length)],
       hisAvatar: fighter.emoji,
       hisName: fighter.name,
