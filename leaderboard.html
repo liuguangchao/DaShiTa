@@ -56,6 +56,14 @@
 .my-rank-stats{display:flex;gap:16px;font-size:13px;color:#666}
 .my-rank-stats span{display:flex;align-items:center;gap:4px}
 .my-rank-stats strong{color:#FF6B6B;font-size:16px}
+
+/* 隐私设置开关 */
+.privacy-toggle{display:flex;align-items:center;gap:8px;padding:8px 16px;margin-top:8px;background:rgba(255,255,255,.6);border-radius:12px;flex-shrink:0}
+.privacy-toggle label{font-size:13px;color:#5C3300;font-weight:500;cursor:pointer}
+.privacy-switch{position:relative;width:44px;height:24px;background:#ccc;border-radius:12px;cursor:pointer;transition:background .3s}
+.privacy-switch.on{background:#4CAF50}
+.privacy-switch::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .3s}
+.privacy-switch.on::after{transform:translateX(20px)}
 </style>
 </head>
 <body>
@@ -65,7 +73,6 @@
   <div class="bar-top">
     <button class="back-btn" onclick="window.location.href='index.html'">←</button>
     <div class="title-center">排行榜</div>
-    <div class="icon-btn" style="width:auto;padding:0 12px;height:36px;border-radius:18px;font-size:13px" onclick="showToast('隐私设置')">隐私设置</div>
   </div>
   
   <!-- Tab 切换 -->
@@ -83,6 +90,12 @@
       <div class="rank-list" id="rankList"></div>
     </div>
     
+    <!-- 隐私设置开关（仅打屎他榜单显示） -->
+    <div class="privacy-toggle" id="privacyToggle" style="display:none">
+      <div class="privacy-switch" id="privacySwitch" onclick="togglePrivacy()"></div>
+      <label for="privacySwitch" onclick="togglePrivacy()">隐藏我的名字</label>
+    </div>
+    
     <!-- 自己的数据 -->
     <div class="my-rank-card" id="myRankCard"></div>
   </div>
@@ -90,6 +103,17 @@
 
 <script src="js/app.js"></script>
 <script>
+/* ===== 干架表情和名字库 ===== */
+var fightEmojis = ['😡','😤','🤬','💢','👊','👺','👹','💪','🔥','⚡'];
+var fightNames = ['干架王','暴躁老哥','打架达人','街头霸王','拳王争霸','铁血战士','格斗之王','无敌战神','一拳超人','终极战士'];
+
+/* ===== 随机生成干架表情和名字 ===== */
+function generateRandomFighter() {
+  var emoji = fightEmojis[Math.floor(Math.random() * fightEmojis.length)];
+  var name = fightNames[Math.floor(Math.random() * fightNames.length)];
+  return { emoji: emoji, name: name };
+}
+
 /* ===== 排行榜数据 ===== */
 var leaderboardData = {
   mole: {
@@ -131,25 +155,7 @@ var leaderboardData = {
       {rank:2,name:'暴躁老哥',score:132000,avatar:'👑',desc:'总伤害'},
       {rank:3,name:'打屎达人',score:118000,avatar:'👑',desc:'总伤害'}
     ],
-    list: [
-      {rank:4,name:'发泄专家',avatar:'😤',desc:'总伤害',score:95000},
-      {rank:5,name:'愤怒的小鸟',avatar:'🐦',desc:'总伤害',score:88000},
-      {rank:6,name:'屎球滚滚',avatar:'💩',desc:'总伤害',score:82000},
-      {rank:7,name:'暴力拆解',avatar:'🔨',desc:'总伤害',score:78000},
-      {rank:8,name:'精准打击',avatar:'🎯',desc:'总伤害',score:72000},
-      {rank:9,name:'手速王者',avatar:'⚡',desc:'总伤害',score:68000},
-      {rank:10,name:'打屎达人',avatar:'🔥',desc:'总伤害',score:65000},
-      {rank:11,name:'新手上路',avatar:'👶',desc:'总伤害',score:62000},
-      {rank:12,name:'坚持不懈',avatar:'💪',desc:'总伤害',score:58000},
-      {rank:13,name:'运气爆棚',avatar:'🍀',desc:'总伤害',score:55000},
-      {rank:14,name:'慢慢来',avatar:'🐢',desc:'总伤害',score:52000},
-      {rank:15,name:'初出茅庐',avatar:'🌱',desc:'总伤害',score:48000},
-      {rank:16,name:'偶尔玩玩',avatar:'🎮',desc:'总伤害',score:45000},
-      {rank:17,name:'休闲玩家',avatar:'🎲',desc:'总伤害',score:42000},
-      {rank:18,name:'打屎爱好者',avatar:'🏃',desc:'总伤害',score:38000},
-      {rank:19,name:'新手小白',avatar:'🐣',desc:'总伤害',score:35000},
-      {rank:20,name:'刚入门',avatar:'🌟',desc:'总伤害',score:32000}
-    ],
+    list: [], // 动态生成
     myRank: {
       rank: 15,
       name: '我的名字',
@@ -160,8 +166,42 @@ var leaderboardData = {
   }
 };
 
+// 初始化打屎他榜单的动态数据
+function initFigureList() {
+  var list = [];
+  for (var i = 4; i <= 20; i++) {
+    var fighter = generateRandomFighter();
+    list.push({
+      rank: i,
+      name: fighter.name,
+      avatar: fighter.emoji,
+      desc: '总伤害',
+      score: Math.floor(32000 + Math.random() * 63000)
+    });
+  }
+  leaderboardData.figure.list = list;
+}
+initFigureList();
+
 /* ===== 当前选中的榜单 ===== */
 var currentBoard = 'figure';
+
+/* ===== 隐私设置 ===== */
+var hideName = false;
+
+/* ===== 切换隐私设置 ===== */
+function togglePrivacy() {
+  hideName = !hideName;
+  var switchEl = document.getElementById('privacySwitch');
+  if (hideName) {
+    switchEl.classList.add('on');
+  } else {
+    switchEl.classList.remove('on');
+  }
+  // 重新渲染列表以应用隐私设置
+  var data = leaderboardData[currentBoard];
+  renderList(data);
+}
 
 /* ===== 渲染 Top 3 ===== */
 function renderTop3(data){
@@ -192,11 +232,18 @@ function renderList(data){
   for(var i = 0; i < data.list.length; i++){
     var item = data.list[i];
     var isTop3 = item.rank <= 3;
+    var displayName = item.name;
+    
+    // 如果开启隐私设置且是打屎他榜单，随机隐藏名字
+    if (currentBoard === 'figure' && hideName && Math.random() > 0.5) {
+      displayName = '干架达人' + item.rank;
+    }
+    
     html += '<div class="rank-item">' +
       '<span class="rank-num' + (isTop3 ? ' top3' : '') + '">' + item.rank + '</span>' +
       '<div class="rank-avatar">' + item.avatar + '</div>' +
       '<div class="rank-info">' +
-        '<div class="rank-name">' + item.name + '</div>' +
+        '<div class="rank-name">' + displayName + '</div>' +
         '<div class="rank-desc">' + item.desc + '</div>' +
       '</div>' +
       '<span class="rank-score">' + item.score.toLocaleString() + '</span>' +
@@ -242,6 +289,15 @@ function switchLeaderboard(el, type){
   
   // 切换数据
   currentBoard = type;
+  
+  // 显示/隐藏隐私设置开关
+  var privacyToggle = document.getElementById('privacyToggle');
+  if (type === 'figure') {
+    privacyToggle.style.display = 'flex';
+  } else {
+    privacyToggle.style.display = 'none';
+  }
+  
   var data = leaderboardData[type];
   renderTop3(data);
   renderList(data);
@@ -254,6 +310,9 @@ window.addEventListener('DOMContentLoaded', function(){
   renderTop3(data);
   renderList(data);
   renderMyRank(data);
+  
+  // 默认显示隐私设置开关
+  document.getElementById('privacyToggle').style.display = 'flex';
 });
 </script>
 
