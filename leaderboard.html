@@ -14,10 +14,13 @@
 .leaderboard-tab{flex:1;padding:10px 0;text-align:center;font-size:15px;color:#5C3300;cursor:pointer;white-space:nowrap;transition:all .3s;font-weight:500;border:none;background:transparent}
 .leaderboard-tab.active{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;font-weight:700}
 
-/* 排名样式 */
-.rank-top3{display:flex;justify-content:center;gap:12px;padding:16px 8px 8px}
+/* 排名列表容器 */
+.rank-wrapper{margin:8px 16px;display:flex;flex-direction:column;max-height:calc(100vh - 240px)}
+
+/* Top 3 样式 */
+.rank-top3{display:flex;justify-content:center;gap:12px;padding:12px 0;flex-shrink:0}
 .rank-crown{width:100px;background:rgba(255,255,255,.7);border-radius:16px;padding:12px 8px;text-align:center;border:1px solid rgba(255,255,255,.5)}
-.rank-crown.r1{order:2}
+.rank-crown.r1{order:2;transform:scale(1.1)}
 .rank-crown.r2{order:1}
 .rank-crown.r3{order:3}
 .rank-crown .rn{font-size:12px;font-weight:700;color:#FF6B6B}
@@ -25,20 +28,34 @@
 .rank-crown .rname{font-size:13px;font-weight:700;color:#333;margin-bottom:4px}
 .rank-crown .rscore{font-size:14px;font-weight:700;color:#FF6B6B}
 
-/* 排名列表 */
-.rank-list{margin:8px 16px}
-.rank-list .row{display:flex;align-items:center;padding:12px 8px;border-bottom:1px solid rgba(0,0,0,.05)}
-.rank-list .row:last-child{border-bottom:none}
-.rank-list .rn{width:32px;font-size:14px;font-weight:700;color:#FF6B6B}
-.rank-list .ra{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:20px;margin-right:8px}
-.rank-list .ri{flex:1}
-.rank-list .ri .nm{font-size:14px;font-weight:600;color:#333}
-.rank-list .ri .bd{font-size:12px;color:#999}
-.rank-list .sc{font-size:15px;font-weight:700;color:#FF6B6B;margin-right:8px}
-.rank-list .act{padding:4px 10px;border-radius:12px;border:none;background:rgba(255,255,255,.5);font-size:12px;cursor:pointer}
+/* 滚动列表 */
+.rank-scroll{flex:1;overflow-y:auto;margin-top:8px}
+.rank-list{background:rgba(255,255,255,.7);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.5)}
+.rank-item{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(0,0,0,.05)}
+.rank-item:last-child{border-bottom:none}
+.rank-item.me{background:rgba(255,224,102,.3);border-left:3px solid #FFB347}
+.rank-num{width:40px;font-size:16px;font-weight:700;color:#666}
+.rank-num.top3{color:#FF6B6B}
+.rank-avatar{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:22px;margin-right:12px;flex-shrink:0}
+.rank-info{flex:1;min-width:0}
+.rank-name{font-size:14px;font-weight:600;color:#333;margin-bottom:2px}
+.rank-desc{font-size:12px;color:#999;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-score{font-size:15px;font-weight:700;color:#FF6B6B;margin-left:12px;flex-shrink:0}
 
-/* 底部提示 */
-.bottom-tip{text-align:center;padding:16px;color:#8B6914;font-size:14px}
+/* 自己数据卡片 */
+.my-rank-card{margin-top:12px;padding:16px;background:rgba(255,255,255,.8);border-radius:16px;border:1px solid rgba(255,255,255,.5);flex-shrink:0}
+.my-rank-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.my-rank-title{font-size:14px;font-weight:600;color:#5C3300}
+.my-rank-badge{padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600}
+.my-rank-badge.on-list{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300}
+.my-rank-badge.off-list{background:rgba(255,255,255,.5);color:#999}
+.my-rank-content{display:flex;align-items:center}
+.my-rank-avatar{width:50px;height:50px;border-radius:50%;background:rgba(255,224,102,.3);display:flex;align-items:center;justify-content:center;font-size:28px;margin-right:12px}
+.my-rank-info{flex:1}
+.my-rank-name{font-size:15px;font-weight:700;color:#333;margin-bottom:4px}
+.my-rank-stats{display:flex;gap:16px;font-size:13px;color:#666}
+.my-rank-stats span{display:flex;align-items:center;gap:4px}
+.my-rank-stats strong{color:#FF6B6B;font-size:16px}
 </style>
 </head>
 <body>
@@ -57,21 +74,17 @@
     <div class="leaderboard-tab active" onclick="switchLeaderboard(this, 'figure')">打屎他</div>
   </div>
   
-  <div style="padding:0 8px">
-    <!-- Top 3 排名 -->
-    <div class="rank-top3" id="rankTop3">
-      <!-- 动态渲染 -->
+  <div class="rank-wrapper" id="rankWrapper">
+    <!-- Top 3 -->
+    <div class="rank-top3" id="rankTop3"></div>
+    
+    <!-- 滚动列表 -->
+    <div class="rank-scroll">
+      <div class="rank-list" id="rankList"></div>
     </div>
     
-    <!-- 排名列表 -->
-    <div class="card rank-list" id="rankList">
-      <!-- 动态渲染 -->
-    </div>
-    
-    <!-- 底部提示 -->
-    <div class="card-round bottom-tip">
-      <div>🏆 今日上榜可获得打屎币奖励</div>
-    </div>
+    <!-- 自己的数据 -->
+    <div class="my-rank-card" id="myRankCard"></div>
   </div>
 </div>
 
@@ -86,11 +99,31 @@ var leaderboardData = {
       {rank:3,name:'解压大师',score:87200,avatar:'👑',desc:'累计伤害'}
     ],
     list: [
-      {rank:4,avatar:'👦',name:'发泄小能手',desc:'累计小奖头',score:12800},
-      {rank:5,avatar:'👷',name:'发泄小能手',desc:'累计小奖头',score:12500},
-      {rank:6,avatar:'👨',name:'天天打地鼠',desc:'累计小奖头',score:17500},
-      {rank:10,avatar:'👩',name:'发泄小能手',desc:'累计小奖头',score:10500}
-    ]
+      {rank:4,name:'打屎高手',avatar:'😡',desc:'累计小奖头',score:75000},
+      {rank:5,name:'快乐打鼠',avatar:'😊',desc:'累计小奖头',score:68000},
+      {rank:6,name:'鼠辈克星',avatar:'😎',desc:'累计小奖头',score:62000},
+      {rank:7,name:'快速反应',avatar:'🤩',desc:'累计小奖头',score:58000},
+      {rank:8,name:'精准打击',avatar:'🎯',desc:'累计小奖头',score:52000},
+      {rank:9,name:'手速王者',avatar:'⚡',desc:'累计小奖头',score:48000},
+      {rank:10,name:'打鼠达人',avatar:'🔥',desc:'累计小奖头',score:45000},
+      {rank:11,name:'新手上路',avatar:'👶',desc:'累计小奖头',score:42000},
+      {rank:12,name:'坚持不懈',avatar:'💪',desc:'累计小奖头',score:38000},
+      {rank:13,name:'运气爆棚',avatar:'🍀',desc:'累计小奖头',score:35000},
+      {rank:14,name:'慢慢来',avatar:'🐢',desc:'累计小奖头',score:32000},
+      {rank:15,name:'初出茅庐',avatar:'🌱',desc:'累计小奖头',score:28000},
+      {rank:16,name:'偶尔玩玩',avatar:'🎮',desc:'累计小奖头',score:25000},
+      {rank:17,name:'休闲玩家',avatar:'🎲',desc:'累计小奖头',score:22000},
+      {rank:18,name:'打鼠爱好者',avatar:'🏃',desc:'累计小奖头',score:18000},
+      {rank:19,name:'新手小白',avatar:'🐣',desc:'累计小奖头',score:15000},
+      {rank:20,name:'刚入门',avatar:'🌟',desc:'累计小奖头',score:12000}
+    ],
+    myRank: {
+      rank: 10,
+      name: '我的名字',
+      avatar: '😄',
+      score: 45000,
+      desc: '累计小奖头'
+    }
   },
   figure: {
     top3: [
@@ -99,11 +132,31 @@ var leaderboardData = {
       {rank:3,name:'打屎达人',score:118000,avatar:'👑',desc:'总伤害'}
     ],
     list: [
-      {rank:4,avatar:'😡',name:'屎神降临',desc:'总伤害',score:15600},
-      {rank:5,avatar:'🤬',name:'暴躁老哥',desc:'总伤害',score:13200},
-      {rank:6,avatar:'💪',name:'打屎达人',desc:'总伤害',score:11800},
-      {rank:10,avatar:'🔥',name:'发泄专家',desc:'总伤害',score:9800}
-    ]
+      {rank:4,name:'发泄专家',avatar:'😤',desc:'总伤害',score:95000},
+      {rank:5,name:'愤怒的小鸟',avatar:'🐦',desc:'总伤害',score:88000},
+      {rank:6,name:'屎球滚滚',avatar:'💩',desc:'总伤害',score:82000},
+      {rank:7,name:'暴力拆解',avatar:'🔨',desc:'总伤害',score:78000},
+      {rank:8,name:'精准打击',avatar:'🎯',desc:'总伤害',score:72000},
+      {rank:9,name:'手速王者',avatar:'⚡',desc:'总伤害',score:68000},
+      {rank:10,name:'打屎达人',avatar:'🔥',desc:'总伤害',score:65000},
+      {rank:11,name:'新手上路',avatar:'👶',desc:'总伤害',score:62000},
+      {rank:12,name:'坚持不懈',avatar:'💪',desc:'总伤害',score:58000},
+      {rank:13,name:'运气爆棚',avatar:'🍀',desc:'总伤害',score:55000},
+      {rank:14,name:'慢慢来',avatar:'🐢',desc:'总伤害',score:52000},
+      {rank:15,name:'初出茅庐',avatar:'🌱',desc:'总伤害',score:48000},
+      {rank:16,name:'偶尔玩玩',avatar:'🎮',desc:'总伤害',score:45000},
+      {rank:17,name:'休闲玩家',avatar:'🎲',desc:'总伤害',score:42000},
+      {rank:18,name:'打屎爱好者',avatar:'🏃',desc:'总伤害',score:38000},
+      {rank:19,name:'新手小白',avatar:'🐣',desc:'总伤害',score:35000},
+      {rank:20,name:'刚入门',avatar:'🌟',desc:'总伤害',score:32000}
+    ],
+    myRank: {
+      rank: 15,
+      name: '我的名字',
+      avatar: '😄',
+      score: 48000,
+      desc:'总伤害'
+    }
   }
 };
 
@@ -115,7 +168,6 @@ function renderTop3(data){
   var container = document.getElementById('rankTop3');
   var html = '';
   
-  // 按排名排序
   var sorted = data.top3.sort(function(a, b){ return a.rank - b.rank; });
   
   for(var i = 0; i < sorted.length; i++){
@@ -125,7 +177,7 @@ function renderTop3(data){
       '<div class="ravatar">' + item.avatar + '</div>' +
       '<div class="rname">' + item.name + '</div>' +
       '<div style="font-size:11px;color:#8B6914">' + item.desc + '</div>' +
-      '<div class="rscore">' + item.score + '</div>' +
+      '<div class="rscore">' + item.score.toLocaleString() + '</div>' +
     '</div>';
   }
   
@@ -139,17 +191,43 @@ function renderList(data){
   
   for(var i = 0; i < data.list.length; i++){
     var item = data.list[i];
-    html += '<div class="row">' +
-      '<span class="rn">' + item.rank + '</span>' +
-      '<div class="ra">' + item.avatar + '</div>' +
-      '<div class="ri">' +
-        '<div class="nm">' + item.name + '</div>' +
-        '<div class="bd">' + item.desc + '</div>' +
+    var isTop3 = item.rank <= 3;
+    html += '<div class="rank-item">' +
+      '<span class="rank-num' + (isTop3 ? ' top3' : '') + '">' + item.rank + '</span>' +
+      '<div class="rank-avatar">' + item.avatar + '</div>' +
+      '<div class="rank-info">' +
+        '<div class="rank-name">' + item.name + '</div>' +
+        '<div class="rank-desc">' + item.desc + '</div>' +
       '</div>' +
-      '<span class="sc">' + item.score + '</span>' +
-      '<button class="act">👍 伤害</button>' +
+      '<span class="rank-score">' + item.score.toLocaleString() + '</span>' +
     '</div>';
   }
+  
+  container.innerHTML = html;
+}
+
+/* ===== 渲染自己的数据 ===== */
+function renderMyRank(data){
+  var container = document.getElementById('myRankCard');
+  var my = data.myRank;
+  var isOnList = my.rank <= 20;
+  
+  var html = '<div class="my-rank-header">' +
+    '<span class="my-rank-title">我的排名</span>' +
+    '<span class="my-rank-badge ' + (isOnList ? 'on-list' : 'off-list') + '">' +
+      (isOnList ? '第' + my.rank + '名 · 已上榜' : '未上榜') +
+    '</span>' +
+  '</div>' +
+  '<div class="my-rank-content">' +
+    '<div class="my-rank-avatar">' + my.avatar + '</div>' +
+    '<div class="my-rank-info">' +
+      '<div class="my-rank-name">' + my.name + '</div>' +
+      '<div class="my-rank-stats">' +
+        '<span>排名: <strong>' + (isOnList ? my.rank : '—') + '</strong></span>' +
+        '<span>分数: <strong>' + my.score.toLocaleString() + '</strong></span>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
   
   container.innerHTML = html;
 }
@@ -167,6 +245,7 @@ function switchLeaderboard(el, type){
   var data = leaderboardData[type];
   renderTop3(data);
   renderList(data);
+  renderMyRank(data);
 }
 
 /* ===== 初始化 ===== */
@@ -174,6 +253,7 @@ window.addEventListener('DOMContentLoaded', function(){
   var data = leaderboardData[currentBoard];
   renderTop3(data);
   renderList(data);
+  renderMyRank(data);
 });
 </script>
 
