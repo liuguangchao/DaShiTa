@@ -71,33 +71,6 @@
 
 <script src="js/app.js?v=2"></script>
 <script>
-/* ===== 首页逻辑 ===== */
-var selectedMode = null;
-
-/* ===== 选择模式 ===== */
-function selectMode(mode) {
-  selectedMode = mode;
-  document.querySelectorAll('.mode-card').forEach(function(card) {
-    card.style.outline = 'none';
-  });
-  var activeCard = document.querySelector('[data-mode="' + mode + '"]');
-  activeCard.style.outline = '3px solid #FF6B35';
-  showToast('已选择' + (mode === 'mole' ? '打地鼠' : '虚拟人物') + '模式');
-}
-
-/* ===== 从首页开始游戏 ===== */
-function startFromHome() {
-  if (!selectedMode) {
-    showToast('请先选择模式');
-    return;
-  }
-  if (selectedMode === 'mole') {
-    window.location.href = 'mole-game.html';
-  } else {
-    window.location.href = 'figure-game.html';
-  }
-}
-
 /* ===== 签到功能 ===== */
 var signInDone = false;
 
@@ -166,6 +139,33 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+
+/* ===== 首页逻辑 ===== */
+var selectedMode = null;
+
+/* ===== 选择模式 ===== */
+function selectMode(mode) {
+  selectedMode = mode;
+  document.querySelectorAll('.mode-card').forEach(function(card) {
+    card.style.outline = 'none';
+  });
+  var activeCard = document.querySelector('[data-mode="' + mode + '"]');
+  activeCard.style.outline = '3px solid #FF6B35';
+  showToast('已选择' + (mode === 'mole' ? '打地鼠' : '虚拟人物') + '模式');
+}
+
+/* ===== 从首页开始游戏 ===== */
+function startFromHome() {
+  if (!selectedMode) {
+    showToast('请先选择模式');
+    return;
+  }
+  if (selectedMode === 'mole') {
+    window.location.href = 'mole-game.html';
+  } else {
+    window.location.href = 'figure-game.html';
+  }
+}
 </script>
 </body>
 </html>
