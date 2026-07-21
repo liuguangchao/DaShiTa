@@ -242,23 +242,30 @@ function renderList(data){
   var container = document.getElementById('rankList');
   var html = '';
   
+  // 获取当前用户的排名
+  var myRank = data.myRank.rank;
+  
   for(var i = 0; i < data.list.length; i++){
     var item = data.list[i];
     var isTop3 = item.rank <= 3;
     var hisDisplayName = item.hisName;
+    var showHisAvatar = true;
+    var showHisName = true;
     
-    // 如果开启隐私设置且是打屎他榜单，隐藏他人名字
-    if (currentBoard === 'figure' && hideName) {
-      hisDisplayName = '干架达人' + item.rank;
+    // 如果开启隐私设置且是打屎他榜单，且是当前行，隐藏他的头像和名字
+    if (currentBoard === 'figure' && hideName && item.rank === myRank) {
+      hisDisplayName = '';
+      showHisAvatar = false;
+      showHisName = false;
     }
     
     html += '<div class="rank-item">' +
       '<span class="rank-num' + (isTop3 ? ' top3' : '') + '">' + item.rank + '</span>' +
       '<div class="rank-avatar">' + item.meAvatar + '</div>' +
       '<span class="rank-name">' + item.meName + '</span>' +
-      '<span class="rank-label">' + item.fightEmoji + '</span>' +
-      '<div class="rank-avatar">' + item.hisAvatar + '</div>' +
-      '<span class="rank-name">' + hisDisplayName + '</span>' +
+      '<span class="rank-label">🤜</span>' +
+      (showHisAvatar ? '<div class="rank-avatar">' + item.hisAvatar + '</div>' : '') +
+      (showHisName ? '<span class="rank-name">' + hisDisplayName + '</span>' : '') +
       '<span class="rank-label">总伤害</span>' +
       '<span class="rank-score">' + item.score.toLocaleString() + '</span>' +
     '</div>';
