@@ -263,6 +263,13 @@ function renderList(data){
       showFightEmoji = false;
     }
     
+    // 打地鼠榜单不展示🤜、他的头像、他的名字
+    if (currentBoard === 'mole') {
+      showFightEmoji = false;
+      showHisAvatar = false;
+      showHisName = false;
+    }
+    
     html += '<div class="rank-item">' +
       '<span class="rank-num' + (isTop3 ? ' top3' : '') + '">' + item.rank + '</span>' +
       '<div class="rank-avatar">' + item.meAvatar + '</div>' +
@@ -270,7 +277,7 @@ function renderList(data){
       (showFightEmoji ? '<span class="rank-label">🤜</span>' : '') +
       (showHisAvatar ? '<div class="rank-avatar">' + item.hisAvatar + '</div>' : '') +
       (showHisName ? '<span class="rank-name">' + hisDisplayName + '</span>' : '') +
-      '<span class="rank-label">总伤害</span>' +
+      '<span class="rank-label">' + (currentBoard === 'mole' ? '打地鼠个数' : '总伤害') + '</span>' +
       '<span class="rank-score">' + item.score.toLocaleString() + '</span>' +
     '</div>';
   }
