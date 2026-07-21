@@ -164,7 +164,25 @@ var leaderboardData = {
       {rank:2,name:'暴躁老哥',score:132000,avatar:'👑',desc:'总伤害'},
       {rank:3,name:'打屎达人',score:118000,avatar:'👑',desc:'总伤害'}
     ],
-    list: [], // 动态生成
+    list: [
+      {rank:4,meAvatar:'😄',meName:'开心果',fightEmoji:'👊',hisAvatar:'😡',hisName:'干架王',desc:'总伤害',score:95000},
+      {rank:5,meAvatar:'😊',meName:'微笑侠',fightEmoji:'💪',hisAvatar:'😤',hisName:'暴躁老哥',desc:'总伤害',score:88000},
+      {rank:6,meAvatar:'😎',meName:'酷盖',fightEmoji:'🔥',hisAvatar:'🤬',hisName:'打架达人',desc:'总伤害',score:82000},
+      {rank:7,meAvatar:'🤩',meName:'闪亮之星',fightEmoji:'⚡',hisAvatar:'💢',hisName:'街头霸王',desc:'总伤害',score:78000},
+      {rank:8,meAvatar:'😇',meName:'天使宝贝',fightEmoji:'👺',hisAvatar:'👊',hisName:'拳王争霸',desc:'总伤害',score:72000},
+      {rank:9,meAvatar:'🥳',meName:'派对动物',fightEmoji:'👹',hisAvatar:'👺',hisName:'铁血战士',desc:'总伤害',score:68000},
+      {rank:10,meAvatar:'😜',meName:'调皮鬼',fightEmoji:'💢',hisAvatar:'👹',hisName:'格斗之王',desc:'总伤害',score:65000},
+      {rank:11,meAvatar:'🤪',meName:'逗比王',fightEmoji:'😤',hisAvatar:'💪',hisName:'无敌战神',desc:'总伤害',score:62000},
+      {rank:12,meAvatar:'😋',meName:'甜心派',fightEmoji:'😡',hisAvatar:'🔥',hisName:'一拳超人',desc:'总伤害',score:58000},
+      {rank:13,meAvatar:'🤗',meName:'温暖天使',fightEmoji:'🤬',hisAvatar:'⚡',hisName:'终极战士',desc:'总伤害',score:55000},
+      {rank:14,meAvatar:'😄',meName:'开心果',fightEmoji:'👊',hisAvatar:'🎯',hisName:'干架王',desc:'总伤害',score:52000},
+      {rank:15,meAvatar:'😊',meName:'微笑侠',fightEmoji:'💪',hisAvatar:'🔨',hisName:'暴躁老哥',desc:'总伤害',score:48000},
+      {rank:16,meAvatar:'😎',meName:'酷盖',fightEmoji:'🔥',hisAvatar:'💣',hisName:'打架达人',desc:'总伤害',score:45000},
+      {rank:17,meAvatar:'🤩',meName:'闪亮之星',fightEmoji:'⚡',hisAvatar:'🧨',hisName:'街头霸王',desc:'总伤害',score:42000},
+      {rank:18,meAvatar:'😇',meName:'天使宝贝',fightEmoji:'👺',hisAvatar:'💥',hisName:'拳王争霸',desc:'总伤害',score:38000},
+      {rank:19,meAvatar:'🥳',meName:'派对动物',fightEmoji:'👹',hisAvatar:'🎆',hisName:'铁血战士',desc:'总伤害',score:35000},
+      {rank:20,meAvatar:'😜',meName:'调皮鬼',fightEmoji:'💢',hisAvatar:'✨',hisName:'格斗之王',desc:'总伤害',score:32000}
+    ],
     myRank: {
       rank: 15,
       name: '我的名字',
@@ -174,27 +192,6 @@ var leaderboardData = {
     }
   }
 };
-
-// 初始化打屎他榜单的动态数据
-function initFigureList() {
-  var list = [];
-  for (var i = 4; i <= 20; i++) {
-    var fighter = generateRandomFighter();
-    var myInfo = generateMyInfo();
-    list.push({
-      rank: i,
-      meAvatar: myInfo.avatar,
-      meName: myInfo.name,
-      fightEmoji: fightEmojis[Math.floor(Math.random() * fightEmojis.length)],
-      hisAvatar: fighter.emoji,
-      hisName: fighter.name,
-      desc: '总伤害',
-      score: Math.floor(32000 + Math.random() * 63000)
-    });
-  }
-  leaderboardData.figure.list = list;
-}
-initFigureList();
 
 /* ===== 当前选中的榜单 ===== */
 var currentBoard = 'figure';
