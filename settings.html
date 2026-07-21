@@ -74,12 +74,12 @@
   <!-- 关于游戏 -->
   <div class="setting-section">
     <div class="setting-section-title">关于</div>
-    <div class="setting-item" onclick="showToast('关于游戏')">
+    <div class="setting-item" onclick="showAbout()">
       <div class="si-left">
         <div class="si-icon blue">ℹ️</div>
         <div class="si-label">关于游戏</div>
       </div>
-      <div class="si-right">v1.0.0 <span class="arrow">›</span></div>
+      <div class="si-right"><span class="arrow">›</span></div>
     </div>
   </div>
   
@@ -101,6 +101,11 @@ function toggleSetting(el, type) {
   } else {
     valueEl.textContent = '已开启';
   }
+}
+
+/* ===== 关于游戏弹窗 ===== */
+function showAbout() {
+  showToast('打屎他 v1.0.0');
 }
 </script>
 </body>
