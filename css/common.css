@@ -206,6 +206,69 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
     box-shadow: inset 0 2px 3px rgba(255,255,255,0.3);
     position: relative;
 }
+/* 第1天 - 礼物特效 */
+.day-box:nth-child(1)::before {
+    content: "🎁";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+    animation: bounce 1.5s infinite;
+}
+/* 第2天 - 星星特效 */
+.day-box:nth-child(2)::before {
+    content: "⭐";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+    animation: twinkle 1s infinite;
+}
+/* 第3天 - 钻石特效 */
+.day-box:nth-child(3)::before {
+    content: "💎";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+    animation: spin 2s infinite linear;
+}
+/* 第4天 - 火焰特效 */
+.day-box:nth-child(4)::before {
+    content: "🔥";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+    animation: pulse 1s infinite;
+}
+/* 第5天 - 皇冠特效 */
+.day-box:nth-child(5)::before {
+    content: "👑";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+    animation: float 2s infinite ease-in-out;
+}
+/* 第6天 - 彩虹特效 */
+.day-box:nth-child(6)::before {
+    content: "🌈";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+    animation: twinkle 1.2s infinite;
+}
+/* 第7天 - 奖杯特效 */
+.day-box:nth-child(7)::before {
+    content: "🏆";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 14px;
+    animation: bounce 1.8s infinite;
+}
 .day-box.today {
     background: linear-gradient(140deg, #FFD782, #FFBB40);
     border-color: #783E10;
@@ -419,4 +482,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
   .bar-top + div[style*="padding:0 16px 10px"] .icon-btn{height:28px;font-size:11px}
   .bar-top + div[style*="padding:0 16px 10px"] .icon-btn span{font-size:7px}
   .bar-top + div[style*="padding:0 16px 10px"] .icon-btn[style*="width:auto"]{padding:0 10px}
+}
+
+/* ===== 签到卡片动画 ===== */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(5deg); }
+    75% { transform: translateY(3px) rotate(-5deg); }
 }
