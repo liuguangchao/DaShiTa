@@ -99,7 +99,7 @@ function startFromHome() {
 }
 
 /* ===== 签到功能 ===== */
-var hasSignedInToday = false;
+var signInLocked = false;
 
 function initSignIn() {
   var today = new Date().toDateString();
@@ -107,51 +107,37 @@ function initSignIn() {
   var todayBox = document.getElementById('todayBox');
   
   if (lastSignIn === today) {
-    // 今天已签到，标记为done，禁用点击
-    hasSignedInToday = true;
+    // 今天已签到
+    signInLocked = true;
     if (todayBox) {
       todayBox.className = 'day-box done';
       todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
-      todayBox.onclick = null;
-      todayBox.style.cursor = 'default';
+      todayBox.removeAttribute('onclick');
+      todayBox.style.pointerEvents = 'none';
     }
     return;
   }
   
-  // 今天未签到，绑定点击事件（使用 once 标志防止重复绑定）
-  if (todayBox && !todayBox.dataset.bound) {
-    todayBox.dataset.bound = 'true';
-    todayBox.style.cursor = 'pointer';
-    todayBox.onclick = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      doSignIn(todayBox);
-    };
+  // 今天未签到，绑定点击
+  if (todayBox) {
+    todayBox.setAttribute('onclick', 'performSignIn()');
   }
 }
 
-function doSignIn(todayBox) {
-  // 防止重复点击
-  if (hasSignedInToday) {
-    return;
-  }
+function performSignIn() {
+  // 锁住防止重复点击
+  if (signInLocked) return;
+  signInLocked = true;
   
   var today = new Date().toDateString();
-  
-  // 立即写入localStorage，防止重复点击
   localStorage.setItem('lastSignInDate', today);
-  hasSignedInToday = true;
   
-  // 立即禁用点击
-  if (todayBox) {
-    todayBox.onclick = null;
-    todayBox.style.cursor = 'default';
-  }
-  
-  // 更新UI：将今天标记为done
+  var todayBox = document.getElementById('todayBox');
   if (todayBox) {
     todayBox.className = 'day-box done';
     todayBox.innerHTML = '<span class="day-num">4</span><span class="day-icon">✓</span>';
+    todayBox.removeAttribute('onclick');
+    todayBox.style.pointerEvents = 'none';
   }
   
   // 解锁下一天
@@ -166,11 +152,6 @@ function doSignIn(todayBox) {
   
   showToast('签到成功！+20打屎币');
 }
-
-// 页面加载时初始化签到
-window.addEventListener('DOMContentLoaded', function() {
-  initSignIn();
-});
 </script>
 </body>
 </html>
