@@ -1,25 +1,166 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>设置</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 5. 系统设置 ===================== -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>设置</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+/* ===== 设置页面专用样式 ===== */
+#settingsPage{background:linear-gradient(180deg,#FFE066 0%,#FFD166 30%,#FFB347 100%)}
+
+.setting-section{margin:12px 16px;background:rgba(255,255,255,.85);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.setting-section-title{font-size:13px;color:#999;padding:12px 16px 4px;font-weight:600}
+.setting-item{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,.05);cursor:pointer;transition:background .2s}
+.setting-item:last-child{border-bottom:none}
+.setting-item:active{background:rgba(255,255,255,.5)}
+.setting-item .si-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.setting-item .si-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.si-icon.blue{background:linear-gradient(135deg,#667eea,#764ba2)}
+.si-icon.green{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.si-icon.orange{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.si-icon.purple{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.si-icon.red{background:linear-gradient(135deg,#fa709a,#fee140)}
+.si-icon.teal{background:linear-gradient(135deg,#a8edea,#fed6e3)}
+.si-icon.yellow{background:linear-gradient(135deg,#ffe259,#ffa751)}
+.setting-item .si-label{font-size:15px;color:#333;font-weight:500}
+.setting-item .si-right{font-size:13px;color:#999;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.setting-item .si-right .arrow{color:#ccc;font-size:16px}
+
+/* 开关样式 */
+.switch{position:relative;width:48px;height:26px;background:#ddd;border-radius:13px;cursor:pointer;transition:background .3s;flex-shrink:0}
+.switch.on{background:#4CAF50}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .3s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.switch.on::after{transform:translateX(22px)}
+
+/* 底部按钮 */
+.setting-buttons{display:flex;gap:12px;padding:20px 16px 10px}
+.setting-btn{flex:1;padding:14px;border-radius:25px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.setting-btn:active{transform:scale(.96)}
+.setting-btn.primary{background:linear-gradient(135deg,#FFE066,#FFB347);color:#5C3300;box-shadow:0 4px 12px rgba(255,165,0,.35)}
+.setting-btn.danger{background:linear-gradient(135deg,#ff6b6b,#ee5a5a);color:#fff;box-shadow:0 4px 12px rgba(255,107,107,.35)}
+.setting-btn.secondary{background:rgba(255,255,255,.6);color:#666;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+</style>
+</head>
+<body>
+
+<!-- ===================== 5. 系统设置 ===================== -->
 <div class="page active" id="settingsPage">
   <div class="bar-top">
     <button class="back-btn" onclick="window.location.href='index.html'">←</button>
-    <div class="title-center" style="font-size:32px">设置</div>
+    <div class="title-center">设置</div>
     <div style="width:40px"></div>
   </div>
-  <div style="padding-bottom:20px">
-    <div class="card">
-      <div class="setting-item"><div class="si-left"><div class="si-icon">🎵</div><div class="si-label">音效设置</div></div><div class="si-right">背景音乐 已关闭 <span class="arrow">›</span></div></div>
-      <div class="setting-item"><div class="si-left"><div class="si-icon">📳</div><div class="si-label">震动设置</div></div><div class="si-right">打击音效 已开启 <span class="arrow">›</span></div></div>
-      <div class="setting-item"><div class="si-left"><div class="si-icon">🖥️</div><div class="si-label">界面设置</div></div><div class="si-right">震动强度 中 <span class="arrow">›</span></div></div>
-      <div class="setting-item"><div class="si-left"><div class="si-icon">🔒</div><div class="si-label">隐私设置</div></div><div class="si-right"><span class="arrow">›</span></div></div>
-      <div class="setting-item"><div class="si-left"><div class="si-icon">✉️</div><div class="si-label">消息设置</div></div><div class="si-right">排行榜展示 已开启 <span class="arrow">›</span></div></div>
-      <div class="setting-item"><div class="si-left"><div class="si-icon">🗑️</div><div class="si-label">清除缓存</div></div><div class="si-right">头像模糊 已关闭 <span class="arrow">›</span></div></div>
-      <div class="setting-item"><div class="si-left"><div class="si-icon">ℹ️</div><div class="si-label">关于游戏</div></div><div class="si-right"><span class="arrow">›</span></div></div>
+  
+  <!-- 基本设置 -->
+  <div class="setting-section">
+    <div class="setting-section-title">基本设置</div>
+    <div class="setting-item" onclick="showToast('音效设置')">
+      <div class="si-left">
+        <div class="si-icon blue">🎵</div>
+        <div class="si-label">音效设置</div>
+      </div>
+      <div class="si-right">已开启 <span class="arrow">›</span></div>
     </div>
-    <div style="display:flex;gap:10px;padding:0 16px">
-      <button class="btn-gold" style="flex:1" onclick="showToast(&#39;设置已保存&#39;)">保存设置</button>
-      <button class="btn-gray" style="flex:1" onclick="if(confirm(&#39;确定要重置自定义内容吗？&#39;))showToast(&#39;已重置&#39;)">重置自定义内容</button>
+    <div class="setting-item" onclick="showToast('震动设置')">
+      <div class="si-left">
+        <div class="si-icon green">📳</div>
+        <div class="si-label">震动设置</div>
+      </div>
+      <div class="si-right">中 <span class="arrow">›</span></div>
     </div>
+    <div class="setting-item" onclick="showToast('界面设置')">
+      <div class="si-left">
+        <div class="si-icon orange">🖥️</div>
+        <div class="si-label">界面设置</div>
+      </div>
+      <div class="si-right">标准 <span class="arrow">›</span></div>
+    </div>
+  </div>
+  
+  <!-- 隐私与安全 -->
+  <div class="setting-section">
+    <div class="setting-section-title">隐私与安全</div>
+    <div class="setting-item" onclick="showToast('隐私设置')">
+      <div class="si-left">
+        <div class="si-icon purple">🔒</div>
+        <div class="si-label">隐私设置</div>
+      </div>
+      <div class="si-right"><span class="arrow">›</span></div>
+    </div>
+    <div class="setting-item">
+      <div class="si-left">
+        <div class="si-icon red">👁️</div>
+        <div class="si-label">在线状态</div>
+      </div>
+      <div class="si-right"><div class="switch on" onclick="event.stopPropagation();this.classList.toggle('on')"></div></div>
+    </div>
+  </div>
+  
+  <!-- 消息通知 -->
+  <div class="setting-section">
+    <div class="setting-section-title">消息通知</div>
+    <div class="setting-item" onclick="showToast('消息设置')">
+      <div class="si-left">
+        <div class="si-icon teal">✉️</div>
+        <div class="si-label">消息设置</div>
+      </div>
+      <div class="si-right">已开启 <span class="arrow">›</span></div>
+    </div>
+    <div class="setting-item">
+      <div class="si-left">
+        <div class="si-icon yellow">🔔</div>
+        <div class="si-label">推送通知</div>
+      </div>
+      <div class="si-right"><div class="switch on" onclick="event.stopPropagation();this.classList.toggle('on')"></div></div>
+    </div>
+  </div>
+  
+  <!-- 存储与清理 -->
+  <div class="setting-section">
+    <div class="setting-section-title">存储与清理</div>
+    <div class="setting-item" onclick="showToast('清除缓存')">
+      <div class="si-left">
+        <div class="si-icon orange">🗑️</div>
+        <div class="si-label">清除缓存</div>
+      </div>
+      <div class="si-right">2.3MB <span class="arrow">›</span></div>
+    </div>
+  </div>
+  
+  <!-- 关于游戏 -->
+  <div class="setting-section">
+    <div class="setting-section-title">关于</div>
+    <div class="setting-item" onclick="showToast('关于游戏')">
+      <div class="si-left">
+        <div class="si-icon blue">ℹ️</div>
+        <div class="si-label">关于游戏</div>
+      </div>
+      <div class="si-right">v1.0.0 <span class="arrow">›</span></div>
+    </div>
+    <div class="setting-item" onclick="showToast('用户协议')">
+      <div class="si-left">
+        <div class="si-icon green">📄</div>
+        <div class="si-label">用户协议</div>
+      </div>
+      <div class="si-right"><span class="arrow">›</span></div>
+    </div>
+    <div class="setting-item" onclick="showToast('隐私政策')">
+      <div class="si-left">
+        <div class="si-icon purple">🛡️</div>
+        <div class="si-label">隐私政策</div>
+      </div>
+      <div class="si-right"><span class="arrow">›</span></div>
+    </div>
+  </div>
+  
+  <!-- 底部按钮 -->
+  <div class="setting-buttons">
+    <button class="setting-btn secondary" onclick="showToast('设置已保存')">保存设置</button>
+    <button class="setting-btn danger" onclick="if(confirm('确定要重置所有设置吗？'))showToast('已重置')">重置设置</button>
   </div>
 </div>
 
-<script src="js/app.js"></script></body></html>
+<script src="js/app.js"></script>
+</body>
+</html>
