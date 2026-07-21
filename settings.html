@@ -86,7 +86,7 @@
   <!-- 底部按钮 -->
   <div class="setting-buttons">
     <button class="setting-btn secondary" onclick="showToast('设置已保存')">保存设置</button>
-    <button class="setting-btn danger" onclick="if(confirm('确定要重置所有设置吗？'))showToast('已重置')">重置设置</button>
+    <button class="setting-btn danger" onclick="resetSettings()">重置设置</button>
   </div>
 </div>
 
@@ -106,6 +106,18 @@ function toggleSetting(el, type) {
 /* ===== 关于游戏弹窗 ===== */
 function showAbout() {
   showToast('打屎他 v1.0.0');
+}
+
+/* ===== 重置设置 ===== */
+function resetSettings() {
+  if (confirm('确定要重置所有设置吗？')) {
+    // 重置音效设置为已开启
+    var soundValues = document.querySelectorAll('.setting-value');
+    for (var i = 0; i < soundValues.length; i++) {
+      soundValues[i].textContent = '已开启';
+    }
+    showToast('已重置');
+  }
 }
 </script>
 </body>
