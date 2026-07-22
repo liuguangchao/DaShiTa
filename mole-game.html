@@ -145,20 +145,23 @@
       background-position: center;
       background-repeat: no-repeat;
     }
-    .mole-face {
-      font-size: 50px;
-      position: relative;
+    .mole-face-wrapper {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 100px;
       z-index: 2;
       display: none;
     }
-    .mole-face.visible {
+    .mole-face-wrapper.visible {
       display: block;
     }
-    .mole-face.hit {
-      display: none;
-    }
-    .mole-face.hit-visible {
-      display: block;
+    .mole-face-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
     .mole-hole {
       cursor: pointer;
@@ -549,7 +552,7 @@
       const hole = holes[idx];
       const faceWrapper = hole.querySelector('.mole-face-wrapper');
       faceWrapper.innerHTML = `<img src="${mole.normal}" style="width:100px;height:100px;object-fit:contain;display:block;" />`;
-      faceWrapper.style.display = 'block';
+      faceWrapper.classList.add('visible');
       
       // 1.5~3秒后自动消失
       const disappearTime = 1500 + Math.random() * 1500;
@@ -564,7 +567,7 @@
       clearTimeout(holeStates[idx].timer);
       const hole = holes[idx];
       const faceWrapper = hole.querySelector('.mole-face-wrapper');
-      faceWrapper.style.display = 'none';
+      faceWrapper.classList.remove('visible');
       holeStates[idx] = null;
     }
     
@@ -598,6 +601,7 @@
       const mole = moleTypes[state.type];
       const faceWrapper = element.querySelector('.mole-face-wrapper');
       faceWrapper.innerHTML = `<img src="${mole.hit}" style="width:100px;height:100px;object-fit:contain;display:block;" />`;
+      faceWrapper.classList.add('visible');
       
       // 打鼠数量 +1
       score++;
