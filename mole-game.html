@@ -17,6 +17,10 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      background-image: url('./images/grass-bg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
     
     /* 顶部圆角卡片 */
@@ -122,10 +126,6 @@
       position: relative;
       overflow: hidden;
       margin: 8px 12px;
-      background-image: url('./images/grass-bg.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
     }
     
     /* 草地装饰 */
@@ -163,6 +163,9 @@
       align-items: flex-end;
       justify-content: center;
       cursor: pointer;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
     .hole-base {
       width: 120px;
@@ -175,7 +178,6 @@
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     .mole-body {
       width: 75px;
