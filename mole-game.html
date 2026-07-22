@@ -1,53 +1,124 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>打地鼠模式</title><link rel="stylesheet" href="css/common.css"></head><body><!-- ===================== 6. 打地鼠游戏 ===================== -->
-<div class="page active" id="moleGamePage">
-  <div class="game-bar">
-    <button class="back-btn" onclick="window.location.href='index.html'">←</button>
-    <div class="gb-title">打地鼠模式</div>
-    <div class="gb-stats">
-      <div class="gb-stat">剩余时间 01:30</div>
-      <div class="gb-stat">累计伤害</div>
-      <div class="gb-val" id="moleScore">8650</div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>打地鼠模式</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: #8BC34A;
+    }
+    .game-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    .game-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #8BC34A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: opacity 0.5s;
+    }
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loading-text {
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #5C3300;
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .back-btn:active {
+      transform: scale(0.9);
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <!-- 返回按钮 -->
+    <div class="back-btn" onclick="window.history.back()">←</div>
+    
+    <!-- 加载提示 -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">正在加载游戏...</div>
     </div>
-  </div>
-  <div style="padding:0 16px;margin-top:8px;display:flex;justify-content:space-between;align-items:center">
-    <button class="btn-gray" style="padding:8px 14px;border-radius:12px">⬇️</button>
-    <div style="display:flex;align-items:center;gap:6px">
-      <span style="font-size:22px">⭐</span>
-      <span style="font-size:22px;font-weight:900;color:#5C3300" id="moleStarScore">8650</span>
-    </div>
-  </div>
-  <div style="text-align:right;padding:4px 16px;font-size:12px;color:#8B6914">连续打击可触发伤害翻倍</div>
-
-  <div class="game-field" id="moleField">
-    <!-- 装饰 -->
-    <div class="grass-deco" style="top:10px;left:10px">🌿</div>
-    <div class="grass-deco" style="top:30px;right:20px">🌸</div>
-    <div class="grass-deco" style="bottom:50px;left:30px">🌼</div>
-    <div class="grass-deco" style="bottom:30px;right:40px">🌺</div>
-    <div class="grass-deco" style="top:60px;left:60px">🪨</div>
-
-    <!-- 地鼠 -->
-    <div class="mole-hole" style="top:40px;left:30px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
-    <div class="mole-hole" style="top:30px;right:80px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
-    <div class="mole-hole" style="top:140px;left:20px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
-    <div class="mole-hole" style="top:140px;right:20px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
-    <div class="mole-hole" style="top:250px;left:60px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
-    <div class="mole-hole" style="top:250px;right:60px" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
-    <div class="mole-hole" style="top:340px;left:50%;transform:translateX(-50%)" onclick="hitMole(this)"><span class="mole-body">🐹</span><div class="hole-base"></div></div>
+    
+    <!-- Cocos 游戏 iframe -->
+    <iframe 
+      class="game-iframe" 
+      src="cocos-build/mole-game/index.html" 
+      id="gameIframe"
+      onload="hideLoading()"
+      allowfullscreen
+    ></iframe>
   </div>
 
-  <div class="combo-bar"><span class="combo-badge">➕ 连击 x8</span></div>
-
-  <div class="game-actions">
-    <div class="left-tool">
-      <div class="lt-icon">🔨</div>
-      <div class="lt-name">✓ 拖鞋</div>
-    </div>
-    <div class="center-btns">
-      <button class="btn-orange" onclick="showToast(&#39;重锤攻击！&#39;)">重锤</button>
-      <button class="btn-yellow" onclick="showToast(&#39;切换武器&#39;)">切换武器</button>
-    </div>
-  </div>
-</div>
-
-<script src="js/app.js"></script></body></html>
+  <script>
+    // 隐藏加载提示
+    function hideLoading() {
+      const overlay = document.getElementById('loadingOverlay');
+      if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 500);
+      }
+    }
+    
+    // 错误处理
+    document.getElementById('gameIframe').addEventListener('error', function() {
+      alert('游戏加载失败，请刷新重试');
+    });
+    
+    // 确保 iframe 加载完成后隐藏 loading
+    window.addEventListener('load', function() {
+      setTimeout(hideLoading, 1000);
+    });
+  </script>
+</body>
+</html>
