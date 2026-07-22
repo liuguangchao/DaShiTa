@@ -145,42 +145,10 @@
       background-position: center;
       background-repeat: no-repeat;
     }
-    .mole-body {
-      width: 75px;
-      height: 75px;
-      background: radial-gradient(circle at 40% 35%, #EFEBE9, #A1887F);
-      border-radius: 50% 50% 45% 45%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 45px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.25), inset 0 -3px 8px rgba(0,0,0,0.1);
-      transition: transform 0.15s;
-      border: 2px solid #8D6E63;
-      z-index: 2;
-    }
-    .mole-body:active {
-      transform: scale(0.92);
-    }
-    .mole-body.hit {
-      animation: hitShake 0.3s ease-out;
-    }
-    @keyframes hitShake {
-      0% { transform: scale(1) rotate(0deg); }
-      25% { transform: scale(1.15) rotate(-5deg); }
-      50% { transform: scale(1.15) rotate(5deg); }
-      75% { transform: scale(1.05) rotate(-3deg); }
-      100% { transform: scale(1) rotate(0deg); }
-    }
-    
-    /* 地鼠表情 */
     .mole-face {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 40px;
+      font-size: 50px;
+      position: relative;
+      z-index: 2;
     }
     
     /* 特效标记 */
@@ -330,14 +298,14 @@
         <!-- 第一行：2个 -->
         <div class="mole-row mole-row-1">
           <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-body">
+            <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
               <span class="effect-mark">🌀</span>
             </div>
             <div class="hole-base"></div>
           </div>
           <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-body">
+            <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
             </div>
             <div class="hole-base"></div>
@@ -346,20 +314,20 @@
         <!-- 第二行：3个 -->
         <div class="mole-row mole-row-2">
           <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-body">
+            <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
             </div>
             <div class="hole-base"></div>
           </div>
           <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-body">
+            <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
               <span class="sparkle-effect">⭐</span>
             </div>
             <div class="hole-base"></div>
           </div>
           <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-body">
+            <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
               <span class="sparkle-effect">✨</span>
             </div>
@@ -369,13 +337,13 @@
         <!-- 第三行：2个 -->
         <div class="mole-row mole-row-3">
           <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-body">
+            <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
             </div>
             <div class="hole-base"></div>
           </div>
           <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-body">
+            <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
             </div>
             <div class="hole-base"></div>
@@ -405,11 +373,14 @@
     
     function hitMole(element) {
       // 播放击中动画
-      const moleBody = element.querySelector('.mole-body');
-      moleBody.classList.add('hit');
-      setTimeout(() => {
-        moleBody.classList.remove('hit');
-      }, 300);
+      const faceWrapper = element.querySelector('.mole-face-wrapper');
+      if (faceWrapper) {
+        faceWrapper.style.transition = 'transform 0.15s';
+        faceWrapper.style.transform = 'scale(0.8)';
+        setTimeout(() => {
+          faceWrapper.style.transform = 'scale(1)';
+        }, 150);
+      }
       
       // 计算得分
       const points = Math.round(100 * (1 + combo * 0.1));
