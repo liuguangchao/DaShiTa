@@ -245,78 +245,130 @@
     .mode-text.active {
       color: #E65100;
     }
+    
     /* 滑动开关 */
     .mode-toggle {
-      flex: 1;
+      flex: 3;
       height: 65px;
-      background: linear-gradient(135deg, #A8D56C 0%, #C8E6A8 100%);
+      background: #fff;
       border-radius: 32px;
       position: relative;
-      cursor: pointer;
-      transition: all 0.3s;
-      overflow: hidden;
-      border: 2px solid rgba(255,255,255,0.3);
-      box-shadow: 0 5px 0 #7CB342;
+      overflow: visible;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.1), 0 2px 0 rgba(0,0,0,0.1);
     }
     .mode-toggle.active {
-      background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
-      box-shadow: 0 5px 0 #E65100;
+      background: #fff;
     }
-    .toggle-bg {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    .toggle-text {
-      font-size: 18px;
-      font-weight: bold;
-      color: #fff;
-      white-space: nowrap;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: left 0.3s ease-out, opacity 0.3s;
-      z-index: 1;
-    }
-    .toggle-text.right {
-      left: calc(50% + 50px);
-    }
-    .toggle-text.left {
-      left: calc(50% - 50px);
-    }
-    .toggle-handle {
-      width: 56px;
-      height: 56px;
-      background: #4CAF50;
-      border-radius: 50%;
-      position: absolute;
-      left: calc(50% - 100px);
-      top: 50%;
-      transform: translateY(-50%);
-      transition: left 0.3s ease-out;
+    
+    .toggle-track {
       display: flex;
       align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 4px;
+    }
+    
+    .toggle-mode {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 2;
+      height: 100%;
+      position: relative;
     }
-    .toggle-handle::before {
-      content: '';
-      width: 24px;
-      height: 24px;
-      background: #fff;
+    
+    .mode-circle {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
+      position: absolute;
+      bottom: 4px;
+      opacity: 0.4;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.1);
     }
-    .mode-toggle.active .toggle-handle {
-      left: calc(50% + 100px);
+    
+    .mode-label {
+      font-size: 14px;
+      font-weight: bold;
+      color: #666;
+      text-align: center;
+      line-height: 1.2;
     }
-    .mode-toggle.active .toggle-text {
-      left: calc(50% + 50px);
+    
+    /* 右侧模式（无尽） */
+    .mode-toggle .toggle-mode:last-child .mode-circle {
+      right: 50%;
+      transform: translateX(19px);
     }
-    .mode-toggle:not(.active) .toggle-text {
-      left: calc(50% - 50px);
+    .mode-toggle .toggle-mode:last-child .mode-label {
+      order: 2;
+    }
+    .toggle-mode:last-child:hover .mode-label {
+      color: #AB47BC;
+    }
+    
+    /* 左侧模式（常规） */
+    .mode-toggle .toggle-mode:first-child .mode-circle {
+      left: 50%;
+      transform: translateX(-19px);
+    }
+    .mode-toggle .toggle-mode:first-child .mode-label {
+      order: 2;
+    }
+    
+    /* 激活状态下的颜色和高亮 */
+    .mode-toggle.active .toggle-mode:first-child {
+      background: linear-gradient(180deg, rgba(255,107,53,0.1) 0%, rgba(255,107,53,0.05) 100%);
+      border-radius: 28px;
+    }
+    .mode-toggle.active .toggle-mode:last-child {
+      background: linear-gradient(180deg, rgba(171,71,188,0.1) 0%, rgba(171,71,188,0.05) 100%);
+      border-radius: 28px;
+    }
+    
+    .mode-toggle.active .toggle-mode:first-child .mode-circle {
+      background: #FF6B35;
+      opacity: 0.6;
+    }
+    .mode-toggle.active .toggle-mode:first-child .mode-label {
+      color: #FF6B35;
+      font-size: 16px;
+    }
+    
+    .mode-toggle.active .toggle-mode:last-child .mode-circle {
+      background: #AB47BC;
+      opacity: 0.6;
+    }
+    .mode-toggle.active .toggle-mode:last-child .mode-label {
+      color: #AB47BC;
+      font-size: 16px;
+    }
+    
+    /* 未激活状态下的颜色 */
+    .mode-toggle:not(.active) .toggle-mode:first-child {
+      background: linear-gradient(180deg, rgba(168,213,108,0.2) 0%, rgba(168,213,108,0.1) 100%);
+      border-radius: 28px;
+    }
+    .mode-toggle:not(.active) .toggle-mode:first-child .mode-circle {
+      background: #4CAF50;
+      opacity: 0.5;
+    }
+    .mode-toggle:not(.active) .toggle-mode:first-child .mode-label {
+      color: #333;
+    }
+    
+    .mode-toggle:not(.active) .toggle-mode:last-child {
+      background: transparent;
+      border-radius: 0;
+    }
+    .mode-toggle:not(.active) .toggle-mode:last-child .mode-circle {
+      background: #999;
+      opacity: 0.3;
+    }
+    .mode-toggle:not(.active) .toggle-mode:last-child .mode-label {
+      color: #999;
     }
     
     /* 飘字效果 */
@@ -561,10 +613,16 @@
     <div class="bottom-card">
       <div class="weapon-actions">
         <div class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()">
-          <div class="toggle-bg">
-            <span class="toggle-text">常规</span>
+          <div class="toggle-track">
+            <div class="toggle-mode">
+              <div class="mode-circle"></div>
+              <span class="mode-label">常规</span>
+            </div>
+            <div class="toggle-mode">
+              <div class="mode-circle"></div>
+              <span class="mode-label">无尽</span>
+            </div>
           </div>
-          <div class="toggle-handle"></div>
         </div>
         <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
       </div>
@@ -915,18 +973,6 @@
     function toggleMode() {
       isInfiniteMode = !isInfiniteMode;
       const btn = document.getElementById('modeToggleBtn');
-      const textEl = btn.querySelector('.toggle-text');
-      
-      if (isInfiniteMode) {
-        textEl.textContent = '无尽';
-        textEl.classList.remove('left');
-        textEl.classList.add('right');
-      } else {
-        textEl.textContent = '常规';
-        textEl.classList.remove('right');
-        textEl.classList.add('left');
-      }
-      
       btn.classList.toggle('active', isInfiniteMode);
       // 游戏重新开始
       restartGame();
