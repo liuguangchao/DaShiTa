@@ -209,12 +209,14 @@
       transform: translateY(3px);
       box-shadow: 0 2px 0 rgba(0,0,0,0.25);
     }
-    .btn-heavy {
+    .btn-mode {
       background: linear-gradient(135deg, #FF6B35, #FF8C42);
+      color: #fff;
+      font-size: 18px;
       box-shadow: 0 5px 0 #E65100;
-      transition: background 0.3s;
+      min-width: 120px;
     }
-    .btn-heavy.infinite {
+    .btn-mode.infinite {
       background: linear-gradient(135deg, #AB47BC, #CE93D8);
       box-shadow: 0 5px 0 #7B1FA2;
     }
@@ -222,49 +224,6 @@
       background: linear-gradient(135deg, #FFB300, #FFD54F);
       color: #5D4037;
       box-shadow: 0 5px 0 #FF8F00;
-    }
-    
-    /* 模式滑动开关 */
-    .mode-switch-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-    .mode-label {
-      font-size: 14px;
-      font-weight: bold;
-      color: #5D4037;
-      transition: opacity 0.3s;
-    }
-    .mode-label.active {
-      color: #E65100;
-    }
-    .mode-switch {
-      width: 60px;
-      height: 30px;
-      background: #ccc;
-      border-radius: 15px;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .mode-switch.active {
-      background: #AB47BC;
-    }
-    .mode-switch-thumb {
-      width: 26px;
-      height: 26px;
-      background: #fff;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      transition: left 0.3s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .mode-switch.active .mode-switch-thumb {
-      left: 32px;
     }
     
     /* 飘字效果 */
@@ -491,15 +450,8 @@
     <!-- 底部圆角卡片 -->
     <div class="bottom-card">
       <div class="weapon-actions">
-        <div class="mode-switch-container">
-          <span class="mode-label normal-label">常规模式</span>
-          <div class="mode-switch" id="modeToggleBtn" onclick="toggleMode()">
-            <div class="mode-switch-thumb"></div>
-          </div>
-          <span class="mode-label infinite-label">无尽模式</span>
-        </div>
         <div class="action-buttons">
-          <button class="action-btn btn-heavy" onclick="heavyAttack()">重锤</button>
+          <button class="action-btn btn-mode" id="modeToggleBtn" onclick="toggleMode()">常规模式</button>
           <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
         </div>
       </div>
@@ -751,26 +703,57 @@
       moleSpawnTimeout = null;
     }
     
+    // 重启游戏
+    function restartGame() {
+      // 重置分数
+      score = 0;
+      document.querySelector('.damage-value').textContent = score;
+      
+      // 重置老鼠状态
+      for (let i = 0; i < 7; i++) {
+        holeStates[i] = null;
+      }
+      
+      // 清除所有老鼠显示
+      const allHoles = getHoles();
+      allHoles.forEach((hole) => {
+        const faceWrapper = hole.querySelector('.mole-face-wrapper');
+        faceWrapper.innerHTML = '';
+        faceWrapper.classList.remove('visible');
+      });
+      
+      // 停止旧的游戏计时
+      stopMoleSpawning();
+      clearInterval(gameTimer);
+      
+      // 重新开始游戏
+      startMoleSpawning();
+      
+      // 常规模式重新开始90秒倒计时
+      if (!isInfiniteMode) {
+        timeLeft = 90;
+        startGameCountdown();
+      } else {
+        // 无尽模式倒计时保持00:00不变
+        document.querySelector('.time-value').textContent = '00:00';
+      }
+    }
+    
     // 切换模式
     function toggleMode() {
       isInfiniteMode = !isInfiniteMode;
       const btn = document.getElementById('modeToggleBtn');
-      const thumb = btn.querySelector('.mode-switch-thumb');
-      const normalLabel = document.querySelector('.normal-label');
-      const infiniteLabel = document.querySelector('.infinite-label');
       
       if (isInfiniteMode) {
-        btn.classList.add('active');
-        normalLabel.classList.remove('active');
-        infiniteLabel.classList.add('active');
+        btn.textContent = '无尽模式';
+        btn.classList.add('infinite');
       } else {
-        btn.classList.remove('active');
-        normalLabel.classList.add('active');
-        infiniteLabel.classList.remove('active');
+        btn.textContent = '常规模式';
+        btn.classList.remove('infinite');
       }
       
-      stopMoleSpawning();
-      startMoleSpawning();
+      // 游戏重新开始
+      restartGame();
     }
     
     // 点击打老鼠
@@ -928,6 +911,9 @@
       startMoleSpawning(); // 开始出老鼠
       if (!isInfiniteMode) {
         startGameCountdown(); // 开始90秒倒计时
+      } else {
+        // 无尽模式倒计时保持00:00不变
+        document.querySelector('.time-value').textContent = '00:00';
       }
     }
   </script>
