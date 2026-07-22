@@ -149,6 +149,23 @@
       font-size: 50px;
       position: relative;
       z-index: 2;
+      display: none;
+    }
+    .mole-face.visible {
+      display: block;
+    }
+    .mole-face.hit {
+      display: none;
+    }
+    .mole-face.hit-visible {
+      display: block;
+    }
+    .mole-hole {
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .mole-hole:active {
+      transform: scale(0.95);
     }
     
     /* 特效标记 */
@@ -502,6 +519,99 @@
       }
     });
     
+    // ===== 打地鼠游戏逻辑 =====
+    // 3种老鼠，每种有正常和敲晕2张图
+    const moleTypes = [
+      { normal: './images/mole-normal-1.png', hit: './images/mole-hit-1.png' },
+      { normal: './images/mole-normal-2.png', hit: './images/mole-hit-2.png' },
+      { normal: './images/mole-normal-3.png', hit: './images/mole-hit-3.png' },
+    ];
+    
+    // 7个洞的状态
+    const holes = document.querySelectorAll('.mole-hole');
+    const holeStates = Array(7).fill(null); // null=无老鼠, {type, hit=false/true, timer}=有老鼠
+    
+    // 随机出现老鼠
+    function spawnMole() {
+      // 随机选一个没有老鼠的洞
+      const emptyIndices = [];
+      for (let i = 0; i < 7; i++) {
+        if (!holeStates[i]) emptyIndices.push(i);
+      }
+      if (emptyIndices.length === 0) return;
+      
+      const idx = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      const typeIdx = Math.floor(Math.random() * moleTypes.length);
+      const mole = moleTypes[typeIdx];
+      
+      holeStates[idx] = { type: typeIdx, hit: false };
+      
+      const hole = holes[idx];
+      const faceWrapper = hole.querySelector('.mole-face-wrapper');
+      faceWrapper.innerHTML = `<img src="${mole.normal}" style="width:100%;height:100%;object-fit:contain;" />`;
+      faceWrapper.style.display = 'block';
+      
+      // 1.5~3秒后自动消失
+      const disappearTime = 1500 + Math.random() * 1500;
+      holeStates[idx].timer = setTimeout(() => {
+        hideMole(idx);
+      }, disappearTime);
+    }
+    
+    // 隐藏老鼠
+    function hideMole(idx) {
+      if (!holeStates[idx]) return;
+      clearTimeout(holeStates[idx].timer);
+      const hole = holes[idx];
+      const faceWrapper = hole.querySelector('.mole-face-wrapper');
+      faceWrapper.style.display = 'none';
+      holeStates[idx] = null;
+    }
+    
+    // 定时出现老鼠，同时最多2只
+    let moleSpawnInterval = null;
+    function startMoleSpawning() {
+      // 每0.8~1.5秒尝试出现一只
+      moleSpawnInterval = setInterval(() => {
+        // 统计当前活跃的老鼠数量
+        let activeCount = 0;
+        for (let i = 0; i < 7; i++) {
+          if (holeStates[i] && !holeStates[i].hit) activeCount++;
+        }
+        if (activeCount < 2) {
+          spawnMole();
+        }
+      }, 800 + Math.random() * 700);
+    }
+    
+    // 点击打老鼠
+    function hitMole(element) {
+      // 找到这个洞的索引
+      const idx = Array.from(holes).indexOf(element);
+      if (idx === -1 || !holeStates[idx] || holeStates[idx].hit) return;
+      
+      const state = holeStates[idx];
+      state.hit = true;
+      clearTimeout(state.timer);
+      
+      // 显示敲晕图片
+      const mole = moleTypes[state.type];
+      const faceWrapper = element.querySelector('.mole-face-wrapper');
+      faceWrapper.innerHTML = `<img src="${mole.hit}" style="width:100%;height:100%;object-fit:contain;" />`;
+      
+      // 打鼠数量 +1
+      score++;
+      document.querySelector('.damage-value').textContent = score;
+      
+      // 显示飘字
+      showFloatingText(element, '+1');
+      
+      // 1秒后消失
+      setTimeout(() => {
+        hideMole(idx);
+      }, 1000);
+    }
+    
     // 5秒倒计时
     function startFiveSecondCountdown() {
       let count = 5;
@@ -518,7 +628,7 @@
           overlay.classList.add('hidden');
           setTimeout(() => {
             overlay.style.display = 'none';
-            startGameCountdown();
+            startGame(); // 启动游戏
           }, 500);
         }
       }, 1000);
@@ -601,6 +711,12 @@
     function switchWeapon() {
       // 弹出toast提示
       showToast('从背包中选择武器');
+    }
+    
+    // 5秒倒计时结束后启动游戏
+    function startGame() {
+      startMoleSpawning(); // 开始出老鼠
+      startGameCountdown(); // 开始90秒倒计时
     }
   </script>
 </body>
