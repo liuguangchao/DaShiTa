@@ -474,11 +474,11 @@
     const weaponNames = ['木斧', '锤子', '法棍', '汤勺', '手套'];
     let selectedIndex = 0;
     
-    // 跟随鼠标移动 - 使用 requestAnimationFrame 确保始终显示
-    const cursorWeapon = document.getElementById('cursorWeapon');
-    let mouseX = -100;
-    let mouseY = -100;
+    // 鼠标位置
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
     
+    // 鼠标移动事件
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -492,15 +492,17 @@
       }
     });
     
-    // 持续更新位置
-    function updateCursorPosition() {
-      if (cursorWeapon) {
-        cursorWeapon.style.left = mouseX + 'px';
-        cursorWeapon.style.top = mouseY + 'px';
+    // 持续更新武器位置 - 使用 requestAnimationFrame
+    function updateCursorWeapon() {
+      const el = document.getElementById('cursorWeapon');
+      if (el) {
+        el.style.left = mouseX + 'px';
+        el.style.top = mouseY + 'px';
       }
-      requestAnimationFrame(updateCursorPosition);
+      requestAnimationFrame(updateCursorWeapon);
     }
-    updateCursorPosition();
+    // 启动动画循环
+    requestAnimationFrame(updateCursorWeapon);
     
     // 5秒倒计时
     function startFiveSecondCountdown() {
