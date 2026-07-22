@@ -517,33 +517,58 @@
       const grid = document.getElementById('molesGrid');
       const gridRect = grid.getBoundingClientRect();
       const holeSize = 130; // 每个洞的宽高
-      const minGap = 80; // 最小间距，保证老鼠不重叠
+      const minGap = 100; // 最小间距，保证老鼠不重叠
       
       const positions = [];
+      const maxAttempts = 500;
       
-      // 使用固定菱形布局，确保7个洞都能放下且不重叠
-      const cols = 3; // 每列最多3个
-      const cellW = gridRect.width / cols;
-      const cellH = gridRect.height / 3;
-      const offsetX = cellW / 2;
-      const offsetY = cellH / 2;
-      
-      // 7个洞的位置：2-3-2 菱形排列
-      const layout = [
-        { col: 0, row: 0 },  // 第一行左
-        { col: 2, row: 0 },  // 第一行右
-        { col: 0, row: 1 },  // 第二行左
-        { col: 1, row: 1 },  // 第二行中
-        { col: 2, row: 1 },  // 第二行右
-        { col: 0, row: 2 },  // 第三行左
-        { col: 2, row: 2 },  // 第三行右
-      ];
-      
-      layout.forEach((pos, idx) => {
-        const x = pos.col * cellW + offsetX - holeSize / 2;
-        const y = pos.row * cellH + offsetY - holeSize / 2;
-        positions.push({ x, y });
+      // 先放置第一个洞在中心附近
+      const centerX = gridRect.width / 2 - holeSize / 2;
+      const centerY = gridRect.height / 2 - holeSize / 2;
+      positions.push({ 
+        x: centerX + (Math.random() - 0.5) * 50, 
+        y: centerY + (Math.random() - 0.5) * 50 
       });
+      
+      // 随机放置剩余6个洞
+      for (let i = 1; i < 7; i++) {
+        let placed = false;
+        let attempts = 0;
+        
+        while (!placed && attempts < maxAttempts) {
+          attempts++;
+          const x = Math.random() * (gridRect.width - holeSize);
+          const y = Math.random() * (gridRect.height - holeSize);
+          
+          // 检查是否与已有洞重叠
+          let overlap = false;
+          for (const pos of positions) {
+            const dx = x - pos.x;
+            const dy = y - pos.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < minGap) {
+              overlap = true;
+              break;
+            }
+          }
+          
+          if (!overlap) {
+            positions.push({ x, y });
+            placed = true;
+          }
+        }
+        
+        if (!placed) {
+          console.warn(`无法在第${i + 1}个洞找到合适位置，使用备用位置`);
+          // 使用备用位置：均匀分布
+          const angle = (i / 6) * Math.PI * 2;
+          const radius = Math.min(gridRect.width, gridRect.height) * 0.3;
+          positions.push({
+            x: centerX + Math.cos(angle) * radius - holeSize / 2,
+            y: centerY + Math.sin(angle) * radius - holeSize / 2
+          });
+        }
+      }
       
       return positions;
     }
