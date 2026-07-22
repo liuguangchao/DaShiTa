@@ -239,54 +239,68 @@
     .mode-text.active {
       color: #E65100;
     }
+    /* 滑动开关 */
     .mode-toggle {
       flex: 1;
       height: 65px;
-      background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+      background: linear-gradient(135deg, #A8D56C 0%, #C8E6A8 100%);
       border-radius: 32px;
       position: relative;
       cursor: pointer;
       transition: all 0.3s;
       overflow: hidden;
       border: 2px solid rgba(255,255,255,0.3);
-      box-shadow: 0 5px 0 #E65100;
+      box-shadow: 0 5px 0 #7CB342;
     }
     .mode-toggle.active {
-      background: linear-gradient(135deg, #AB47BC 0%, #CE93D8 100%);
-      box-shadow: 0 5px 0 #7B1FA2;
+      background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
+      box-shadow: 0 5px 0 #E65100;
     }
-    .mode-toggle-thumb {
+    .toggle-bg {
       width: 100%;
       height: 100%;
       position: absolute;
       top: 0;
       left: 0;
-      transition: transform 0.3s;
       display: flex;
       align-items: center;
+      justify-content: center;
+      gap: 60px;
     }
-    .normal-text {
-      font-size: 18px;
-      padding-left: 20px;
-      transition: opacity 0.3s;
-    }
+    .normal-text,
     .infinite-text {
-      font-size: 18px;
-      padding-right: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: rgba(255,255,255,0.7);
+      transition: color 0.3s;
+      white-space: nowrap;
+      z-index: 1;
+    }
+    .normal-text.active,
+    .infinite-text.active {
+      color: #fff;
+    }
+    .toggle-handle {
+      width: 56px;
+      height: 56px;
+      background: #fff;
+      border-radius: 50%;
       position: absolute;
-      right: 20px;
-      display: none;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: left 0.3s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 2;
     }
-    .mode-toggle.active .mode-toggle-thumb {
-      transform: translateX(100%);
+    .toggle-handle span {
+      font-size: 24px;
     }
-    .mode-toggle.active .normal-text {
-      opacity: 0;
-      display: none;
-    }
-    .mode-toggle.active .infinite-text {
-      display: block;
-      right: 20px;
+    .mode-toggle.active .toggle-handle {
+      left: calc(100% - 64px);
     }
     
     /* 飘字效果 */
@@ -531,9 +545,12 @@
     <div class="bottom-card">
       <div class="weapon-actions">
         <div class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()">
-          <div class="mode-toggle-thumb">
-            <span class="mode-text normal-text">常规</span>
-            <span class="mode-text infinite-text">无尽</span>
+          <div class="toggle-bg">
+            <span class="normal-text active">常规</span>
+            <span class="infinite-text">无尽</span>
+          </div>
+          <div class="toggle-handle">
+            <span>♻️</span>
           </div>
         </div>
         <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
