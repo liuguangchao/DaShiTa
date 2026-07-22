@@ -212,6 +212,11 @@
     .btn-heavy {
       background: linear-gradient(135deg, #FF6B35, #FF8C42);
       box-shadow: 0 5px 0 #E65100;
+      transition: background 0.3s;
+    }
+    .btn-heavy.infinite {
+      background: linear-gradient(135deg, #AB47BC, #CE93D8);
+      box-shadow: 0 5px 0 #7B1FA2;
     }
     .btn-switch {
       background: linear-gradient(135deg, #FFB300, #FFD54F);
@@ -444,7 +449,7 @@
     <div class="bottom-card">
       <div class="weapon-actions">
         <div class="action-buttons">
-          <button class="action-btn btn-heavy" onclick="heavyAttack()">重锤</button>
+          <button class="action-btn btn-heavy" id="modeToggleBtn" onclick="toggleMode()">常规模式</button>
           <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
         </div>
       </div>
@@ -461,6 +466,11 @@
     let gameTimer = null;
     let countdownTimer = null;
     let currentWeapon = '🪓'; // 默认木制锤子
+    let gameMode = 'normal'; // 'normal' 或 'infinite'
+    let moleSpawnBaseInterval = 1200; // 基础间隔1.2秒
+    let moleSpawnCurrentInterval = 1200;
+    let moleSpawnTimeout = null; // 用于非固定间隔
+    let isInfiniteMode = false; // 是否无尽模式
     
     // 武器列表
     const weaponList = ['🪓', '🔨', '🥖', '🥄', '🧤'];
@@ -643,10 +653,31 @@
     
     // 定时出现老鼠，同时最多2只
     let moleSpawnInterval = null;
+    let moleSpawnTimeout = null;
+    
     function startMoleSpawning() {
-      // 每0.8~1.5秒尝试出现一只
-      moleSpawnInterval = setInterval(() => {
-        // 统计当前活跃的老鼠数量
+      if (isInfiniteMode) {
+        // 无尽模式：使用可变间隔
+        moleSpawnCurrentInterval = moleSpawnBaseInterval;
+        scheduleNextMole();
+      } else {
+        // 常规模式：固定间隔
+        moleSpawnInterval = setInterval(() => {
+          let activeCount = 0;
+          for (let i = 0; i < 7; i++) {
+            if (holeStates[i] && !holeStates[i].hit) activeCount++;
+          }
+          if (activeCount < 2) {
+            spawnMole();
+          }
+        }, 1200); // 固定1.2秒
+      }
+    }
+    
+    // 调度下一个老鼠（无尽模式用）
+    function scheduleNextMole() {
+      clearTimeout(moleSpawnTimeout);
+      moleSpawnTimeout = setTimeout(() => {
         let activeCount = 0;
         for (let i = 0; i < 7; i++) {
           if (holeStates[i] && !holeStates[i].hit) activeCount++;
@@ -654,7 +685,39 @@
         if (activeCount < 2) {
           spawnMole();
         }
-      }, 800 + Math.random() * 700);
+        // 每10秒减少50%间隔
+        moleSpawnCurrentInterval *= 0.5;
+        // 限制最小间隔500ms
+        if (moleSpawnCurrentInterval < 500) moleSpawnCurrentInterval = 500;
+        // 每10秒记录一次加速
+        scheduleNextMole();
+      }, moleSpawnCurrentInterval);
+    }
+    
+    // 停止出老鼠
+    function stopMoleSpawning() {
+      clearInterval(moleSpawnInterval);
+      clearTimeout(moleSpawnTimeout);
+      moleSpawnInterval = null;
+      moleSpawnTimeout = null;
+    }
+    
+    // 切换模式
+    function toggleMode() {
+      isInfiniteMode = !isInfiniteMode;
+      const btn = document.getElementById('modeToggleBtn');
+      
+      if (isInfiniteMode) {
+        btn.textContent = '无尽模式';
+        btn.classList.add('infinite');
+        stopMoleSpawning();
+        startMoleSpawning();
+      } else {
+        btn.textContent = '常规模式';
+        btn.classList.remove('infinite');
+        stopMoleSpawning();
+        startMoleSpawning();
+      }
     }
     
     // 点击打老鼠
@@ -774,8 +837,29 @@
     }
     
     function heavyAttack() {
-      // TODO: 实现重锤逻辑
-      console.log('重锤攻击');
+      // 重锤攻击当前所有可见老鼠
+      for (let i = 0; i < 7; i++) {
+        if (holeStates[i] && !holeStates[i].hit) {
+          holeStates[i].hit = true;
+          clearTimeout(holeStates[i].timer);
+          
+          const hole = getHoles()[i];
+          if (hole) {
+            const mole = moleTypes[holeStates[i].type];
+            const faceWrapper = hole.querySelector('.mole-face-wrapper');
+            faceWrapper.innerHTML = `<img src="${mole.hit}" style="width:100px;height:100px;object-fit:contain;display:block;" />`;
+            faceWrapper.classList.add('visible');
+            
+            score++;
+            document.querySelector('.damage-value').textContent = score;
+            
+            setTimeout(() => {
+              hideMole(i);
+            }, 1000);
+          }
+        }
+      }
+      showToast('重锤攻击！所有老鼠被击中！');
     }
     
     function switchWeapon() {
@@ -786,7 +870,9 @@
     // 5秒倒计时结束后启动游戏
     function startGame() {
       startMoleSpawning(); // 开始出老鼠
-      startGameCountdown(); // 开始90秒倒计时
+      if (!isInfiniteMode) {
+        startGameCountdown(); // 开始90秒倒计时
+      }
     }
   </script>
 </body>
