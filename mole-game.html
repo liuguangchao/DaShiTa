@@ -180,10 +180,11 @@
       position: fixed;
       pointer-events: none;
       font-size: 40px;
-      z-index: 9999;
+      z-index: 99999;
       transform: translate(-50%, -50%);
       transition: font-size 0.2s;
       filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.3));
+      display: block !important;
     }
     .action-btn {
       flex: 1;
@@ -474,31 +475,28 @@
     const weaponNames = ['木斧', '锤子', '法棍', '汤勺', '手套'];
     let selectedIndex = 0;
     
-    // 鼠标位置
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
+    // 获取锤子元素
+    const cursorWeaponEl = document.getElementById('cursorWeapon');
+    
+    // 初始位置：屏幕中央
+    if (cursorWeaponEl) {
+      cursorWeaponEl.style.left = (window.innerWidth / 2) + 'px';
+      cursorWeaponEl.style.top = (window.innerHeight / 2) + 'px';
+    }
     
     // 鼠标移动事件 - 直接更新武器位置
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      const el = document.getElementById('cursorWeapon');
-      if (el) {
-        el.style.left = mouseX + 'px';
-        el.style.top = mouseY + 'px';
+      if (cursorWeaponEl) {
+        cursorWeaponEl.style.left = e.clientX + 'px';
+        cursorWeaponEl.style.top = e.clientY + 'px';
       }
     });
     
     // 移动端触摸支持
     document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        mouseX = e.touches[0].clientX;
-        mouseY = e.touches[0].clientY;
-        const el = document.getElementById('cursorWeapon');
-        if (el) {
-          el.style.left = mouseX + 'px';
-          el.style.top = mouseY + 'px';
-        }
+      if (cursorWeaponEl && e.touches.length > 0) {
+        cursorWeaponEl.style.left = e.touches[0].clientX + 'px';
+        cursorWeaponEl.style.top = e.touches[0].clientY + 'px';
       }
     });
     
