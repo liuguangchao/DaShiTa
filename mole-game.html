@@ -264,29 +264,33 @@
       left: 0;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 60px;
+      justify-content: space-between;
+      padding: 0 20px;
     }
     .normal-text,
     .infinite-text {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
-      color: rgba(255,255,255,0.7);
-      transition: color 0.3s;
+      color: rgba(255,255,255,0.9);
       white-space: nowrap;
       z-index: 1;
     }
-    .normal-text.active,
-    .infinite-text.active {
-      color: #fff;
+    .infinite-text {
+      display: none;
+    }
+    .mode-toggle.active .normal-text {
+      display: none;
+    }
+    .mode-toggle.active .infinite-text {
+      display: block;
     }
     .toggle-handle {
       width: 56px;
       height: 56px;
-      background: #fff;
+      background: #4CAF50;
       border-radius: 50%;
       position: absolute;
-      left: 8px;
+      left: calc(50% - 110px);
       top: 50%;
       transform: translateY(-50%);
       transition: left 0.3s ease-out;
@@ -296,11 +300,13 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       z-index: 2;
     }
-    .toggle-handle span {
+    .toggle-handle::before {
+      content: '●';
       font-size: 24px;
+      color: #fff;
     }
     .mode-toggle.active .toggle-handle {
-      left: calc(100% - 64px);
+      left: calc(50% + 50px);
     }
     
     /* 飘字效果 */
@@ -549,9 +555,7 @@
             <span class="normal-text active">常规</span>
             <span class="infinite-text">无尽</span>
           </div>
-          <div class="toggle-handle">
-            <span>♻️</span>
-          </div>
+          <div class="toggle-handle"></div>
         </div>
         <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
       </div>
