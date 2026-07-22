@@ -220,6 +220,163 @@
       background: linear-gradient(135deg, #FFB300, #FFD54F);
       color: #5D4037;
       box-shadow: 0 5px 0 #FF8F00;
+      font-size: 18px;
+    }
+    
+    /* 武器切换弹窗 */
+    .weapon-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 100000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .weapon-modal-overlay.show {
+      display: flex;
+    }
+    .weapon-modal {
+      background: linear-gradient(180deg, #FFE066 0%, #FFD166 30%, #FFB347 100%);
+      border-radius: 28px 28px 0 0;
+      width: 100%;
+      max-height: 80vh;
+      padding: 20px 16px 30px;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+      animation: slideUp 0.3s ease-out;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .weapon-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .weapon-modal-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #5C3300;
+    }
+    .weapon-modal-close {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      color: #5C3300;
+    }
+    .weapon-modal-close:active {
+      transform: scale(0.9);
+      background: rgba(255,255,255,0.8);
+    }
+    .weapon-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      overflow-y: auto;
+      padding: 12px 0;
+    }
+    .weapon-item {
+      background: rgba(255,255,255,0.6);
+      border-radius: 16px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    .weapon-item:active {
+      transform: scale(0.95);
+    }
+    .weapon-item.selected {
+      background: rgba(255,224,102,0.5);
+      border-color: #FFB347;
+    }
+    .weapon-item .wi-icon {
+      font-size: 44px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .weapon-item .wi-name {
+      font-size: 12px;
+      color: #333;
+      font-weight: 500;
+    }
+    .weapon-item .wi-count {
+      font-size: 11px;
+      color: #5C3300;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .weapon-equip-bar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 16px;
+      margin-top: 16px;
+      flex-shrink: 0;
+    }
+    .weapon-equip-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,224,102,0.4);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      flex-shrink: 0;
+    }
+    .weapon-equip-info {
+      flex: 1;
+    }
+    .weapon-equip-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 2px;
+    }
+    .weapon-equip-damage {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 2px;
+    }
+    .weapon-equip-effect {
+      font-size: 12px;
+      color: #FF6B35;
+    }
+    .weapon-equip-btn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(135deg, #FFB347, #FFD166);
+      color: #5C3300;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      box-shadow: 0 3px 10px rgba(255,179,71,0.4);
+    }
+    .weapon-equip-btn:active {
+      transform: scale(0.95);
     }
     
     /* 滑动开关 */
@@ -555,6 +712,28 @@
       </div>
     </div>
     
+    <!-- 武器选择弹窗 -->
+    <div class="weapon-modal-overlay" id="weaponModalOverlay">
+      <div class="weapon-modal">
+        <div class="weapon-modal-header">
+          <span class="weapon-modal-title">武器库</span>
+          <button class="weapon-modal-close" onclick="closeWeaponModal()">✕</button>
+        </div>
+        <div class="weapon-grid" id="weaponGrid">
+          <!-- 动态渲染武器 -->
+        </div>
+        <div class="weapon-equip-bar">
+          <div class="weapon-equip-icon" id="equipIcon">🪓</div>
+          <div class="weapon-equip-info">
+            <div class="weapon-equip-name" id="equipName">木斧</div>
+            <div class="weapon-equip-damage" id="equipDamage">伤害 20-25</div>
+            <div class="weapon-equip-effect" id="equipEffect">专属特效 木纹飞溅</div>
+          </div>
+          <button class="weapon-equip-btn" id="equipBtn" onclick="equipSelectedWeapon()">装备</button>
+        </div>
+      </div>
+    </div>
+
     <!-- 跟随鼠标的武器 -->
     <div class="cursor-weapon" id="cursorWeapon">🪓</div>
   </div>
@@ -574,7 +753,19 @@
     // 武器列表
     const weaponList = ['🪓', '🔨', '🥖', '🥄', '🧤'];
     const weaponNames = ['木斧', '锤子', '法棍', '汤勺', '手套'];
-    let selectedIndex = 0;
+    // 武器列表（参考 backpack.html）
+    const weaponData = [
+      {icon:'🪵',name:'木棍',damage:'伤害 20-25',effect:'专属特效 木纹飞溅'},
+      {icon:'🔨',name:'铁锤',damage:'伤害 30-40',effect:'专属特效 铁锤重击'},
+      {icon:'👟',name:'拖鞋',damage:'伤害 10-15',effect:'专属特效 拖鞋暴击'},
+      {icon:'⚡',name:'电击棒',damage:'伤害 25-35',effect:'专属特效 电击麻痹'},
+      {icon:'🍳',name:'平底锅',damage:'伤害 15-20',effect:'专属特效 锅气爆发'},
+      {icon:'🏏',name:'棒球棍',damage:'伤害 22-30',effect:'专属特效 全垒打'},
+      {icon:'🔫',name:'激光枪',damage:'伤害 40-50',effect:'专属特效 激光束'},
+      {icon:'🪄',name:'魔法杖',damage:'伤害 35-45',effect:'专属特效 魔法闪光'}
+    ];
+    
+    let selectedWeaponIdx = -1;
     
     // 获取锤子元素
     const cursorWeaponEl = document.getElementById('cursorWeapon');
@@ -1062,37 +1253,93 @@
       }, 1000);
     }
     
-    function heavyAttack() {
-      // 重锤攻击当前所有可见老鼠
-      for (let i = 0; i < 7; i++) {
-        if (holeStates[i] && !holeStates[i].hit) {
-          holeStates[i].hit = true;
-          clearTimeout(holeStates[i].timer);
-          
-          const hole = getHoles()[i];
-          if (hole) {
-            const mole = moleTypes[holeStates[i].type];
-            const faceWrapper = hole.querySelector('.mole-face-wrapper');
-            faceWrapper.innerHTML = `<img src="${mole.hit}" style="width:100px;height:100px;object-fit:contain;display:block;" />`;
-            faceWrapper.classList.add('visible');
-            
-            score++;
-            document.querySelector('.damage-value').textContent = score;
-            
-            setTimeout(() => {
-              hideMole(i);
-            }, 1000);
-          }
-        }
+    // ===== 武器弹窗逻辑 =====
+    
+    // 渲染武器网格
+    function renderWeaponGrid() {
+      const grid = document.getElementById('weaponGrid');
+      let html = '';
+      for (let i = 0; i < weaponData.length; i++) {
+        const item = weaponData[i];
+        const selectedClass = i === selectedWeaponIdx ? 'selected' : '';
+        html += '<div class="weapon-item ' + selectedClass + '" onclick="selectWeapon(' + i + ')">' +
+          '<span class="wi-icon">' + item.icon + '</span>' +
+          '<div class="wi-name">' + item.name + '</div>' +
+          '<div class="wi-count">' + item.damage + '</div>' +
+        '</div>';
       }
-      showToast('重锤攻击！所有老鼠被击中！');
+      grid.innerHTML = html;
+      
+      // 如果有选中，更新装备栏信息
+      if (selectedWeaponIdx >= 0) {
+        updateEquipBar(selectedWeaponIdx);
+      }
     }
+    
+    // 更新装备栏信息
+    function updateEquipBar(idx) {
+      const item = weaponData[idx];
+      document.getElementById('equipIcon').textContent = item.icon;
+      document.getElementById('equipName').textContent = item.name;
+      document.getElementById('equipDamage').textContent = item.damage || '';
+      document.getElementById('equipEffect').textContent = item.effect || '';
+      
+      const equipBtn = document.getElementById('equipBtn');
+      if (currentWeapon === item.icon) {
+        equipBtn.textContent = '卸下';
+      } else {
+        equipBtn.textContent = '装备';
+      }
+    }
+    
+    // 选择武器
+    function selectWeapon(idx) {
+      selectedWeaponIdx = idx;
+      renderWeaponGrid();
+    }
+    
+    // 装备武器
+    function equipSelectedWeapon() {
+      if (selectedWeaponIdx < 0) return;
+      
+      const item = weaponData[selectedWeaponIdx];
+      currentWeapon = item.icon;
+      cursorWeaponEl.textContent = currentWeapon;
+      
+      const btn = document.getElementById('equipBtn');
+      btn.textContent = '已装备';
+      showToast('已装备：' + item.name);
+      
+      setTimeout(function() {
+        closeWeaponModal();
+      }, 600);
+    }
+    
+    // 关闭武器弹窗
+    function closeWeaponModal() {
+      document.getElementById('weaponModalOverlay').classList.remove('show');
+    }
+    
+    // 点击遮罩层关闭
+    document.getElementById('weaponModalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeWeaponModal();
+      }
+    });
     
     function switchWeapon() {
-      // 弹出toast提示
-      showToast('从背包中选择武器');
+      selectedWeaponIdx = -1;
+      // 默认选中当前装备的武器
+      for (let i = 0; i < weaponData.length; i++) {
+        if (weaponData[i].icon === currentWeapon) {
+          selectedWeaponIdx = i;
+          break;
+        }
+      }
+      renderWeaponGrid();
+      document.getElementById('weaponModalOverlay').classList.add('show');
     }
-    
+
     // 3秒倒计时结束后启动游戏
     function startGame() {
       startMoleSpawning(); // 开始出老鼠
