@@ -226,6 +226,49 @@
       box-shadow: 0 5px 0 #FF8F00;
     }
     
+    /* 模式切换 Toggle Switch */
+    .mode-switch-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .mode-text {
+      font-size: 14px;
+      font-weight: bold;
+      color: #5D4037;
+      transition: color 0.3s;
+    }
+    .mode-text.active {
+      color: #E65100;
+    }
+    .mode-toggle {
+      width: 50px;
+      height: 26px;
+      background: #ccc;
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .mode-toggle.active {
+      background: #FF6B35;
+    }
+    .mode-toggle-thumb {
+      width: 22px;
+      height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .mode-toggle.active .mode-toggle-thumb {
+      left: 26px;
+    }
+    
     /* 飘字效果 */
     .floating-text {
       position: absolute;
@@ -451,7 +494,13 @@
     <div class="bottom-card">
       <div class="weapon-actions">
         <div class="action-buttons">
-          <button class="action-btn btn-mode" id="modeToggleBtn" onclick="toggleMode()">常规模式</button>
+          <div class="mode-switch-wrapper">
+            <span class="mode-text normal-text">常规</span>
+            <div class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()">
+              <div class="mode-toggle-thumb"></div>
+            </div>
+            <span class="mode-text infinite-text">无尽</span>
+          </div>
           <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
         </div>
       </div>
@@ -778,13 +827,17 @@
     function toggleMode() {
       isInfiniteMode = !isInfiniteMode;
       const btn = document.getElementById('modeToggleBtn');
+      const normalText = document.querySelector('.normal-text');
+      const infiniteText = document.querySelector('.infinite-text');
       
       if (isInfiniteMode) {
-        btn.textContent = '无尽模式';
-        btn.classList.add('infinite');
+        btn.classList.add('active');
+        normalText.classList.remove('active');
+        infiniteText.classList.add('active');
       } else {
-        btn.textContent = '常规模式';
-        btn.classList.remove('infinite');
+        btn.classList.remove('active');
+        normalText.classList.add('active');
+        infiniteText.classList.remove('active');
       }
       
       // 游戏重新开始
