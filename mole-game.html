@@ -143,19 +143,33 @@
     .bush1 { top: 40px; right: 20px; font-size: 36px; }
     .rock1 { top: 30px; left: 10px; font-size: 28px; }
     
-    /* 地鼠网格 */
+    /* 地鼠网格 - 菱形排列 */
     .moles-grid {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3, 1fr);
-      gap: 15px;
       width: 90%;
-      max-width: 380px;
+      max-width: 400px;
       height: 70%;
+    }
+    .mole-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    .mole-row:last-child {
+      margin-bottom: 0;
+    }
+    .mole-row-1 {
+      gap: 60px;
+    }
+    .mole-row-2 {
+      gap: 20px;
+    }
+    .mole-row-3 {
+      gap: 60px;
     }
     .mole-hole {
       position: relative;
@@ -389,53 +403,61 @@
       <div class="grass-decoration bush1">🌿</div>
       <div class="grass-decoration rock1">🪨</div>
       
-      <!-- 地鼠网格 -->
+      <!-- 地鼠网格 - 菱形排列 -->
       <div class="moles-grid">
-        <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">
-            <span class="mole-face">🐹</span>
-            <span class="effect-mark">🌀</span>
+        <!-- 第一行：2个 -->
+        <div class="mole-row mole-row-1">
+          <div class="mole-hole" onclick="hitMole(this)">
+            <div class="mole-body">
+              <span class="mole-face">🐹</span>
+              <span class="effect-mark">🌀</span>
+            </div>
+            <div class="hole-base"></div>
           </div>
-          <div class="hole-base"></div>
+          <div class="mole-hole" onclick="hitMole(this)">
+            <div class="mole-body">
+              <span class="mole-face">🐹</span>
+            </div>
+            <div class="hole-base"></div>
+          </div>
         </div>
-        <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">
-            <span class="mole-face">🐹</span>
+        <!-- 第二行：3个 -->
+        <div class="mole-row mole-row-2">
+          <div class="mole-hole" onclick="hitMole(this)">
+            <div class="mole-body">
+              <span class="mole-face">🐹</span>
+            </div>
+            <div class="hole-base"></div>
           </div>
-          <div class="hole-base"></div>
+          <div class="mole-hole" onclick="hitMole(this)">
+            <div class="mole-body">
+              <span class="mole-face">🐹</span>
+              <span class="sparkle-effect">⭐</span>
+            </div>
+            <div class="hole-base"></div>
+          </div>
+          <div class="mole-hole" onclick="hitMole(this)">
+            <div class="mole-body">
+              <span class="mole-face">🐹</span>
+              <span class="sparkle-effect">✨</span>
+            </div>
+            <div class="hole-base"></div>
+          </div>
         </div>
-        <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">
-            <span class="mole-face">🐹</span>
-            <span class="sparkle-effect">✨</span>
+        <!-- 第三行：2个 -->
+        <div class="mole-row mole-row-3">
+          <div class="mole-hole" onclick="hitMole(this)">
+            <div class="mole-body">
+              <span class="mole-face">🐹</span>
+            </div>
+            <div class="hole-base"></div>
           </div>
-          <div class="hole-base"></div>
-        </div>
-        <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">
-            <span class="mole-face">🐹</span>
+          <div class="mole-hole" onclick="hitMole(this)">
+            <div class="mole-body">
+              <span class="mole-face">🐹</span>
+            </div>
+            <div class="hole-base"></div>
           </div>
-          <div class="hole-base"></div>
-        </div>
-        <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">
-            <span class="mole-face">🐹</span>
-            <span class="sparkle-effect">⭐</span>
-          </div>
-          <div class="hole-base"></div>
-        </div>
-        <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">
-            <span class="mole-face">🐹</span>
-            <span class="sparkle-effect">✨</span>
-          </div>
-          <div class="hole-base"></div>
-        </div>
-        <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">
-            <span class="mole-face">🐹</span>
-          </div>
-          <div class="hole-base"></div>
         </div>
       </div>
     </div>
