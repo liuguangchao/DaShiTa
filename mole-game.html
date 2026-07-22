@@ -474,23 +474,33 @@
     const weaponNames = ['木斧', '锤子', '法棍', '汤勺', '手套'];
     let selectedIndex = 0;
     
-    // 跟随鼠标移动
+    // 跟随鼠标移动 - 使用 requestAnimationFrame 确保始终显示
+    const cursorWeapon = document.getElementById('cursorWeapon');
+    let mouseX = -100;
+    let mouseY = -100;
+    
     document.addEventListener('mousemove', (e) => {
-      const cursorWeapon = document.getElementById('cursorWeapon');
-      if (cursorWeapon) {
-        cursorWeapon.style.left = e.clientX + 'px';
-        cursorWeapon.style.top = e.clientY + 'px';
-      }
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
     
     // 移动端触摸支持
     document.addEventListener('touchmove', (e) => {
-      const cursorWeapon = document.getElementById('cursorWeapon');
-      if (cursorWeapon && e.touches.length > 0) {
-        cursorWeapon.style.left = e.touches[0].clientX + 'px';
-        cursorWeapon.style.top = e.touches[0].clientY + 'px';
+      if (e.touches.length > 0) {
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
       }
     });
+    
+    // 持续更新位置
+    function updateCursorPosition() {
+      if (cursorWeapon) {
+        cursorWeapon.style.left = mouseX + 'px';
+        cursorWeapon.style.top = mouseY + 'px';
+      }
+      requestAnimationFrame(updateCursorPosition);
+    }
+    updateCursorPosition();
     
     // 5秒倒计时
     function startFiveSecondCountdown() {
