@@ -227,41 +227,22 @@
       box-shadow: 0 5px 0 #FF8F00;
     }
     
-    /* 模式切换 Toggle Switch */
-    .mode-switch-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-    .mode-text {
-      font-size: 10px;
-      font-weight: bold;
-      color: #5D4037;
-      transition: color 0.3s;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-    .mode-text.active {
-      color: #E65100;
-    }
-    
     /* 滑动开关 */
     .mode-toggle {
       flex: 3;
       height: 65px;
-      background: linear-gradient(135deg, #A8D56C 0%, #C8E6A8 100%);
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
       border-radius: 32px;
       position: relative;
       cursor: pointer;
-      transition: all 0.3s;
-      overflow: hidden;
-      border: 2px solid rgba(255,255,255,0.3);
-      box-shadow: 0 5px 0 #7CB342;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      overflow: visible;
+      border: 3px solid rgba(255,255,255,0.5);
+      box-shadow: 0 6px 0 #E53935;
     }
     .mode-toggle.active {
-      background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
-      box-shadow: 0 5px 0 #E65100;
+      background: linear-gradient(135deg, #AB47BC 0%, #CE93D8 100%);
+      box-shadow: 0 6px 0 #7B1FA2;
     }
     
     .toggle-bg {
@@ -272,71 +253,59 @@
       left: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 24px;
     }
     
-    .normal-text,
-    .infinite-text {
+    .toggle-text-left,
+    .toggle-text-right {
       font-size: 18px;
       font-weight: bold;
       color: #fff;
       white-space: nowrap;
       z-index: 1;
-      position: relative;
     }
     
-    /* 常规模式：显示"常规"在中间，隐藏"无尽" */
-    .normal-text {
-      display: block;
-      text-align: center;
-      width: 100%;
+    .toggle-text-left {
+      margin-right: auto;
     }
-    .infinite-text {
-      display: none;
+    
+    .toggle-text-right {
+      margin-left: auto;
     }
     
     .toggle-handle {
-      width: 56px;
-      height: 56px;
+      width: 60px;
+      height: 60px;
       background: #fff;
       border-radius: 50%;
       position: absolute;
-      left: 50%;
+      left: 12px;
       top: 50%;
-      transform: translate(-50%, -50%);
-      transition: left 0.3s ease-out;
+      transform: translateY(-50%);
+      transition: left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset 0 -2px 5px rgba(0,0,0,0.1);
       z-index: 2;
     }
     
     .toggle-handle::before {
       content: '';
-      width: 24px;
-      height: 24px;
-      background: #4CAF50;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(255,255,255,0.6);
       border-radius: 50%;
-      transition: background 0.3s;
     }
     
-    /* 无尽模式：隐藏"常规"，显示"无尽"，圆圈滑到右侧 */
-    .mode-toggle.active .normal-text {
-      display: none;
+    /* 默认状态（常规模式）：文字"常规"在右侧，圆圈在左侧 */
+    .mode-toggle:not(.active) .toggle-handle {
+      left: 12px;
     }
-    .mode-toggle.active .infinite-text {
-      display: block;
-      text-align: center;
-      width: 100%;
-    }
+    
+    /* 激活状态（无尽模式）：文字"无尽"在左侧，圆圈在右侧 */
     .mode-toggle.active .toggle-handle {
-      left: calc(50% + 35px);
-      transform: translate(-50%, -50%);
-    }
-    .mode-toggle.active .toggle-handle::before {
-      background: #4CAF50;
+      left: calc(100% - 72px);
     }
     
     /* 飘字效果 */
@@ -582,8 +551,8 @@
       <div class="weapon-actions">
         <div class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()">
           <div class="toggle-bg">
-            <span class="normal-text">常规</span>
-            <span class="infinite-text">无尽</span>
+            <span class="toggle-text-left">无尽</span>
+            <span class="toggle-text-right">常规</span>
           </div>
           <div class="toggle-handle"></div>
         </div>
