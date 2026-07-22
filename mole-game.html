@@ -283,11 +283,14 @@
       color: #fff;
       white-space: nowrap;
       z-index: 1;
+      position: relative;
     }
     
-    /* 常规模式时显示"常规"，隐藏"无尽" */
+    /* 常规模式：显示"常规"在中间，隐藏"无尽" */
     .normal-text {
       display: block;
+      text-align: center;
+      width: 100%;
     }
     .infinite-text {
       display: none;
@@ -299,9 +302,9 @@
       background: #fff;
       border-radius: 50%;
       position: absolute;
-      left: 8px;
+      left: 50%;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translate(-50%, -50%);
       transition: left 0.3s ease-out;
       display: flex;
       align-items: center;
@@ -319,15 +322,18 @@
       transition: background 0.3s;
     }
     
-    /* 无尽模式时隐藏"常规"，显示"无尽"，圆圈滑到右侧 */
+    /* 无尽模式：隐藏"常规"，显示"无尽"，圆圈滑到右侧 */
     .mode-toggle.active .normal-text {
       display: none;
     }
     .mode-toggle.active .infinite-text {
       display: block;
+      text-align: center;
+      width: 100%;
     }
     .mode-toggle.active .toggle-handle {
-      left: calc(100% - 64px);
+      left: calc(50% + 35px);
+      transform: translate(-50%, -50%);
     }
     .mode-toggle.active .toggle-handle::before {
       background: #4CAF50;
