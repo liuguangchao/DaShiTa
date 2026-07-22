@@ -238,6 +238,43 @@
       animation: floatUp 1s ease-out forwards;
       z-index: 100;
     }
+    
+    /* 5秒倒计时遮罩 */
+    .countdown-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s;
+    }
+    .countdown-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .countdown-number {
+      font-size: 120px;
+      font-weight: 900;
+      color: #FFD700;
+      text-shadow: 0 0 30px rgba(255,215,0,0.8);
+      animation: countdownPulse 1s ease-in-out infinite;
+    }
+    .countdown-text {
+      font-size: 24px;
+      color: #fff;
+      margin-top: 20px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    @keyframes countdownPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(1); }
       100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
@@ -327,6 +364,12 @@
       </div>
     </div>
     
+    <!-- 5秒倒计时遮罩 -->
+    <div class="countdown-overlay" id="countdownOverlay">
+      <div class="countdown-number" id="countdownNumber">5</div>
+      <div class="countdown-text">游戏即将开始...</div>
+    </div>
+    
     <!-- 底部圆角卡片 -->
     <div class="bottom-card">
       <div class="weapon-actions">
@@ -344,12 +387,34 @@
 
   <script>
     let score = 0;
-    let combo = 0;
     let timeLeft = 90;
     let gameTimer = null;
+    let countdownTimer = null;
     
-    // 倒计时
-    function startCountdown() {
+    // 5秒倒计时
+    function startFiveSecondCountdown() {
+      let count = 5;
+      const overlay = document.getElementById('countdownOverlay');
+      const numberEl = document.getElementById('countdownNumber');
+      
+      countdownTimer = setInterval(() => {
+        count--;
+        if (count > 0) {
+          numberEl.textContent = count;
+        } else {
+          // 倒计时结束，隐藏遮罩
+          clearInterval(countdownTimer);
+          overlay.classList.add('hidden');
+          setTimeout(() => {
+            overlay.style.display = 'none';
+            startGameCountdown();
+          }, 500);
+        }
+      }, 1000);
+    }
+    
+    // 游戏倒计时（90秒）
+    function startGameCountdown() {
       gameTimer = setInterval(() => {
         timeLeft--;
         const minutes = Math.floor(timeLeft / 60);
@@ -382,8 +447,8 @@
       showFloatingText(element, '+1');
     }
     
-    // 页面加载时开始倒计时
-    window.addEventListener('load', startCountdown);
+    // 页面加载时开始5秒倒计时
+    window.addEventListener('load', startFiveSecondCountdown);
     
     function showFloatingText(element, text) {
       const rect = element.getBoundingClientRect();
