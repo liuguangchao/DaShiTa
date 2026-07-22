@@ -152,28 +152,6 @@
     }
     
     /* 特效标记 */
-    .effect-mark {
-      position: absolute;
-      top: -15px;
-      left: -15px;
-      font-size: 28px;
-      animation: rotate 2s linear infinite;
-    }
-    .sparkle-effect {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      font-size: 24px;
-      animation: sparkle 1s ease-in-out infinite;
-    }
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    @keyframes sparkle {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.2); }
-    }
     
     /* 底部圆角卡片 */
     .bottom-card {
@@ -300,7 +278,6 @@
           <div class="mole-hole" onclick="hitMole(this)">
             <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
-              <span class="effect-mark">🌀</span>
             </div>
             <div class="hole-base"></div>
           </div>
@@ -322,14 +299,12 @@
           <div class="mole-hole" onclick="hitMole(this)">
             <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
-              <span class="sparkle-effect">⭐</span>
             </div>
             <div class="hole-base"></div>
           </div>
           <div class="mole-hole" onclick="hitMole(this)">
             <div class="mole-face-wrapper">
               <span class="mole-face">🐹</span>
-              <span class="sparkle-effect">✨</span>
             </div>
             <div class="hole-base"></div>
           </div>
