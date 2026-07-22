@@ -275,6 +275,76 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.2); }
     }
+    
+    /* 游戏结束弹窗 */
+    .game-over-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .game-over-modal.show {
+      display: flex;
+    }
+    .game-over-card {
+      background: linear-gradient(135deg, #FFF8E1, #FFE082);
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border: 3px solid #FFB300;
+      animation: modalPopIn 0.4s ease-out;
+      max-width: 320px;
+      width: 90%;
+    }
+    @keyframes modalPopIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .game-over-emoji {
+      font-size: 60px;
+      margin-bottom: 15px;
+    }
+    .game-over-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #E65100;
+      margin-bottom: 10px;
+    }
+    .game-over-score {
+      font-size: 48px;
+      font-weight: 900;
+      color: #FF6F00;
+      margin: 15px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    .game-over-label {
+      font-size: 16px;
+      color: #5D4037;
+      margin-bottom: 25px;
+    }
+    .game-over-btn {
+      background: linear-gradient(135deg, #FFB300, #FF8F00);
+      color: #fff;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #E65100;
+      transition: transform 0.1s;
+    }
+    .game-over-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #E65100;
+    }
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(1); }
       100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
@@ -364,6 +434,17 @@
       </div>
     </div>
     
+    <!-- 游戏结束弹窗 -->
+    <div class="game-over-modal" id="gameOverModal">
+      <div class="game-over-card">
+        <div class="game-over-emoji">🎉</div>
+        <div class="game-over-title">时间到！</div>
+        <div class="game-over-score" id="finalScore">0</div>
+        <div class="game-over-label">只老鼠被你打死</div>
+        <button class="game-over-btn" onclick="closeGameOver()">再来一局</button>
+      </div>
+    </div>
+    
     <!-- 5秒倒计时遮罩 -->
     <div class="countdown-overlay" id="countdownOverlay">
       <div class="countdown-number" id="countdownNumber">5</div>
@@ -423,7 +504,7 @@
           `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         if (timeLeft <= 0) {
           clearInterval(gameTimer);
-          alert('时间到！共打死 ' + score + ' 只老鼠');
+          showGameOver(score);
         }
       }, 1000);
     }
@@ -449,6 +530,18 @@
     
     // 页面加载时开始5秒倒计时
     window.addEventListener('load', startFiveSecondCountdown);
+    
+    // 游戏结束弹窗
+    function showGameOver(score) {
+      document.getElementById('finalScore').textContent = score;
+      document.getElementById('gameOverModal').classList.add('show');
+    }
+    
+    function closeGameOver() {
+      document.getElementById('gameOverModal').classList.remove('show');
+      // 重新开始游戏
+      location.reload();
+    }
     
     function showFloatingText(element, text) {
       const rect = element.getBoundingClientRect();
