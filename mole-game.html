@@ -254,8 +254,8 @@
         <div class="stats-panel">
           <div class="time-label">剩余时间</div>
           <div class="time-value">01:30</div>
-          <div class="damage-label">累计伤害</div>
-          <div class="damage-value">8650</div>
+          <div class="damage-label">打鼠数量</div>
+          <div class="damage-value">0</div>
         </div>
       </div>
     </div>
@@ -343,8 +343,25 @@
   </div>
 
   <script>
-    let score = 8650;
-    let combo = 8;
+    let score = 0;
+    let combo = 0;
+    let timeLeft = 90;
+    let gameTimer = null;
+    
+    // 倒计时
+    function startCountdown() {
+      gameTimer = setInterval(() => {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.querySelector('.time-value').textContent = 
+          `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        if (timeLeft <= 0) {
+          clearInterval(gameTimer);
+          alert('时间到！共打死 ' + score + ' 只老鼠');
+        }
+      }, 1000);
+    }
     
     function hitMole(element) {
       // 播放击中动画
@@ -357,19 +374,16 @@
         }, 150);
       }
       
-      // 计算得分
-      const points = Math.round(100 * (1 + combo * 0.1));
-      score += points;
-      combo++;
-      
-      // 更新UI
+      // 打鼠数量 +1
+      score++;
       document.querySelector('.damage-value').textContent = score;
-      document.querySelector('.score-value').textContent = score;
-      document.querySelector('.combo-badge span:last-child').textContent = `连击 x${combo}`;
       
       // 显示飘字
-      showFloatingText(element, `+${points}`);
+      showFloatingText(element, '+1');
     }
+    
+    // 页面加载时开始倒计时
+    window.addEventListener('load', startCountdown);
     
     function showFloatingText(element, text) {
       const rect = element.getBoundingClientRect();
