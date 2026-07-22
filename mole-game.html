@@ -167,6 +167,12 @@
       align-items: stretch;
       gap: 0;
     }
+    .mode-toggle {
+      flex: 3;
+    }
+    .btn-switch {
+      flex: 7;
+    }
     
     /* 跟随鼠标的武器 */
     .cursor-weapon {
@@ -269,12 +275,16 @@
       white-space: nowrap;
       position: absolute;
       top: 50%;
-      left: calc(50% - 40px);
+      left: 50%;
       transform: translate(-50%, -50%);
-      transition: left 0.3s ease-out;
+      transition: left 0.3s ease-out, opacity 0.3s;
+      z-index: 1;
     }
-    .infinite-text-show {
-      left: calc(50% + 40px);
+    .toggle-text.right {
+      left: calc(50% + 50px);
+    }
+    .toggle-text.left {
+      left: calc(50% - 50px);
     }
     .toggle-handle {
       width: 56px;
@@ -282,9 +292,9 @@
       background: #4CAF50;
       border-radius: 50%;
       position: absolute;
-      left: calc(50% - 40px);
+      left: calc(50% - 100px);
       top: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateY(-50%);
       transition: left 0.3s ease-out;
       display: flex;
       align-items: center;
@@ -300,10 +310,13 @@
       border-radius: 50%;
     }
     .mode-toggle.active .toggle-handle {
-      left: calc(50% + 40px);
+      left: calc(50% + 100px);
     }
     .mode-toggle.active .toggle-text {
-      left: calc(50% + 40px);
+      left: calc(50% + 50px);
+    }
+    .mode-toggle:not(.active) .toggle-text {
+      left: calc(50% - 50px);
     }
     
     /* 飘字效果 */
@@ -906,8 +919,12 @@
       
       if (isInfiniteMode) {
         textEl.textContent = '无尽';
+        textEl.classList.remove('left');
+        textEl.classList.add('right');
       } else {
         textEl.textContent = '常规';
+        textEl.classList.remove('right');
+        textEl.classList.add('left');
       }
       
       btn.classList.toggle('active', isInfiniteMode);
