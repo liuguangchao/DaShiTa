@@ -224,6 +224,49 @@
       box-shadow: 0 5px 0 #FF8F00;
     }
     
+    /* 模式滑动开关 */
+    .mode-switch-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .mode-label {
+      font-size: 14px;
+      font-weight: bold;
+      color: #5D4037;
+      transition: opacity 0.3s;
+    }
+    .mode-label.active {
+      color: #E65100;
+    }
+    .mode-switch {
+      width: 60px;
+      height: 30px;
+      background: #ccc;
+      border-radius: 15px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .mode-switch.active {
+      background: #AB47BC;
+    }
+    .mode-switch-thumb {
+      width: 26px;
+      height: 26px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .mode-switch.active .mode-switch-thumb {
+      left: 32px;
+    }
+    
     /* 飘字效果 */
     .floating-text {
       position: absolute;
@@ -448,8 +491,15 @@
     <!-- 底部圆角卡片 -->
     <div class="bottom-card">
       <div class="weapon-actions">
+        <div class="mode-switch-container">
+          <span class="mode-label normal-label">常规模式</span>
+          <div class="mode-switch" id="modeToggleBtn" onclick="toggleMode()">
+            <div class="mode-switch-thumb"></div>
+          </div>
+          <span class="mode-label infinite-label">无尽模式</span>
+        </div>
         <div class="action-buttons">
-          <button class="action-btn btn-heavy" id="modeToggleBtn" onclick="toggleMode()">常规模式</button>
+          <button class="action-btn btn-heavy" onclick="heavyAttack()">重锤</button>
           <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
         </div>
       </div>
@@ -706,18 +756,22 @@
     function toggleMode() {
       isInfiniteMode = !isInfiniteMode;
       const btn = document.getElementById('modeToggleBtn');
+      const thumb = btn.querySelector('.mode-switch-thumb');
+      const normalLabel = document.querySelector('.normal-label');
+      const infiniteLabel = document.querySelector('.infinite-label');
       
       if (isInfiniteMode) {
-        btn.textContent = '无尽模式';
-        btn.classList.add('infinite');
-        stopMoleSpawning();
-        startMoleSpawning();
+        btn.classList.add('active');
+        normalLabel.classList.remove('active');
+        infiniteLabel.classList.add('active');
       } else {
-        btn.textContent = '常规模式';
-        btn.classList.remove('infinite');
-        stopMoleSpawning();
-        startMoleSpawning();
+        btn.classList.remove('active');
+        normalLabel.classList.add('active');
+        infiniteLabel.classList.remove('active');
       }
+      
+      stopMoleSpawning();
+      startMoleSpawning();
     }
     
     // 点击打老鼠
@@ -764,6 +818,9 @@
       let count = 5;
       const overlay = document.getElementById('countdownOverlay');
       const numberEl = document.getElementById('countdownNumber');
+      
+      // 立即显示当前数字
+      numberEl.textContent = count;
       
       countdownTimer = setInterval(() => {
         count--;
