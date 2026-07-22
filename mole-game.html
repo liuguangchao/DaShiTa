@@ -115,13 +115,13 @@
       margin-bottom: 0;
     }
     .mole-row-1 {
-      gap: 120px;
+      gap: 320px;
     }
     .mole-row-2 {
-      gap: 80px;
+      gap: 280px;
     }
     .mole-row-3 {
-      gap: 120px;
+      gap: 320px;
     }
     .mole-hole {
       position: relative;
@@ -205,6 +205,14 @@
       transition: font-size 0.2s;
       filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.3));
       display: block !important;
+    }
+    .cursor-weapon.hit {
+      animation: weaponHit 0.2s ease-out;
+    }
+    @keyframes weaponHit {
+      0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(-30deg) scale(1.3); }
+      100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
     }
     .action-btn {
       flex: 1;
@@ -589,6 +597,16 @@
     
     // 点击打老鼠
     function hitMole(element) {
+      // 武器打击动画
+      if (cursorWeaponEl) {
+        cursorWeaponEl.classList.remove('hit');
+        void cursorWeaponEl.offsetWidth; // 触发重绘
+        cursorWeaponEl.classList.add('hit');
+        setTimeout(() => {
+          cursorWeaponEl.classList.remove('hit');
+        }, 200);
+      }
+      
       // 找到这个洞的索引
       const idx = Array.from(holes).indexOf(element);
       if (idx === -1 || !holeStates[idx] || holeStates[idx].hit) return;
