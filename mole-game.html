@@ -478,10 +478,15 @@
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     
-    // 鼠标移动事件
+    // 鼠标移动事件 - 直接更新武器位置
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      const el = document.getElementById('cursorWeapon');
+      if (el) {
+        el.style.left = mouseX + 'px';
+        el.style.top = mouseY + 'px';
+      }
     });
     
     // 移动端触摸支持
@@ -489,20 +494,13 @@
       if (e.touches.length > 0) {
         mouseX = e.touches[0].clientX;
         mouseY = e.touches[0].clientY;
+        const el = document.getElementById('cursorWeapon');
+        if (el) {
+          el.style.left = mouseX + 'px';
+          el.style.top = mouseY + 'px';
+        }
       }
     });
-    
-    // 持续更新武器位置 - 使用 requestAnimationFrame
-    function updateCursorWeapon() {
-      const el = document.getElementById('cursorWeapon');
-      if (el) {
-        el.style.left = mouseX + 'px';
-        el.style.top = mouseY + 'px';
-      }
-      requestAnimationFrame(updateCursorWeapon);
-    }
-    // 启动动画循环
-    requestAnimationFrame(updateCursorWeapon);
     
     // 5秒倒计时
     function startFiveSecondCountdown() {
