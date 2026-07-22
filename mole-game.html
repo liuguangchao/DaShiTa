@@ -285,6 +285,11 @@
       z-index: 1;
     }
     
+    /* 常规模式时隐藏"无尽"，显示圆圈在左侧 */
+    .infinite-text {
+      display: none;
+    }
+    
     .toggle-handle {
       width: 56px;
       height: 56px;
@@ -311,12 +316,18 @@
       transition: background 0.3s;
     }
     
+    /* 无尽模式时隐藏"常规"，显示"无尽"，圆圈滑到右侧 */
+    .mode-toggle.active .normal-text {
+      display: none;
+    }
+    .mode-toggle.active .infinite-text {
+      display: block;
+    }
     .mode-toggle.active .toggle-handle {
       left: calc(100% - 64px);
     }
-    
     .mode-toggle.active .toggle-handle::before {
-      background: #FF6B35;
+      background: #4CAF50;
     }
     
     /* 飘字效果 */
@@ -562,8 +573,8 @@
       <div class="weapon-actions">
         <div class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()">
           <div class="toggle-bg">
-            <span class="toggle-text normal-text">常规</span>
-            <span class="toggle-text infinite-text">无尽</span>
+            <span class="normal-text">常规</span>
+            <span class="infinite-text">无尽</span>
           </div>
           <div class="toggle-handle"></div>
         </div>
