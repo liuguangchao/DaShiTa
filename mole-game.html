@@ -9,7 +9,7 @@
     body { 
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       overflow: hidden;
-      background: #8BC34A;
+      background: #A8D56C;
     }
     .game-container {
       width: 100vw;
@@ -17,96 +17,128 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      background: linear-gradient(180deg, #A8D56C 0%, #8BC34A 50%, #7CB342 100%);
     }
     
-    /* 顶部栏 */
-    .top-bar {
-      height: 120px;
-      background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
-      display: flex;
-      flex-direction: column;
-      padding: 10px 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    /* 顶部圆角卡片 */
+    .top-card {
+      margin: 12px 12px 8px;
+      background: linear-gradient(180deg, #FFE082 0%, #FFD54F 100%);
+      border-radius: 20px;
+      border: 3px solid #F57F17;
+      box-shadow: 0 4px 0 #F57F17, 0 8px 16px rgba(0,0,0,0.15);
+      padding: 12px 16px;
       position: relative;
       z-index: 10;
     }
-    .top-bar-row1 {
+    .top-card-row1 {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
     }
     .back-btn {
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.9);
+      width: 44px;
+      height: 44px;
+      background: #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
-      color: #5C3300;
+      font-size: 28px;
+      color: #F57F17;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      border: 2px solid #FFD54F;
     }
     .game-title {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 900;
-      color: #5C3300;
-      text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+      color: #5D4037;
+      text-shadow: 2px 2px 0 rgba(255,255,255,0.6);
+      letter-spacing: 2px;
     }
     .stats-panel {
       text-align: right;
-      color: #5C3300;
-      font-size: 14px;
-      line-height: 1.6;
+      color: #5D4037;
+      font-size: 13px;
+      line-height: 1.5;
     }
-    .stats-panel .time { font-weight: bold; }
-    .stats-panel .damage { font-size: 12px; opacity: 0.8; }
-    .stats-panel .damage-value { font-size: 20px; font-weight: 900; }
+    .stats-panel .time-label { font-weight: bold; font-size: 15px; }
+    .stats-panel .time-value { font-size: 18px; font-weight: 900; }
+    .stats-panel .damage-label { font-size: 12px; opacity: 0.8; }
+    .stats-panel .damage-value { font-size: 22px; font-weight: 900; color: #E65100; }
     
-    .top-bar-row2 {
+    .top-card-row2 {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-top: 8px;
+      border-top: 2px dashed rgba(93,64,55,0.2);
     }
-    .star-score {
+    .dropdown-btn {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 10px;
       display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.9);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 18px;
-      font-weight: 900;
-      color: #5C3300;
+      justify-content: center;
+      font-size: 20px;
+      color: #F57F17;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border: 2px solid #FFD54F;
+    }
+    .score-panel {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.95);
+      padding: 8px 16px;
+      border-radius: 25px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: 2px solid #FFD54F;
+    }
+    .score-icon {
+      font-size: 24px;
+    }
+    .score-value {
+      font-size: 24px;
+      font-weight: 900;
+      color: #5D4037;
     }
     .tip-text {
-      font-size: 12px;
-      color: #5C3300;
-      opacity: 0.8;
+      font-size: 13px;
+      color: #5D4037;
+      background: rgba(255,255,255,0.7);
+      padding: 4px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(93,64,55,0.2);
     }
     
     /* 游戏区域 */
     .game-area {
       flex: 1;
       position: relative;
-      background: linear-gradient(180deg, #8BC34A 0%, #7CB342 100%);
       overflow: hidden;
+      margin: 8px 12px;
     }
-    .grass-bg {
+    
+    /* 草地装饰 */
+    .grass-decoration {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        radial-gradient(circle at 20% 30%, #9CCC65 2px, transparent 2px),
-        radial-gradient(circle at 80% 70%, #AED581 2px, transparent 2px),
-        radial-gradient(circle at 50% 50%, #C5E1A5 3px, transparent 3px);
-      background-size: 100px 100px, 150px 150px, 200px 200px;
+      font-size: 24px;
+      opacity: 0.6;
+      pointer-events: none;
     }
+    .flower1 { top: 20px; left: 30px; font-size: 30px; }
+    .flower2 { top: 60px; right: 40px; }
+    .flower3 { bottom: 100px; left: 50px; }
+    .flower4 { bottom: 60px; right: 60px; font-size: 20px; }
+    .flower5 { top: 150px; left: 80px; font-size: 18px; }
+    .bush1 { top: 40px; right: 20px; font-size: 36px; }
+    .rock1 { top: 30px; left: 10px; font-size: 28px; }
     
     /* 地鼠网格 */
     .moles-grid {
@@ -117,90 +149,122 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
-      gap: 20px;
+      gap: 15px;
       width: 90%;
-      max-width: 400px;
-      height: 60%;
+      max-width: 380px;
+      height: 70%;
     }
     .mole-hole {
       position: relative;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       cursor: pointer;
     }
     .hole-base {
-      width: 80px;
-      height: 40px;
-      background: radial-gradient(ellipse, #5D4037 0%, #4E342E 100%);
+      width: 90px;
+      height: 45px;
+      background: radial-gradient(ellipse at center, #6D4C41 0%, #4E342E 100%);
       border-radius: 50%;
       position: absolute;
       bottom: 0;
-      box-shadow: inset 0 -5px 10px rgba(0,0,0,0.3);
+      box-shadow: inset 0 -8px 15px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.2);
+      border: 2px solid #3E2723;
     }
     .mole-body {
-      width: 70px;
-      height: 70px;
-      background: radial-gradient(circle at 40% 40%, #D7CCC8, #8D6E63);
-      border-radius: 50% 50% 40% 40%;
+      width: 75px;
+      height: 75px;
+      background: radial-gradient(circle at 40% 35%, #EFEBE9, #A1887F);
+      border-radius: 50% 50% 45% 45%;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
+      font-size: 45px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25), inset 0 -3px 8px rgba(0,0,0,0.1);
+      transition: transform 0.15s;
+      border: 2px solid #8D6E63;
+      z-index: 2;
     }
     .mole-body:active {
-      transform: scale(0.9);
+      transform: scale(0.92);
     }
     .mole-body.hit {
-      animation: hitEffect 0.3s ease-out;
+      animation: hitShake 0.3s ease-out;
     }
-    @keyframes hitEffect {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2) rotate(10deg); }
-      100% { transform: scale(1); }
+    @keyframes hitShake {
+      0% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.15) rotate(-5deg); }
+      50% { transform: scale(1.15) rotate(5deg); }
+      75% { transform: scale(1.05) rotate(-3deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    
+    /* 地鼠表情 */
+    .mole-face {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
     }
     
     /* 特效标记 */
     .effect-mark {
       position: absolute;
+      top: -15px;
+      left: -15px;
+      font-size: 28px;
+      animation: rotate 2s linear infinite;
+    }
+    .sparkle-effect {
+      position: absolute;
       top: -10px;
       right: -10px;
       font-size: 24px;
-      animation: rotate 2s linear infinite;
+      animation: sparkle 1s ease-in-out infinite;
     }
     @keyframes rotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
     
-    /* 底部栏 */
-    .bottom-bar {
-      height: 140px;
-      background: linear-gradient(0deg, #FFF8E1 0%, #FFE0B2 100%);
-      display: flex;
-      flex-direction: column;
-      padding: 10px 16px;
-      box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+    /* 底部圆角卡片 */
+    .bottom-card {
+      margin: 8px 12px 12px;
+      background: linear-gradient(180deg, #FFF8E1 0%, #FFE0B2 100%);
+      border-radius: 24px;
+      border: 3px solid #FFB300;
+      box-shadow: 0 4px 0 #FFB300, 0 8px 16px rgba(0,0,0,0.15);
+      padding: 16px;
       position: relative;
       z-index: 10;
     }
     .combo-display {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .combo-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #FFD700, #FFA500);
-      color: #5C3300;
-      padding: 6px 20px;
-      border-radius: 20px;
-      font-size: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #FFD54F, #FFB300);
+      color: #5D4037;
+      padding: 8px 24px;
+      border-radius: 25px;
+      font-size: 20px;
       font-weight: 900;
-      box-shadow: 0 3px 0 #E65100;
-      border: 2px solid #FF8F00;
+      box-shadow: 0 4px 0 #FF8F00, inset 0 2px 4px rgba(255,255,255,0.3);
+      border: 2px solid #FFA000;
+    }
+    .combo-plus {
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
     .weapon-actions {
       display: flex;
@@ -208,77 +272,99 @@
       gap: 12px;
     }
     .weapon-selector {
-      width: 100px;
-      height: 80px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
+      width: 110px;
+      height: 85px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border: 2px solid #FFA500;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      border: 3px solid #FFB300;
     }
     .weapon-icon {
-      font-size: 40px;
+      font-size: 44px;
       margin-bottom: 4px;
     }
     .weapon-name {
       font-size: 14px;
       font-weight: bold;
-      color: #5C3300;
+      color: #5D4037;
     }
     .weapon-check {
       font-size: 12px;
       color: #4CAF50;
+      margin-top: 2px;
     }
     .action-buttons {
       flex: 1;
       display: flex;
-      gap: 10px;
+      gap: 12px;
     }
     .action-btn {
       flex: 1;
-      height: 60px;
+      height: 65px;
       border: none;
-      border-radius: 30px;
-      font-size: 20px;
+      border-radius: 32px;
+      font-size: 22px;
       font-weight: 900;
       color: #fff;
       cursor: pointer;
-      box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+      box-shadow: 0 5px 0 rgba(0,0,0,0.25);
       transition: transform 0.1s;
+      border: 2px solid rgba(255,255,255,0.3);
     }
     .action-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.25);
     }
     .btn-heavy {
       background: linear-gradient(135deg, #FF6B35, #FF8C42);
+      box-shadow: 0 5px 0 #E65100;
     }
     .btn-switch {
-      background: linear-gradient(135deg, #FFA500, #FFD700);
-      color: #5C3300;
+      background: linear-gradient(135deg, #FFB300, #FFD54F);
+      color: #5D4037;
+      box-shadow: 0 5px 0 #FF8F00;
+    }
+    
+    /* 飘字效果 */
+    .floating-text {
+      position: absolute;
+      color: #FFD700;
+      font-size: 28px;
+      font-weight: 900;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6), 0 0 10px rgba(255,215,0,0.5);
+      pointer-events: none;
+      animation: floatUp 1s ease-out forwards;
+      z-index: 100;
+    }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
     }
   </style>
 </head>
 <body>
   <div class="game-container">
-    <!-- 顶部栏 -->
-    <div class="top-bar">
-      <div class="top-bar-row1">
+    <!-- 顶部圆角卡片 -->
+    <div class="top-card">
+      <div class="top-card-row1">
         <div class="back-btn" onclick="window.history.back()">←</div>
         <div class="game-title">打地鼠模式</div>
         <div class="stats-panel">
-          <div class="time">剩余时间 01:30</div>
-          <div class="damage">累计伤害</div>
+          <div class="time-label">剩余时间</div>
+          <div class="time-value">01:30</div>
+          <div class="damage-label">累计伤害</div>
           <div class="damage-value">8650</div>
         </div>
       </div>
-      <div class="top-bar-row2">
-        <div class="star-score">
-          <span>⭐</span>
-          <span>8650</span>
+      <div class="top-card-row2">
+        <div class="dropdown-btn">⬇️</div>
+        <div class="score-panel">
+          <span class="score-icon">⭐</span>
+          <span class="score-value">8650</span>
         </div>
         <div class="tip-text">连续打击可触发伤害翻倍</div>
       </div>
@@ -286,43 +372,73 @@
     
     <!-- 游戏区域 -->
     <div class="game-area">
-      <div class="grass-bg"></div>
+      <!-- 草地装饰 -->
+      <div class="grass-decoration flower1">🌸</div>
+      <div class="grass-decoration flower2">🌼</div>
+      <div class="grass-decoration flower3">🌺</div>
+      <div class="grass-decoration flower4">🌻</div>
+      <div class="grass-decoration flower5">🌷</div>
+      <div class="grass-decoration bush1">🌿</div>
+      <div class="grass-decoration rock1">🪨</div>
+      
+      <!-- 地鼠网格 -->
       <div class="moles-grid">
         <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">🐹</div>
+          <div class="mole-body">
+            <span class="mole-face">🐹</span>
+            <span class="effect-mark">🌀</span>
+          </div>
           <div class="hole-base"></div>
         </div>
         <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">🐹</div>
+          <div class="mole-body">
+            <span class="mole-face">🐹</span>
+          </div>
           <div class="hole-base"></div>
         </div>
         <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">🐹</div>
+          <div class="mole-body">
+            <span class="mole-face">🐹</span>
+            <span class="sparkle-effect">✨</span>
+          </div>
           <div class="hole-base"></div>
         </div>
         <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">🐹</div>
+          <div class="mole-body">
+            <span class="mole-face">🐹</span>
+          </div>
           <div class="hole-base"></div>
         </div>
         <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">🐹</div>
+          <div class="mole-body">
+            <span class="mole-face">🐹</span>
+            <span class="sparkle-effect">⭐</span>
+          </div>
           <div class="hole-base"></div>
         </div>
         <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">🐹</div>
+          <div class="mole-body">
+            <span class="mole-face">🐹</span>
+            <span class="sparkle-effect">✨</span>
+          </div>
           <div class="hole-base"></div>
         </div>
         <div class="mole-hole" onclick="hitMole(this)">
-          <div class="mole-body">🐹</div>
+          <div class="mole-body">
+            <span class="mole-face">🐹</span>
+          </div>
           <div class="hole-base"></div>
         </div>
       </div>
     </div>
     
-    <!-- 底部栏 -->
-    <div class="bottom-bar">
+    <!-- 底部圆角卡片 -->
+    <div class="bottom-card">
       <div class="combo-display">
-        <div class="combo-badge">➕ 连击 x8</div>
+        <div class="combo-badge">
+          <span class="combo-plus">➕</span>
+          <span>连击 x8</span>
+        </div>
       </div>
       <div class="weapon-actions">
         <div class="weapon-selector">
@@ -340,7 +456,6 @@
   <script>
     let score = 8650;
     let combo = 8;
-    let timeLeft = 90;
     
     function hitMole(element) {
       // 播放击中动画
@@ -350,35 +465,28 @@
         moleBody.classList.remove('hit');
       }, 300);
       
-      // 更新分数
-      score += 100 * (1 + combo * 0.1);
+      // 计算得分
+      const points = Math.round(100 * (1 + combo * 0.1));
+      score += points;
       combo++;
       
       // 更新UI
-      document.querySelector('.damage-value').textContent = Math.round(score);
-      document.querySelector('.star-score span:last-child').textContent = Math.round(score);
-      document.querySelector('.combo-badge').textContent = `➕ 连击 x${combo}`;
+      document.querySelector('.damage-value').textContent = score;
+      document.querySelector('.score-value').textContent = score;
+      document.querySelector('.combo-badge span:last-child').textContent = `连击 x${combo}`;
       
       // 显示飘字
-      showFloatingText(element, `+${Math.round(100 * (1 + combo * 0.1))}`);
+      showFloatingText(element, `+${points}`);
     }
     
     function showFloatingText(element, text) {
+      const rect = element.getBoundingClientRect();
       const floatEl = document.createElement('div');
+      floatEl.className = 'floating-text';
       floatEl.textContent = text;
-      floatEl.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #FFD700;
-        font-size: 24px;
-        font-weight: 900;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        pointer-events: none;
-        animation: floatUp 1s ease-out forwards;
-      `;
-      element.appendChild(floatEl);
+      floatEl.style.left = rect.left + rect.width / 2 - 20 + 'px';
+      floatEl.style.top = rect.top + 'px';
+      document.body.appendChild(floatEl);
       
       setTimeout(() => {
         floatEl.remove();
@@ -386,22 +494,14 @@
     }
     
     function heavyAttack() {
-      alert('重锤攻击！');
+      // TODO: 实现重锤逻辑
+      console.log('重锤攻击');
     }
     
     function switchWeapon() {
-      alert('切换武器');
+      // TODO: 实现武器切换逻辑
+      console.log('切换武器');
     }
-    
-    // 添加飘字动画
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes floatUp {
-        0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        100% { opacity: 0; transform: translateX(-50%) translateY(-50px); }
-      }
-    `;
-    document.head.appendChild(style);
   </script>
 </body>
 </html>
