@@ -635,8 +635,18 @@
       faceWrapper.innerHTML = `<img src="${mole.normal}" style="width:100px;height:100px;object-fit:contain;display:block;" />`;
       faceWrapper.classList.add('visible');
       
-      // 1.5~3秒后自动消失
-      const disappearTime = 1500 + Math.random() * 1500;
+      // 老鼠停留时间：常规模式1.5~3秒，无尽模式动态减少
+      let disappearTime;
+      if (isInfiniteMode) {
+        // 无尽模式：初始2.5秒，每10秒降低30%，最低0.1秒
+        if (!window._infiniteDisappearTime) {
+          window._infiniteDisappearTime = 2500; // 初始2.5秒
+        }
+        disappearTime = window._infiniteDisappearTime + Math.random() * 1000; // 2.5~3.5秒随机
+        if (disappearTime > 3500) disappearTime = 3500;
+      } else {
+        disappearTime = 1500 + Math.random() * 1500; // 1.5~3秒
+      }
       holeStates[idx].timer = setTimeout(() => {
         hideMole(idx);
       }, disappearTime);
@@ -661,6 +671,8 @@
         // 无尽模式：使用可变间隔
         moleSpawnCurrentInterval = moleSpawnBaseInterval;
         scheduleNextMole();
+        // 启动停留时间衰减
+        startInfiniteDisappearDecay();
       } else {
         // 常规模式：固定间隔
         moleSpawnInterval = setInterval(() => {
@@ -695,6 +707,28 @@
       }, moleSpawnCurrentInterval);
     }
     
+    // 无尽模式：每10秒降低老鼠停留时间30%
+    let infiniteDisappearDecayTimer = null;
+    function startInfiniteDisappearDecay() {
+      if (infiniteDisappearDecayTimer) clearInterval(infiniteDisappearDecayTimer);
+      window._infiniteDisappearTime = 2500; // 初始2.5秒
+      infiniteDisappearDecayTimer = setInterval(() => {
+        if (!isInfiniteMode) return;
+        window._infiniteDisappearTime *= 0.7; // 降低30%
+        if (window._infiniteDisappearTime < 100) {
+          window._infiniteDisappearTime = 100; // 最低0.1秒
+          clearInterval(infiniteDisappearDecayTimer);
+        }
+      }, 10000); // 每10秒
+    }
+    
+    function stopInfiniteDisappearDecay() {
+      if (infiniteDisappearDecayTimer) {
+        clearInterval(infiniteDisappearDecayTimer);
+        infiniteDisappearDecayTimer = null;
+      }
+    }
+    
     // 停止出老鼠
     function stopMoleSpawning() {
       clearInterval(moleSpawnInterval);
@@ -724,6 +758,7 @@
       
       // 停止旧的游戏计时
       stopMoleSpawning();
+      stopInfiniteDisappearDecay();
       clearInterval(gameTimer);
       
       // 重新开始游戏
