@@ -435,8 +435,16 @@
     ];
     
     // 7个洞的状态
-    const holes = document.querySelectorAll('.mole-hole');
+    let holes = []; // 延迟初始化
     const holeStates = Array(7).fill(null); // null=无老鼠, {type, hit=false/true, timer}=有老鼠
+    
+    // 获取洞元素
+    function getHoles() {
+      if (holes.length === 0) {
+        holes = document.querySelectorAll('.mole-hole');
+      }
+      return holes;
+    }
     
     // 随机生成7个洞的位置，保证不重叠
     function generateMolePositions() {
@@ -486,12 +494,15 @@
     // 初始化洞的位置
     function initMoles() {
       const grid = document.getElementById('molesGrid');
+      const allHoles = getHoles(); // 获取最新的洞元素
       const positions = generateMolePositions();
       
       positions.forEach((pos, idx) => {
-        const hole = holes[idx];
-        hole.style.left = pos.x + 'px';
-        hole.style.top = pos.y + 'px';
+        const hole = allHoles[idx];
+        if (hole) {
+          hole.style.left = pos.x + 'px';
+          hole.style.top = pos.y + 'px';
+        }
       });
     }
     
@@ -571,7 +582,7 @@
       }
       
       // 找到这个洞的索引
-      const idx = Array.from(holes).indexOf(element);
+      const idx = Array.from(getHoles()).indexOf(element);
       if (idx === -1 || !holeStates[idx] || holeStates[idx].hit) return;
       
       const state = holeStates[idx];
