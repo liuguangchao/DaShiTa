@@ -118,6 +118,36 @@
     .mole-hole:active {
       transform: scale(0.95);
     }
+    .hole-base {
+      width: 120px;
+      height: 74px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background-image: url('./images/mole-hole.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .mole-face-wrapper {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 100px;
+      z-index: 2;
+      display: none;
+    }
+    .mole-face-wrapper.visible {
+      display: block;
+    }
+    .mole-face-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
     
     /* 特效标记 */
     
@@ -351,7 +381,43 @@
       <div class="grass-decoration rock1">🪨</div>
       
       <!-- 地鼠网格 - 随机分布 -->
-      <div class="moles-grid" id="molesGrid"></div>
+      <div class="moles-grid" id="molesGrid">
+        <div class="mole-hole" onclick="hitMole(this)">
+          <div class="mole-face-wrapper">
+          </div>
+          <div class="hole-base"></div>
+        </div>
+        <div class="mole-hole" onclick="hitMole(this)">
+          <div class="mole-face-wrapper">
+          </div>
+          <div class="hole-base"></div>
+        </div>
+        <div class="mole-hole" onclick="hitMole(this)">
+          <div class="mole-face-wrapper">
+          </div>
+          <div class="hole-base"></div>
+        </div>
+        <div class="mole-hole" onclick="hitMole(this)">
+          <div class="mole-face-wrapper">
+          </div>
+          <div class="hole-base"></div>
+        </div>
+        <div class="mole-hole" onclick="hitMole(this)">
+          <div class="mole-face-wrapper">
+          </div>
+          <div class="hole-base"></div>
+        </div>
+        <div class="mole-hole" onclick="hitMole(this)">
+          <div class="mole-face-wrapper">
+          </div>
+          <div class="hole-base"></div>
+        </div>
+        <div class="mole-hole" onclick="hitMole(this)">
+          <div class="mole-face-wrapper">
+          </div>
+          <div class="hole-base"></div>
+        </div>
+      </div>
     </div>
     
     <!-- 游戏结束弹窗 -->
@@ -450,43 +516,34 @@
     function generateMolePositions() {
       const grid = document.getElementById('molesGrid');
       const gridRect = grid.getBoundingClientRect();
-      const holeSize = 140; // 每个洞的宽高
-      const minGap = 160; // 最小间距，保证老鼠不重叠
+      const holeSize = 130; // 每个洞的宽高
+      const minGap = 80; // 最小间距，保证老鼠不重叠
       
       const positions = [];
-      const maxAttempts = 1000;
       
-      for (let i = 0; i < 7; i++) {
-        let placed = false;
-        let attempts = 0;
-        
-        while (!placed && attempts < maxAttempts) {
-          attempts++;
-          const x = Math.random() * (gridRect.width - holeSize);
-          const y = Math.random() * (gridRect.height - holeSize);
-          
-          // 检查是否与已有洞重叠
-          let overlap = false;
-          for (const pos of positions) {
-            const dx = x - pos.x;
-            const dy = y - pos.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < minGap) {
-              overlap = true;
-              break;
-            }
-          }
-          
-          if (!overlap) {
-            positions.push({ x, y });
-            placed = true;
-          }
-        }
-        
-        if (!placed) {
-          console.warn(`无法在第${i + 1}个洞找到合适位置`);
-        }
-      }
+      // 使用固定菱形布局，确保7个洞都能放下且不重叠
+      const cols = 3; // 每列最多3个
+      const cellW = gridRect.width / cols;
+      const cellH = gridRect.height / 3;
+      const offsetX = cellW / 2;
+      const offsetY = cellH / 2;
+      
+      // 7个洞的位置：2-3-2 菱形排列
+      const layout = [
+        { col: 0, row: 0 },  // 第一行左
+        { col: 2, row: 0 },  // 第一行右
+        { col: 0, row: 1 },  // 第二行左
+        { col: 1, row: 1 },  // 第二行中
+        { col: 2, row: 1 },  // 第二行右
+        { col: 0, row: 2 },  // 第三行左
+        { col: 2, row: 2 },  // 第三行右
+      ];
+      
+      layout.forEach((pos, idx) => {
+        const x = pos.col * cellW + offsetX - holeSize / 2;
+        const y = pos.row * cellH + offsetY - holeSize / 2;
+        positions.push({ x, y });
+      });
       
       return positions;
     }
@@ -496,6 +553,12 @@
       const grid = document.getElementById('molesGrid');
       const allHoles = getHoles(); // 获取最新的洞元素
       const positions = generateMolePositions();
+      
+      // 确保洞元素存在
+      if (!allHoles || allHoles.length < 7) {
+        console.error(`洞元素不足: ${allHoles ? allHoles.length : 0}`);
+        return;
+      }
       
       positions.forEach((pos, idx) => {
         const hole = allHoles[idx];
