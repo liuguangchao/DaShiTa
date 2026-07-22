@@ -72,54 +72,6 @@
     .stats-panel .damage-label { font-size: 12px; opacity: 0.8; }
     .stats-panel .damage-value { font-size: 22px; font-weight: 900; color: #E65100; }
     
-    .top-card-row2 {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 8px;
-      border-top: 2px dashed rgba(93,64,55,0.2);
-    }
-    .dropdown-btn {
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: #F57F17;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      border: 2px solid #FFD54F;
-    }
-    .score-panel {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.95);
-      padding: 8px 16px;
-      border-radius: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border: 2px solid #FFD54F;
-    }
-    .score-icon {
-      font-size: 24px;
-    }
-    .score-value {
-      font-size: 24px;
-      font-weight: 900;
-      color: #5D4037;
-    }
-    .tip-text {
-      font-size: 13px;
-      color: #5D4037;
-      background: rgba(255,255,255,0.7);
-      padding: 4px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(93,64,55,0.2);
-    }
-    
     /* 游戏区域 */
     .game-area {
       flex: 1;
@@ -266,28 +218,6 @@
       position: relative;
       z-index: 10;
     }
-    .combo-display {
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    .combo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #FFD54F, #FFB300);
-      color: #5D4037;
-      padding: 8px 24px;
-      border-radius: 25px;
-      font-size: 20px;
-      font-weight: 900;
-      box-shadow: 0 4px 0 #FF8F00, inset 0 2px 4px rgba(255,255,255,0.3);
-      border: 2px solid #FFA000;
-    }
-    .combo-plus {
-      font-size: 24px;
-      color: #fff;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-    }
     .weapon-actions {
       display: flex;
       align-items: center;
@@ -382,14 +312,6 @@
           <div class="damage-value">8650</div>
         </div>
       </div>
-      <div class="top-card-row2">
-        <div class="dropdown-btn">⬇️</div>
-        <div class="score-panel">
-          <span class="score-icon">⭐</span>
-          <span class="score-value">8650</span>
-        </div>
-        <div class="tip-text">连续打击可触发伤害翻倍</div>
-      </div>
     </div>
     
     <!-- 游戏区域 -->
@@ -464,12 +386,6 @@
     
     <!-- 底部圆角卡片 -->
     <div class="bottom-card">
-      <div class="combo-display">
-        <div class="combo-badge">
-          <span class="combo-plus">➕</span>
-          <span>连击 x8</span>
-        </div>
-      </div>
       <div class="weapon-actions">
         <div class="weapon-selector">
           <div class="weapon-icon">🔨</div>
