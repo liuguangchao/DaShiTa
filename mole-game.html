@@ -234,39 +234,55 @@
       margin-bottom: 10px;
     }
     .mode-text {
-      font-size: 14px;
+      font-size: 10px;
       font-weight: bold;
       color: #5D4037;
       transition: color 0.3s;
+      white-space: nowrap;
+      pointer-events: none;
     }
     .mode-text.active {
       color: #E65100;
     }
     .mode-toggle {
-      width: 50px;
-      height: 26px;
-      background: #ccc;
-      border-radius: 13px;
+      width: 70px;
+      height: 28px;
+      background: linear-gradient(90deg, #A8D56C 0%, #FF8C42 100%);
+      border-radius: 14px;
       position: relative;
       cursor: pointer;
       transition: background 0.3s;
+      overflow: hidden;
     }
     .mode-toggle.active {
-      background: #FF6B35;
+      background: linear-gradient(90deg, #FF8C42 0%, #AB47BC 100%);
     }
     .mode-toggle-thumb {
-      width: 22px;
-      height: 22px;
-      background: #fff;
-      border-radius: 50%;
+      width: 50%;
+      height: 100%;
       position: absolute;
-      top: 2px;
-      left: 2px;
+      top: 0;
+      left: 0;
       transition: left 0.3s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
     }
     .mode-toggle.active .mode-toggle-thumb {
-      left: 26px;
+      left: 50%;
+      justify-content: flex-end;
+    }
+    .normal-text {
+      padding-left: 6px;
+    }
+    .infinite-text {
+      padding-right: 6px;
+      display: none;
+    }
+    .mode-toggle.active .normal-text {
+      display: none;
+    }
+    .mode-toggle.active .infinite-text {
+      display: block;
     }
     
     /* 飘字效果 */
@@ -512,11 +528,12 @@
       <div class="weapon-actions">
         <div class="action-buttons">
           <div class="mode-switch-wrapper">
-            <span class="mode-text normal-text">常规</span>
             <div class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()">
-              <div class="mode-toggle-thumb"></div>
+              <div class="mode-toggle-thumb">
+                <span class="mode-text normal-text">常规</span>
+                <span class="mode-text infinite-text">无尽</span>
+              </div>
             </div>
-            <span class="mode-text infinite-text">无尽</span>
           </div>
           <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
         </div>
@@ -868,19 +885,7 @@
     function toggleMode() {
       isInfiniteMode = !isInfiniteMode;
       const btn = document.getElementById('modeToggleBtn');
-      const normalText = document.querySelector('.normal-text');
-      const infiniteText = document.querySelector('.infinite-text');
-      
-      if (isInfiniteMode) {
-        btn.classList.add('active');
-        normalText.classList.remove('active');
-        infiniteText.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-        normalText.classList.add('active');
-        infiniteText.classList.remove('active');
-      }
-      
+      btn.classList.toggle('active', isInfiniteMode);
       // 游戏重新开始
       restartGame();
     }
