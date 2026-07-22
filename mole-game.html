@@ -479,34 +479,16 @@
     
     // 获取锤子元素
     const cursorWeaponEl = document.getElementById('cursorWeapon');
-    const isDesktop = window.innerWidth > 768; // 判断是否为桌面模式
     
-    // 只在桌面模式下显示锤子
+    // 初始位置：屏幕中央
     if (cursorWeaponEl) {
-      if (isDesktop) {
-        cursorWeaponEl.style.display = 'block';
-        cursorWeaponEl.style.left = (window.innerWidth / 2) + 'px';
-        cursorWeaponEl.style.top = (window.innerHeight / 2) + 'px';
-      } else {
-        cursorWeaponEl.style.display = 'none';
-      }
+      cursorWeaponEl.style.left = (window.innerWidth / 2) + 'px';
+      cursorWeaponEl.style.top = (window.innerHeight / 2) + 'px';
     }
     
-    // 窗口大小变化时重新判断
-    window.addEventListener('resize', () => {
-      const isDesktopNow = window.innerWidth > 768;
-      if (cursorWeaponEl) {
-        cursorWeaponEl.style.display = isDesktopNow ? 'block' : 'none';
-        if (isDesktopNow) {
-          cursorWeaponEl.style.left = (window.innerWidth / 2) + 'px';
-          cursorWeaponEl.style.top = (window.innerHeight / 2) + 'px';
-        }
-      }
-    });
-    
-    // 鼠标移动事件 - 直接更新武器位置（仅桌面模式）
+    // 鼠标移动事件 - 直接更新武器位置
     document.addEventListener('mousemove', (e) => {
-      if (isDesktop && cursorWeaponEl) {
+      if (cursorWeaponEl) {
         cursorWeaponEl.style.left = e.clientX + 'px';
         cursorWeaponEl.style.top = e.clientY + 'px';
       }
