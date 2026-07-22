@@ -281,7 +281,7 @@
       z-index: 100;
     }
     
-    /* 5秒倒计时遮罩 */
+    /* 3秒倒计时遮罩 */
     .countdown-overlay {
       position: fixed;
       top: 0;
@@ -484,9 +484,9 @@
       </div>
     </div>
     
-    <!-- 5秒倒计时遮罩 -->
-    <div class="countdown-overlay" id="countdownOverlay">
-      <div class="countdown-number" id="countdownNumber">5</div>
+    <!-- 3秒倒计时遮罩 -->
+    <div class="countdown-overlay hidden" id="countdownOverlay" style="display:none;">
+      <div class="countdown-number" id="countdownNumber">3</div>
       <div class="countdown-text">游戏即将开始...</div>
     </div>
     
@@ -810,13 +810,12 @@
       stopInfiniteDisappearDecay();
       clearInterval(gameTimer);
       
-      // 重新开始游戏
-      startMoleSpawning();
+      // 显示3秒倒计时
+      showCountdown();
       
       // 常规模式重新开始90秒倒计时
       if (!isInfiniteMode) {
         timeLeft = 90;
-        startGameCountdown();
       } else {
         // 无尽模式倒计时保持00:00不变
         document.querySelector('.time-value').textContent = '00:00';
@@ -883,19 +882,28 @@
       }, 1000);
     }
     
-    // 5秒倒计时
-    function startFiveSecondCountdown() {
-      let count = 5;
+    // 3秒倒计时
+    function showCountdown() {
+      let count = 3;
       const overlay = document.getElementById('countdownOverlay');
       const numberEl = document.getElementById('countdownNumber');
+      const textEl = document.querySelector('#countdownOverlay .countdown-text');
       
-      // 立即显示当前数字
+      // 重置状态
+      overlay.classList.remove('hidden');
+      overlay.style.display = 'flex';
       numberEl.textContent = count;
+      
+      // 根据是否在游戏中，动态调整提示文字
+      if (textEl && count === 3) {
+        textEl.textContent = score > 0 ? '准备重新开始...' : '游戏即将开始...';
+      }
       
       countdownTimer = setInterval(() => {
         count--;
         if (count > 0) {
           numberEl.textContent = count;
+          textEl.textContent = '游戏即将开始...';
         } else {
           // 倒计时结束，隐藏遮罩
           clearInterval(countdownTimer);
@@ -928,8 +936,8 @@
       }, 1000);
     }
     
-    // 页面加载时开始5秒倒计时
-    window.addEventListener('load', startFiveSecondCountdown);
+    // 页面加载时开始3秒倒计时
+    window.addEventListener('load', showCountdown);
     
     // 游戏结束弹窗
     function showGameOver(score) {
@@ -939,8 +947,15 @@
     
     function closeGameOver() {
       document.getElementById('gameOverModal').classList.remove('show');
-      // 重新开始游戏
-      location.reload();
+      // 重置游戏状态，显示3秒倒计时
+      score = 0;
+      timeLeft = 90;
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.querySelector('.time-value').textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      document.querySelector('.damage-value').textContent = score;
+      showCountdown();
     }
     
     function exitToHome() {
@@ -994,7 +1009,7 @@
       showToast('从背包中选择武器');
     }
     
-    // 5秒倒计时结束后启动游戏
+    // 3秒倒计时结束后启动游戏
     function startGame() {
       startMoleSpawning(); // 开始出老鼠
       if (!isInfiniteMode) {
