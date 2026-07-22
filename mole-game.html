@@ -95,36 +95,17 @@
     .bush1 { top: 40px; right: 20px; font-size: 36px; }
     .rock1 { top: 30px; left: 10px; font-size: 28px; }
     
-    /* 地鼠网格 - 菱形排列 */
     .moles-grid {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 400px;
-      height: 70%;
-    }
-    .mole-row {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      margin-bottom: 50px;
-    }
-    .mole-row:last-child {
-      margin-bottom: 0;
-    }
-    .mole-row-1 {
-      gap: 320px;
-    }
-    .mole-row-2 {
-      gap: 280px;
-    }
-    .mole-row-3 {
-      gap: 320px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
     .mole-hole {
-      position: relative;
+      position: absolute;
+      width: 120px;
+      height: 140px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
@@ -132,39 +113,6 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-    }
-    .hole-base {
-      width: 120px;
-      height: 74px;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      background-image: url('./images/mole-hole.png');
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    .mole-face-wrapper {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 100px;
-      z-index: 2;
-      display: none;
-    }
-    .mole-face-wrapper.visible {
-      display: block;
-    }
-    .mole-face-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .mole-hole {
-      cursor: pointer;
       transition: transform 0.1s;
     }
     .mole-hole:active {
@@ -402,60 +350,8 @@
       <div class="grass-decoration bush1">🌿</div>
       <div class="grass-decoration rock1">🪨</div>
       
-      <!-- 地鼠网格 - 菱形排列 -->
-      <div class="moles-grid">
-        <!-- 第一行：2个 -->
-        <div class="mole-row mole-row-1">
-          <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-face-wrapper">
-              <span class="mole-face">🐹</span>
-            </div>
-            <div class="hole-base"></div>
-          </div>
-          <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-face-wrapper">
-              <span class="mole-face">🐹</span>
-            </div>
-            <div class="hole-base"></div>
-          </div>
-        </div>
-        <!-- 第二行：3个 -->
-        <div class="mole-row mole-row-2">
-          <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-face-wrapper">
-              <span class="mole-face">🐹</span>
-            </div>
-            <div class="hole-base"></div>
-          </div>
-          <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-face-wrapper">
-              <span class="mole-face">🐹</span>
-            </div>
-            <div class="hole-base"></div>
-          </div>
-          <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-face-wrapper">
-              <span class="mole-face">🐹</span>
-            </div>
-            <div class="hole-base"></div>
-          </div>
-        </div>
-        <!-- 第三行：2个 -->
-        <div class="mole-row mole-row-3">
-          <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-face-wrapper">
-              <span class="mole-face">🐹</span>
-            </div>
-            <div class="hole-base"></div>
-          </div>
-          <div class="mole-hole" onclick="hitMole(this)">
-            <div class="mole-face-wrapper">
-              <span class="mole-face">🐹</span>
-            </div>
-            <div class="hole-base"></div>
-          </div>
-        </div>
-      </div>
+      <!-- 地鼠网格 - 随机分布 -->
+      <div class="moles-grid" id="molesGrid"></div>
     </div>
     
     <!-- 游戏结束弹窗 -->
@@ -541,6 +437,73 @@
     // 7个洞的状态
     const holes = document.querySelectorAll('.mole-hole');
     const holeStates = Array(7).fill(null); // null=无老鼠, {type, hit=false/true, timer}=有老鼠
+    
+    // 随机生成7个洞的位置，保证不重叠
+    function generateMolePositions() {
+      const grid = document.getElementById('molesGrid');
+      const gridRect = grid.getBoundingClientRect();
+      const holeSize = 140; // 每个洞的宽高
+      const minGap = 160; // 最小间距，保证老鼠不重叠
+      
+      const positions = [];
+      const maxAttempts = 1000;
+      
+      for (let i = 0; i < 7; i++) {
+        let placed = false;
+        let attempts = 0;
+        
+        while (!placed && attempts < maxAttempts) {
+          attempts++;
+          const x = Math.random() * (gridRect.width - holeSize);
+          const y = Math.random() * (gridRect.height - holeSize);
+          
+          // 检查是否与已有洞重叠
+          let overlap = false;
+          for (const pos of positions) {
+            const dx = x - pos.x;
+            const dy = y - pos.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < minGap) {
+              overlap = true;
+              break;
+            }
+          }
+          
+          if (!overlap) {
+            positions.push({ x, y });
+            placed = true;
+          }
+        }
+        
+        if (!placed) {
+          console.warn(`无法在第${i + 1}个洞找到合适位置`);
+        }
+      }
+      
+      return positions;
+    }
+    
+    // 初始化洞的位置
+    function initMoles() {
+      const grid = document.getElementById('molesGrid');
+      const positions = generateMolePositions();
+      
+      positions.forEach((pos, idx) => {
+        const hole = holes[idx];
+        hole.style.left = pos.x + 'px';
+        hole.style.top = pos.y + 'px';
+      });
+    }
+    
+    // 页面加载时初始化
+    window.addEventListener('load', () => {
+      setTimeout(initMoles, 100);
+    });
+    
+    // 窗口大小变化时重新生成
+    window.addEventListener('resize', () => {
+      setTimeout(initMoles, 100);
+    });
     
     // 随机出现老鼠
     function spawnMole() {
