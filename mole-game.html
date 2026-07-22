@@ -169,36 +169,21 @@
       align-items: center;
       gap: 12px;
     }
-    .weapon-selector {
-      width: 110px;
-      height: 85px;
-      background: rgba(255,255,255,0.95);
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      border: 3px solid #FFB300;
-    }
-    .weapon-icon {
-      font-size: 44px;
-      margin-bottom: 4px;
-    }
-    .weapon-name {
-      font-size: 14px;
-      font-weight: bold;
-      color: #5D4037;
-    }
-    .weapon-check {
-      font-size: 12px;
-      color: #4CAF50;
-      margin-top: 2px;
-    }
     .action-buttons {
       flex: 1;
       display: flex;
       gap: 12px;
+    }
+    
+    /* 跟随鼠标的武器 */
+    .cursor-weapon {
+      position: fixed;
+      pointer-events: none;
+      font-size: 40px;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: font-size 0.2s;
+      filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.3));
     }
     .action-btn {
       flex: 1;
@@ -466,16 +451,15 @@
     <!-- 底部圆角卡片 -->
     <div class="bottom-card">
       <div class="weapon-actions">
-        <div class="weapon-selector">
-          <div class="weapon-icon">🔨</div>
-          <div class="weapon-name">✓ 拖鞋</div>
-        </div>
         <div class="action-buttons">
           <button class="action-btn btn-heavy" onclick="heavyAttack()">重锤</button>
           <button class="action-btn btn-switch" onclick="switchWeapon()">切换武器</button>
         </div>
       </div>
     </div>
+    
+    <!-- 跟随鼠标的武器 -->
+    <div class="cursor-weapon" id="cursorWeapon">🪓</div>
   </div>
 
   <script>
@@ -483,6 +467,30 @@
     let timeLeft = 90;
     let gameTimer = null;
     let countdownTimer = null;
+    let currentWeapon = '🪓'; // 默认木制锤子
+    
+    // 武器列表
+    const weaponList = ['🪓', '🔨', '🥖', '🥄', '🧤'];
+    const weaponNames = ['木斧', '锤子', '法棍', '汤勺', '手套'];
+    let selectedIndex = 0;
+    
+    // 跟随鼠标移动
+    document.addEventListener('mousemove', (e) => {
+      const cursorWeapon = document.getElementById('cursorWeapon');
+      if (cursorWeapon) {
+        cursorWeapon.style.left = e.clientX + 'px';
+        cursorWeapon.style.top = e.clientY + 'px';
+      }
+    });
+    
+    // 移动端触摸支持
+    document.addEventListener('touchmove', (e) => {
+      const cursorWeapon = document.getElementById('cursorWeapon');
+      if (cursorWeapon && e.touches.length > 0) {
+        cursorWeapon.style.left = e.touches[0].clientX + 'px';
+        cursorWeapon.style.top = e.touches[0].clientY + 'px';
+      }
+    });
     
     // 5秒倒计时
     function startFiveSecondCountdown() {
@@ -581,8 +589,8 @@
     }
     
     function switchWeapon() {
-      // TODO: 实现武器切换逻辑
-      console.log('切换武器');
+      // 弹出toast提示
+      showToast('从背包中选择武器');
     }
   </script>
 </body>
