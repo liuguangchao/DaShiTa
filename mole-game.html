@@ -397,6 +397,23 @@
       justify-content: center;
       margin-top: 20px;
     }
+    /* 漏掉提示闪红 */
+    .miss-flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 0, 0, 0.3);
+      z-index: 99998;
+      pointer-events: none;
+      animation: flashFade 0.5s ease-out forwards;
+    }
+    @keyframes flashFade {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(1); }
       100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
@@ -473,10 +490,10 @@
     <!-- 游戏结束弹窗 -->
     <div class="game-over-modal" id="gameOverModal">
       <div class="game-over-card">
-        <div class="game-over-emoji">🎉</div>
-        <div class="game-over-title">时间到！</div>
+        <div class="game-over-emoji" id="gameOverEmoji">🎉</div>
+        <div class="game-over-title" id="gameOverTitle">时间到！</div>
         <div class="game-over-score" id="finalScore">0</div>
-        <div class="game-over-label">只老鼠被你打死</div>
+        <div class="game-over-label" id="gameOverLabel">只老鼠被你打死</div>
         <div class="game-over-buttons">
           <button class="game-over-btn" onclick="closeGameOver()">再来一局</button>
           <button class="game-over-btn exit-btn" onclick="exitToHome()">返回首页</button>
@@ -563,6 +580,7 @@
     // 7个洞的状态
     let holes = []; // 延迟初始化
     const holeStates = Array(7).fill(null); // null=无老鼠, {type, hit=false/true, timer}=有老鼠
+    let infiniteMissCount = 0; // 无尽模式连续漏掉的老鼠数量
     
     // 获取洞元素
     function getHoles() {
@@ -709,6 +727,20 @@
       const faceWrapper = hole.querySelector('.mole-face-wrapper');
       faceWrapper.classList.remove('visible');
       holeStates[idx] = null;
+      
+      // 无尽模式下，老鼠自己消失视为漏掉
+      if (isInfiniteMode && !holeStates[idx]) {
+        infiniteMissCount++;
+        showMissFlash();
+        if (infiniteMissCount >= 2) {
+          stopMoleSpawning();
+          stopInfiniteDisappearDecay();
+          clearInterval(gameTimer);
+          setTimeout(() => {
+            showGameOver(score);
+          }, 500);
+        }
+      }
     }
     
     // 定时出现老鼠，同时最多2只
@@ -771,6 +803,14 @@
       }, 10000); // 每10秒
     }
     
+    // 显示漏掉老鼠的提示（只在手机上有）
+    function showMissFlash() {
+      const flashEl = document.createElement('div');
+      flashEl.className = 'miss-flash';
+      document.body.appendChild(flashEl);
+      setTimeout(() => flashEl.remove(), 500);
+    }
+    
     function stopInfiniteDisappearDecay() {
       if (infiniteDisappearDecayTimer) {
         clearInterval(infiniteDisappearDecayTimer);
@@ -809,6 +849,8 @@
       stopMoleSpawning();
       stopInfiniteDisappearDecay();
       clearInterval(gameTimer);
+      
+      infiniteMissCount = 0;
       
       // 显示3秒倒计时
       showCountdown();
@@ -862,6 +904,9 @@
       const state = holeStates[idx];
       state.hit = true;
       clearTimeout(state.timer);
+      
+      // 打中老鼠，重置连续miss计数
+      infiniteMissCount = 0;
       
       // 显示敲晕图片
       const mole = moleTypes[state.type];
@@ -940,20 +985,39 @@
     window.addEventListener('load', showCountdown);
     
     // 游戏结束弹窗
-    function showGameOver(score) {
+    function showGameOver(score, reason) {
       document.getElementById('finalScore').textContent = score;
+      
+      if (reason === 'infinite' || isInfiniteMode) {
+        document.getElementById('gameOverEmoji').textContent = '😵';
+        document.getElementById('gameOverTitle').textContent = '连续两只老鼠未打中';
+        document.getElementById('gameOverLabel').textContent = '游戏结束';
+      } else {
+        document.getElementById('gameOverEmoji').textContent = '🎉';
+        document.getElementById('gameOverTitle').textContent = '时间到！';
+        document.getElementById('gameOverLabel').textContent = '只老鼠被你打死';
+      }
+      
       document.getElementById('gameOverModal').classList.add('show');
     }
     
     function closeGameOver() {
       document.getElementById('gameOverModal').classList.remove('show');
-      // 重置游戏状态，显示3秒倒计时
+      // 重置游戏状态，保持当前模式，显示3秒倒计时
       score = 0;
-      timeLeft = 90;
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      document.querySelector('.time-value').textContent = 
-        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      infiniteMissCount = 0;
+      
+      // 如果当前是无尽模式，保持无尽模式
+      if (isInfiniteMode) {
+        document.querySelector('.time-value').textContent = '00:00';
+      } else {
+        timeLeft = 90;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.querySelector('.time-value').textContent = 
+          `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      }
+      
       document.querySelector('.damage-value').textContent = score;
       showCountdown();
     }
