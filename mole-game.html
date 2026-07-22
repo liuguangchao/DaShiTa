@@ -341,9 +341,18 @@
       box-shadow: 0 4px 0 #E65100;
       transition: transform 0.1s;
     }
-    .game-over-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 #E65100;
+    .game-over-btn.exit-btn {
+      background: linear-gradient(135deg, #9E9E9E, #757575);
+      box-shadow: 0 4px 0 #616161;
+    }
+    .game-over-btn.exit-btn:active {
+      box-shadow: 0 2px 0 #616161;
+    }
+    .game-over-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
     }
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(1); }
@@ -441,7 +450,10 @@
         <div class="game-over-title">时间到！</div>
         <div class="game-over-score" id="finalScore">0</div>
         <div class="game-over-label">只老鼠被你打死</div>
-        <button class="game-over-btn" onclick="closeGameOver()">再来一局</button>
+        <div class="game-over-buttons">
+          <button class="game-over-btn" onclick="closeGameOver()">再来一局</button>
+          <button class="game-over-btn exit-btn" onclick="exitToHome()">返回首页</button>
+        </div>
       </div>
     </div>
     
@@ -541,6 +553,12 @@
       document.getElementById('gameOverModal').classList.remove('show');
       // 重新开始游戏
       location.reload();
+    }
+    
+    function exitToHome() {
+      document.getElementById('gameOverModal').classList.remove('show');
+      // 返回首页
+      window.location.href = 'index.html';
     }
     
     function showFloatingText(element, text) {
